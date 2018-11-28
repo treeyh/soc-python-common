@@ -92,11 +92,16 @@ def format_table_excel(dbName, tableName, tableComment):
     tableInfo += ('列名\t类型\t是否可为空\t是否为主键\t默认值\t描述'+ os.linesep)
     for c in columns:
         if c['CHARACTER_MAXIMUM_LENGTH'] is None:
-            length = str(c['CHARACTER_MAXIMUM_LENGTH'])
+            if c['NUMERIC_PRECISION'] is None:
+                length = 'None'
+            else:
+                length = str(c['NUMERIC_PRECISION'])
+                if c['NUMERIC_SCALE'] is not None and 0 < c['NUMERIC_SCALE']:
+                    length += ',' + str(c['NUMERIC_SCALE'])
         else:
-            length = str(c['NUMERIC_PRECISION'])
-            if c['NUMERIC_SCALE'] is not None and 0 < c['NUMERIC_SCALE']:
-                length += ','+str(c['NUMERIC_SCALE'])
+            length = str(c['CHARACTER_MAXIMUM_LENGTH'])
+
+
 
         # 列名 类型 是否可为空 是否为主键 默认值 描述
         if 'None' == length:
@@ -125,18 +130,18 @@ def get_column_default(defVal, extra, columnKey):
 
 
 _db_type='m' #数据库类型，m表示mysql，o表示oracle
-_db_name = 'zkdash'
+_db_name = 'compensate_class'
 
 # 需要打印结构的表，空列表则打印库所有表
-_table_list = ['student', 'student_extend', 'stu_contract', 'tsr_task', 'ts_vacate']
+_table_list = []
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
 
 _db = {
 
-    'host': '192.168.1.1',
+    'host': '192.168.170.1',
     'user': 'root',
-    'passwd': 'mysqlpw',
-    'db': 'zkdash',
+    'passwd': 'mysqldev',
+    'db': 'compensate_class',
     'charset': 'utf8mb4',
     'port': 3306,
 }
