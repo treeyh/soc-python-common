@@ -1,13 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 import urllib
-import urllib2
 import socket
 import sys
-import cookielib
 
 from os.path import basename
-from urlparse import urlsplit
 
 _req_type = False
 try:
@@ -18,87 +15,6 @@ except Exception as e:
     pass
 
 cookies = None
-
-
-###GB18030
-def http(url, params={}, headers={}, method='GET', timeout=socket._GLOBAL_DEFAULT_TIMEOUT, isCookie=False,
-         htmlEncode='UTF-8', exportEncode='UTF-8', resp=['content']):
-    '''
-        HTTP 模拟请求
-        url：请求地址
-        params：传入参数，map形式传入
-        headers：模拟http头
-        method：http请求模式，默认GET
-        timeout：超时时间
-        htmlEncode：请求内容的编码，默认UTF-8
-        exportEncode：输出内容编码，默认UTF-8
-        resp：返回输出内容，默认content（http内容），还支持code,info,url
-    '''
-    try:
-        if True == isCookie:
-            global cookies
-            if None == cookies:
-                cookies = cookielib.CookieJar()
-                opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookies))
-                urllib2.install_opener(opener)
-
-        req = None
-        if 'GET' == method:
-            data = urllib.urlencode(params)
-            url = '%s?%s' % (url, data)
-            req = urllib2.Request(url=url, headers=headers)
-        else:
-
-            if isinstance(params, dict):
-                data = urllib.urlencode(params)
-            else:
-                data = params
-            req = urllib2.Request(url=url, data=data, headers=headers)
-
-        page = urllib2.urlopen(req, timeout=timeout)
-        respinfo = {}
-        if 'content' in resp:
-            content = page.read()
-            if htmlEncode != exportEncode:
-                content = content.decode(htmlEncode).encode(exportEncode)
-            if len(resp) == 1:
-                return content
-            respinfo['content'] = content
-        if 'code' in resp:
-            respinfo['code'] = page.getcode()
-        if 'url' in resp:
-            respinfo['url'] = page.geturl()
-        if 'info' in resp:
-            respinfo['info'] = page.info();
-        return respinfo
-    except:
-        print "Unexpected error:", sys.exc_info()
-        return None
-
-
-def url2name(url):
-    return basename(urlsplit(url)[2])
-
-
-def http_download(url, path=None):
-    localName = url2name(url)
-    req = urllib2.Request(url)
-    r = urllib2.urlopen(req)
-    if r.info().has_key('Content-Disposition'):
-        # If the response has Content-Disposition, we take file name from it
-        localName = r.info()['Content-Disposition'].split('filename=')[1]
-        if localName[0] == '"' or localName[0] == "'":
-            localName = localName[1:-1]
-    elif r.url != url:
-        # if we were redirected, the real file name we take from the final URL
-        localName = url2name(r.url)
-    if path:
-        # we can force to save the file as specified name
-        localName = path
-    f = open(localName, 'wb')
-    f.write(r.read())
-    f.close()
-    return None
 
 
 # http://www.python-requests.org/en/latest/
@@ -183,6 +99,6 @@ if __name__ == '__main__':
     }
     data = 'actid=dida_app&mobiletype=1&page=1&page_size=20&ride_type=2&sig=464f9db20c0ce03daba195e6d9e9aa3f&token=a5fccb03-8285-48c7-8489-bb334beb354e&ts=20170622160405&user_cid=3b81ee35-d1c8-4d21-a3e3-5c426cef6bd8&version=5.9.3&vkey=ECF118CE701C29BEB81F871E416AE657'
     info = requests.post(url=url, headers=headers, cookies=cookies, data=data)
-    print info.text
+    print(info.text)
 
 

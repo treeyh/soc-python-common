@@ -71,9 +71,8 @@ def get_db_table_column_list(dbName, tableName):
     #     return []
 
 
-
 def format_excel():
-    global  _db_name, _table_list
+    global _db_name, _table_list
     tableNames = get_db_table_list(_db_name)
     print(tableNames)
     for tableName in tableNames:
@@ -84,12 +83,11 @@ def format_excel():
         print('')
 
 
-
 def format_table_excel(dbName, tableName, tableComment):
     tableInfo = ''
     tableInfo += ('表名\t%s\t%s%s' % (tableName, tableComment, os.linesep))
     columns = get_db_table_column_list(dbName, tableName)
-    tableInfo += ('列名\t类型\t是否可为空\t是否为主键\t默认值\t描述'+ os.linesep)
+    tableInfo += ('列名\t类型\t是否可为空\t是否为主键\t默认值\t描述' + os.linesep)
     for c in columns:
         if c['CHARACTER_MAXIMUM_LENGTH'] is None:
             if c['NUMERIC_PRECISION'] is None:
@@ -101,8 +99,6 @@ def format_table_excel(dbName, tableName, tableComment):
         else:
             length = str(c['CHARACTER_MAXIMUM_LENGTH'])
 
-
-
         # 列名 类型 是否可为空 是否为主键 默认值 描述
         if 'None' == length:
             cmsg = '%s\t%s\t%s\t%s\t%s\t%s' % (c['COLUMN_NAME'], c['DATA_TYPE'], c['IS_NULLABLE'], c['COLUMN_KEY'],
@@ -111,9 +107,9 @@ def format_table_excel(dbName, tableName, tableComment):
         else:
             cmsg = '%s\t%s\t%s\t%s\t%s\t%s' % (c['COLUMN_NAME'], c['DATA_TYPE'] + '(' + length + ')',
                                                c['IS_NULLABLE'], c['COLUMN_KEY'],
-                                                get_column_default(c['COLUMN_DEFAULT'], c['EXTRA'], c['COLUMN_KEY']),
-                                                c['COLUMN_COMMENT'])
-        tableInfo += (cmsg+ os.linesep)
+                                               get_column_default(c['COLUMN_DEFAULT'], c['EXTRA'], c['COLUMN_KEY']),
+                                               c['COLUMN_COMMENT'])
+        tableInfo += (cmsg + os.linesep)
     return tableInfo
 
 
@@ -129,7 +125,7 @@ def get_column_default(defVal, extra, columnKey):
     return defVal
 
 
-_db_type='m' #数据库类型，m表示mysql，o表示oracle
+_db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 _db_name = 'compensate_class'
 
 # 需要打印结构的表，空列表则打印库所有表
@@ -138,7 +134,7 @@ _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + 
 
 _db = {
 
-    'host': '192.168.170.1',
+    'host': '192.168.170.82',
     'user': 'root',
     'passwd': 'mysqldev',
     'db': 'compensate_class',
@@ -146,7 +142,7 @@ _db = {
     'port': 3306,
 }
 
-
 if __name__ == '__main__':
     import sys
+
     format_excel()
