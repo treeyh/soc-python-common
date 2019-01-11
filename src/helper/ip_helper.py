@@ -22,7 +22,17 @@ def get_local_ip():
     return socket.gethostbyname(socket.gethostname())
 
 
+def get_host_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+
+    return ip
+
 if __name__ == '__main__':
-    print(check_ip('211-23-11-110.hinet-ip.hinet.net'))
     print(get_local_ip())
+    print(get_host_ip())
 
