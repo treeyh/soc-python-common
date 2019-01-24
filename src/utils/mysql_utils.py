@@ -179,14 +179,14 @@ class MysqlHelper(object):
         return map
 
 
-_mysql_helpers = {}
+_mysql_utilss = {}
 
 
-def get_mysql_helper(host, user, passwd, db, charset, port):
-    global _mysql_helpers
+def get_mysql_utils(host, user, passwd, db, charset, port):
+    global _mysql_utilss
     key = '%(host)s_%(port)s_%(user)s_%(db)s' % {'host': host, 'port': str(port), 'user': user, 'db': db}
-    if None == _mysql_helpers.get(key, None):
+    if None == _mysql_utilss.get(key, None):
         mysqlHelper = MysqlHelper(host=host, user=user, passwd=passwd, db=db, charset=charset, port=port)
-        _mysql_helpers[key] = mysqlHelper
+        _mysql_utilss[key] = mysqlHelper
 
-    return _mysql_helpers[key]
+    return _mysql_utilss[key]

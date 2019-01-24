@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+*.pyc
 
 # Packages #
 ############
@@ -24,7 +25,7 @@
 # Logs and databases #
 ######################
 *.log
-/logs
+*.log.*
 
 # OS generated files #
 ######################
@@ -47,7 +48,6 @@ Thumbs.db
 */target
 /build
 */build
-*/__pycache__
 
 # IntelliJ specific files/directories
 out
@@ -68,3 +68,7 @@ atlassian-ide-plugin.xml
 
 # NetBeans specific files/directories
 .nbattrs
+
+# Python venv
+/venv
+

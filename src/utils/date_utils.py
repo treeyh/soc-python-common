@@ -143,18 +143,21 @@ def sleep(second):
 
 
 if __name__ == '__main__':
-    print(datetime.fromtimestamp(1473312015).strftime('%Y-%m-%d %H:%M:%S'))
-    print(datetime.fromtimestamp(1472390999).strftime('%Y-%m-%d %H:%M:%S'))
-    print(str_to_time2("2016-02-07 21:44:36"))
-    print(1473312015 - time.time())
-    print(1473311912 - time.time())
+    # print(datetime.fromtimestamp(1473312015).strftime('%Y-%m-%d %H:%M:%S'))
+    # print(datetime.fromtimestamp(1472390999).strftime('%Y-%m-%d %H:%M:%S'))
+    # print(str_to_time2("2016-02-07 21:44:36"))
+    # print(1473312015 - time.time())
+    # print(1473311912 - time.time())
+    #
+    # print(datetime.fromtimestamp(1473552004).strftime('%Y-%m-%d %H:%M:%S'))
+    # print(1473552004 / 300)
+    # print(4911841 % 864)
+    # print(1473552004 / 300 % 864)
+    #
+    # print(datetime_to_time(datetime.now()))
 
-    print(datetime.fromtimestamp(1473552004).strftime('%Y-%m-%d %H:%M:%S'))
-    print(1473552004 / 300)
-    print(4911841 % 864)
-    print(1473552004 / 300 % 864)
+    print(str_to_time2("2018-07-01 00:00:00"))
 
-    print(datetime_to_time(datetime.now()))
     # if True == _arrow_type:
     #     import sys
     #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now())

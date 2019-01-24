@@ -75,7 +75,7 @@ if __name__ == '__main__':
 
     # # data = '1231231231231231231231'
     # r = post(url = url, params ={'name':'AAA'}, data = data)
-    # obj = str_helper.json_decode(r.text)
+    # obj = str_utils.json_decode(r.text)
     # print '1'
     # print obj['info']['userAccountId']
     # print r.text

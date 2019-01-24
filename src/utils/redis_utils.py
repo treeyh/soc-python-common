@@ -28,7 +28,7 @@ class RedisHelper(object):
 _redis_map = {}
 
 
-def get_redis_helper(host, port, db):
+def get_redis_utils(host, port, db):
     global _redis_map
     key = '%s:%d:%d' % (host, port, db)
     if None == _redis_map.get(key, None):
