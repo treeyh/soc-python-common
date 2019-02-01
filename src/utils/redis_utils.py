@@ -5,7 +5,7 @@ import redis
 _conn = None
 
 
-class RedisHelper(object):
+class RedisUtils(object):
 
     def __init__(self, host, port, db):
         self.__conn = redis.ConnectionPool(host=host, port=port, db=db)
@@ -32,6 +32,6 @@ def get_redis_utils(host, port, db):
     global _redis_map
     key = '%s:%d:%d' % (host, port, db)
     if None == _redis_map.get(key, None):
-        _redis_map[key] = RedisHelper(host, port, db)
+        _redis_map[key] = RedisUtils(host, port, db)
 
     return _redis_map[key]
