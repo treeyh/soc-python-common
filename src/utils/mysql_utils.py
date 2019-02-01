@@ -8,7 +8,7 @@ class MysqlUtils(object):
     """docstring for MysqlHelper"""
 
     def __init__(self, host, user, passwd, db, charset, port):
-        super(MysqlHelper, self).__init__()
+        super(MysqlUtils, self).__init__()
 
         self.host = host
         self.user = user
