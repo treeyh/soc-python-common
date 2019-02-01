@@ -103,9 +103,7 @@ img_name = u'iphone照片'
 
 # img_name = u'桃花村鲜花港'
 
-print 'a'
 if __name__ == '__main__':
-    reload(sys)
     sys.setdefaultencoding('utf-8') 
 
     print('b')

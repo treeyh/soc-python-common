@@ -4,7 +4,7 @@ import time
 import pymysql.cursors
 
 
-class MysqlHelper(object):
+class MysqlUtils(object):
     """docstring for MysqlHelper"""
 
     def __init__(self, host, user, passwd, db, charset, port):
@@ -186,7 +186,7 @@ def get_mysql_utils(host, user, passwd, db, charset, port):
     global _mysql_utilss
     key = '%(host)s_%(port)s_%(user)s_%(db)s' % {'host': host, 'port': str(port), 'user': user, 'db': db}
     if None == _mysql_utilss.get(key, None):
-        mysqlHelper = MysqlHelper(host=host, user=user, passwd=passwd, db=db, charset=charset, port=port)
-        _mysql_utilss[key] = mysqlHelper
+        mysqlUtils = MysqlUtils(host=host, user=user, passwd=passwd, db=db, charset=charset, port=port)
+        _mysql_utilss[key] = mysqlUtils
 
     return _mysql_utilss[key]

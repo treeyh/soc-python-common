@@ -71,4 +71,4 @@ atlassian-ide-plugin.xml
 
 # Python venv
 /venv
-
+/dd

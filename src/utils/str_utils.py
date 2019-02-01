@@ -194,7 +194,14 @@ def json_decode(value):
 
 if __name__ == '__main__':
     # print get_uuid()
-    # print get_md5('180.168.5.182$20160302143030$0b6d6fdee03811e5875200059a3c7800')
+    t = int(time.time())
+    print(t)
+    e = '7000157'
+    departmentToken = 'bba76e258bd70fc83b7bd27a9c8e3e62'
+    md5str = e + str(t) + departmentToken
+    print(md5str)
+    print(get_md5(md5str.encode("utf-8")))
+
     print(get_uuid())
     # for i in range(0, 100):
     #     print datetime.now().strftime('%Y%m%d%H%M%S') + get_uuid()[14:]
