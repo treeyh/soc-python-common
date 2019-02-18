@@ -31,7 +31,7 @@ def get_logger(logFile='./log.log', level=logging.INFO, formatter=_default_forma
     logger = logging.getLogger(logFile)
     logger.setLevel(level)
     handler = logging.handlers.TimedRotatingFileHandler(filename=logFile, when='d', interval=1, backupCount=0,
-                                                        encoding=None, delay=False, utc=False)
+                                                        encoding='utf-8', delay=False, utc=False)
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
