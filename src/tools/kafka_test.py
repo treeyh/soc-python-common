@@ -10,7 +10,7 @@ from kafka import SimpleProducer, SimpleClient, KafkaProducer, SimpleConsumer
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..')
 
-from helper import str_helper, file_helper, date_helper, sys_helper
+from utils import str_utils, file_utils, date_utils, sys_utils
 
 
 
@@ -23,7 +23,7 @@ def add_queue(dt):
 
     for i in range(100):
         producer.send_messages('my-topic', 'msg:'+dt+':'+str(i))
-        print i
+        print(i)
 
     # producer.flush()
 
@@ -44,11 +44,6 @@ def read_queue():
 
 
 if __name__ == '__main__':
-    import sys
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
-    print 'begin'
-    dt = date_helper.get_now_datetimestr3()
+    dt = date_utils.get_now_datetimestr3()
     # add_queue(dt)
     read_queue()
-    print 'end'

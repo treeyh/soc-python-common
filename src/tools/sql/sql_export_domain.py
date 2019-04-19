@@ -504,10 +504,6 @@ _db = {
 }
 
 if __name__ == '__main__':
-    import sys
-
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
     # format_php_data_domain()
     # format_domain()   #java bean
     # format_select_sql()   #select 语句
