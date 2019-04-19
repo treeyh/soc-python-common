@@ -39,7 +39,7 @@ def save_value(code, size, score, type, status):
     params = (code, size, score, type, status,)
     id = pymysql_helper.get_mysql_helper(**_db).insert_or_update_or_delete(_INSERT_SQL, params, True)
 
-    print id
+    print(id)
 
 
 if __name__ == '__main__':

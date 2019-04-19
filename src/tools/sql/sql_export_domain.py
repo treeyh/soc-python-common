@@ -7,7 +7,7 @@ import re
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..')
 
-from helper import str_helper, file_helper, pymysql_helper
+from utils import str_utils, file_utils, mysql_utils, oracle_utils
 
 '''
 select `TABLE_NAME` from information_schema.`TABLES` where TABLE_SCHEMA = 'merchant_db' and TABLE_TYPE = 'BASE TABLE';
@@ -33,10 +33,10 @@ def get_db_table_list(dbName):
 
     if 'm' == _db_type:
         params = (dbName)
-        tableNames = pymysql_helper.get_mysql_helper(**_db).find_all(_get_m_db_name_sql, params, _get_m_db_name_col)
+        tableNames = mysql_utils.get_mysql_helper(**_db).find_all(_get_m_db_name_sql, params, _get_m_db_name_col)
         return tableNames
     elif 'o' == _db_type:
-        tableNames = oracle_helper.find_all(_get_o_db_name_sql, params, _get_o_db_name_col)
+        tableNames = oracle_utils.find_all(_get_o_db_name_sql, params, _get_o_db_name_col)
         return tableNames
     else:
         return []
@@ -57,12 +57,12 @@ def get_db_table_column_list(dbName, tableName):
     global _db
     if 'm' == _db_type:
         params = (dbName, tableName)
-        tableColumns = pymysql_helper.get_mysql_helper(**_db).find_all(_get_m_db_column_sql, params,
+        tableColumns = mysql_utils.get_mysql_helper(**_db).find_all(_get_m_db_column_sql, params,
                                                                        _get_m_db_column_col)
         return tableColumns
     elif 'o' == _db_type:
         params = (tableName)
-        tableNames = oracle_helper.find_all(_get_o_db_column_sql, params, _get_m_db_column_col)
+        tableNames = oracle_utils.find_all(_get_o_db_column_sql, params, _get_m_db_column_col)
         return tableNames
     else:
         return []
@@ -79,7 +79,7 @@ def format_domain():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list or len(_table_list) > 0:
@@ -109,7 +109,7 @@ def format_domain():
 
         classInfo = '%s}' % (classInfo)
 
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
 
 
 def format_json_domain():
@@ -122,7 +122,7 @@ def format_json_domain():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list:
@@ -151,7 +151,7 @@ def format_json_domain():
 
         classInfo = '%s}' % (classInfo)
 
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
 
 
 def format_select_sql():
@@ -165,7 +165,7 @@ def format_select_sql():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list and len(_table_list) > 0:
@@ -178,7 +178,7 @@ def format_select_sql():
         for column in tableColumns:
             sqlInfo = '%s a.`%s`,' % (sqlInfo, column['COLUMN_NAME'])
         sqlInfo = '%s FROM `%s` AS a ' % (sqlInfo[0:-1], tableName['TABLE_NAME'])
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
 
 
 def format_insert_sql():
@@ -191,7 +191,7 @@ def format_insert_sql():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list and len(_table_list) > 0:
@@ -206,7 +206,7 @@ def format_insert_sql():
             sqlInfo = '%s `%s`,' % (sqlInfo, column['COLUMN_NAME'])
             pinfo = pinfo + ' %s,'
         sqlInfo = '%s ) VALUES (%s) ' % (sqlInfo[0:-1], pinfo[0:-1])
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
 
 
 def format_update_sql():
@@ -219,7 +219,7 @@ def format_update_sql():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list and len(_table_list) > 0:
@@ -235,7 +235,7 @@ def format_update_sql():
             sqlInfo = sqlInfo + '`' + column['COLUMN_NAME'] + '` = %s ,'
         # sqlInfo = '%s ) VALUES (%s) ' % (sqlInfo[0:-1], pinfo[0:-1])
         sqlInfo = sqlInfo[0:-1]
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
 
 
 def format_column_list():
@@ -248,7 +248,7 @@ def format_column_list():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list and len(_table_list) > 0:
@@ -261,7 +261,7 @@ def format_column_list():
         for column in tableColumns:
             sqlInfo = "%s'%s', " % (sqlInfo, column['COLUMN_NAME'])
         sqlInfo = '%s ]' % (sqlInfo[0:-2])
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
 
 
 def format_php_domain():
@@ -274,7 +274,7 @@ def format_php_domain():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         classInfo = u'public class %s { %s' % (tableName['TABLE_NAME'], linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
@@ -301,7 +301,7 @@ def format_php_domain():
 
         classInfo = '%s}' % (classInfo)
 
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
 
 
 def format_php_info():
@@ -314,7 +314,7 @@ def format_php_info():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         if tableName['TABLE_NAME'] not in _table_list:
             continue
@@ -327,7 +327,7 @@ def format_php_info():
             classInfo = '''%s%s//%s%s%s$item['%s'] = %s;%s''' % (
             classInfo, tab, column['COLUMN_COMMENT'], linesep, tab, column['COLUMN_NAME'], '""', linesep)
 
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
 
 
 def format_php_info_object():
@@ -340,7 +340,7 @@ def format_php_info_object():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         if tableName['TABLE_NAME'] not in _table_list:
             continue
@@ -353,7 +353,7 @@ def format_php_info_object():
             classInfo = '''%s%s//%s%s%s$item->%s = %s;%s''' % (
             classInfo, tab, column['COLUMN_COMMENT'], linesep, tab, column['COLUMN_NAME'], '""', linesep)
 
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', classInfo + os.linesep, 'a')
 
 
 def format_php_params():
@@ -366,7 +366,7 @@ def format_php_params():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list:
@@ -379,7 +379,7 @@ def format_php_params():
         for column in tableColumns:
             sqlInfo = '%s $%s ,' % (sqlInfo, column['COLUMN_NAME'])
         sqlInfo = '%s FROM `%s` AS a ' % (sqlInfo[0:-1], tableName['TABLE_NAME'])
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
 
 
 def format_php_data_params():
@@ -392,7 +392,7 @@ def format_php_data_params():
     if None == tableNames:
         print 'NULL INFO'
     tab = '\t'
-    linesep = file_helper.get_line_sep()
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list:
@@ -405,7 +405,7 @@ def format_php_data_params():
         for column in tableColumns:
             sqlInfo = '%s \'%s\' => $%s , %s' % (sqlInfo, column['COLUMN_NAME'], column['COLUMN_NAME'], os.linesep)
         sqlInfo = '%s FROM `%s` AS a ' % (sqlInfo[0:-1], tableName['TABLE_NAME'])
-        file_helper.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.txt', sqlInfo + os.linesep, 'a')
 
 
 def format_php_data_domain():
@@ -418,8 +418,8 @@ def format_php_data_domain():
     if None == tableNames:
         print 'NULL TABLE'
 
-    temp = file_helper.read_all_file('./temp.php')
-    linesep = file_helper.get_line_sep()
+    temp = file_utils.read_all_file('./temp.php')
+    linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list:
@@ -464,7 +464,7 @@ def format_php_data_domain():
         domain = domain.replace('{fields}', fields)
         domain = domain.replace('{id}', fid)
         domain = domain.replace('{name}', fname)
-        file_helper.write_file(_file_path + dmName + '.php', domain + os.linesep, 'a')
+        file_utils.write_file(_file_path + dmName + '.php', domain + os.linesep, 'a')
 
     return
 
