@@ -23,7 +23,7 @@ def add_queue(dt):
 
     for i in range(10):
         producer.send_messages('tree', 'msg:'+dt+':'+str(i))
-        print i
+        print(i)
 
     # producer.flush()
 

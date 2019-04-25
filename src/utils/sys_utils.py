@@ -68,14 +68,6 @@ def run_sys_cmd_status_output(cmd):
     return commands.getstatusoutput(cmd)
 
 
-def wait_input(prompt = ''):
-    '''
-        系统命令，返回输出，获得到返回值和输出，输出为(status, output)。
-    '''
-    a = raw_input('%s:' % prompt)
-    return a
-
-
 
 
 Windows = 'Windows'
@@ -108,7 +100,7 @@ def timer(function):
         t0 = time.time()
         result = function(*args, **kwargs)
         t1 = time.time()
-        print "Total time running %s: %s seconds" % (function.func_name, str(t1-t0))
+        print("Total time running %s: %s seconds" % (function.func_name, str(t1-t0)))
         return result
     return function_timer
 
@@ -119,4 +111,5 @@ def my_sum(n, m):
 if __name__ == '__main__':
     # print platform.architecture()
     # print platform.platform()
-    print my_sum(9, 10000000)
+
+    pass

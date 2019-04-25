@@ -138,10 +138,6 @@ def run():
 
 
 
-
-
-
-
 # 日志文件路径
 _log_path = '/data0/script/check-memory/logs'
 _log_file_name = 'run.log'
@@ -150,12 +146,10 @@ _logger = None
 # 内存占用比例
 _os_memory_ratio = 0.8
 # 进程名
-_process_name = 'dadaabc-common-web-app'
+_process_name = 'process-name'
 
 # 每次dump时间间隔
 _time_interval = 60 * 60 * 24
-
-
 
 
 
