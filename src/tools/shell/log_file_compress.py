@@ -123,7 +123,7 @@ _log_infos = [
     },
     {
         'path' : os.path.join(_log_base_path, 'rr'),
-        'fileNames' : 'request-response.log',
+        'fileNames' : ['request-response.log'],
         'saveMaxCount' : 90,
     }
 ]
