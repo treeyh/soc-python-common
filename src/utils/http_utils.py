@@ -29,7 +29,6 @@ def get(url, params=None, headers=None, cookies=None, timeout=20, allow_redirect
         allow_redirects:是否支持跳转，默认为True支持
     '''
     r = requests.get(url=url, params=params, headers=headers, cookies=cookies)
-    # print r.url
     return r
 
 
@@ -54,39 +53,6 @@ if __name__ == '__main__':
         reload(sys)
         sys.setdefaultencoding(default_encoding)
 
-    # url = 'http://192.168.73.51/mobi/vod/st02/2015/12/25/Q350_2024797990.3gp?sign=588B4ED04707A3FC06699F551F00C184&tm=567d0336&vw=2&ver=v1.1&qualityCode=511&version=1&guid=1dfaddab-7f99-f656-050b-851301c5bf4c&app=108020310095&cookie=567cf976512fa&session=567cf976512fa&uid=104300041552163151119&uname=18912638032&time=20151225164958&videotype=2&cid=C37480675&cname=&cateid=&dev=000001&ep=1&etv=&os=30&ps=0099&clienttype=HTC+D816v&deviceid=null&appver=5.2.30.3ctch1&res=720%252A1184&channelid=20040101&pid=1000000228&orderid=1100359956945&nid=&netype=11&isp=&cp=00000124&sp=00000014&ip=180.168.5.182&ipSign=cbc1772921e64448e8c67ce1cf179596&cdntoken=api_567d0336e0bf0&pvv=0'
-    # r = requests.get(url = url, headers = headers)
-    # print r.url
-    # # print r.content
-    # print r.status_code
-
-    # url = 'http://127.0.0.1:8080/addUser'
-    # url = 'http://127.0.0.1:8080/hello'
-    # # url = 'http://127.0.0.1:8080/getUser'
-    # data = '{"id":1,"name":"aaaaaaaaaaaaaaaaaaaaaaa"}'
-    # # data = '1231231231231231231231'
-    # r = post(url = url, params ={'name':'AAA'}, data = data)
-    # print '1'
-    # print r.text
-    # print '2'
-
-    # url = 'http://127.0.0.1:8080/openIdLogin'
-    # data = '{"openId":"11222333","facilitatorId":"12","authComeFrom":"WX"}'
-
-    # # data = '1231231231231231231231'
-    # r = post(url = url, params ={'name':'AAA'}, data = data)
-    # obj = str_utils.json_decode(r.text)
-    # print '1'
-    # print obj['info']['userAccountId']
-    # print r.text
-    # print '2'
-
-    # # url = 'http://127.0.0.1:8080/getUser'
-    # # data = '{"openId":"11222333","facilitatorId":"12","authComeFrom":"WX"}'
-    # r = post(url = url, params ={'name':'AAA'}, data = data)
-    # print '1'
-    # print r.text
-    # print '2'
 
     url = 'http://211.151.134.222:80/V3/BookingDriver/getBookingRideList'
     headers = {

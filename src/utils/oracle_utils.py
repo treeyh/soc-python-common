@@ -30,9 +30,9 @@ def _getConnection():
             conn = cx_Oracle.connect(_user, _passwd, tns)
             return conn
         except cx_Oracle.Error, e:
-            print e
+            print(e)
             if(i>= 3):
-                print 'sql connection get count %d ' % (count)
+                print('sql connection get count %d ' % (count)
                 return None
             time.sleep(5)
 
@@ -46,8 +46,8 @@ def insert_or_update_or_delete(sql, params = (), isbackinsertid = False):
     c = None
     try:
         c=conn.cursor()
-        # print sql
-        # print params
+        # print(sql
+        # print(params
         c.execute(sql, params)
         conn.commit()
         if isbackinsertid == True:
@@ -57,7 +57,7 @@ def insert_or_update_or_delete(sql, params = (), isbackinsertid = False):
         else:
             return 0
     except cx_Oracle.Error, e:
-        print e
+        print(e)
         return 1
     finally:
         if None != c:
@@ -74,7 +74,7 @@ def insert_more(sql, params = []):
         conn.commit()
         return 0
     except cx_Oracle.Error, e:
-        print e
+        print(e)
         return 1
     finally:
         if None != c:
@@ -97,7 +97,7 @@ def find_one(sql, params= {}, mapcol=None):
         result = _result_to_map(yz, mapcol)
         return result
     except cx_Oracle.Error, e:
-        print e
+        print(e)
         return result
     finally:
         if None != c:
@@ -121,7 +121,7 @@ def find_all(sql, params={}, mapcol=None):
             result.append( _result_to_map(y, mapcol))
         return result
     except cx_Oracle.Error, e:
-        print e
+        print(e)
         return []
     finally:
         if None != c:
@@ -166,7 +166,7 @@ def find_page(sql, params={}, mapcol=None, page=1, size = 15):
         page_result['data'] = result
         return page_result
     except cx_Oracle.Error, e:
-        print 'Error %d: %s' % (e.args[0], e.args[1])
+        print('Error %d: %s' % (e.args[0], e.args[1]))
         return page_result
     finally:
         if None != c:

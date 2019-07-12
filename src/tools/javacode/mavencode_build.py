@@ -21,7 +21,7 @@ def build_maven_code(glocd, versions):
         <artifactId>%s</artifactId>
         <version>%s</version>
     </dependency>'''  % (lss[0], lss[1], lss[2].replace('$', ''))
-        print sss
+        print(sss
 
 
 

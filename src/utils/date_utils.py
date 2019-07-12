@@ -160,40 +160,40 @@ if __name__ == '__main__':
 
     # if True == _arrow_type:
     #     import sys
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now())
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().replace(hours=-1, weeks=+3))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.utcnow())
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.get('2015-12-22T10:45:29.742000+08:00'))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.get('2015-05-05 12:30:45', 'YYYY-MM-DD HH:mm:ss'))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.get(1450753884.9))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.get('1450753884.9'))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().timestamp)
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().float_timestamp)
-    #     print '%d : %s' % (sys._getframe().f_lineno, type(arrow.Arrow.now().naive))
-    #     print '%d : %s' % (sys._getframe().f_lineno, type(arrow.Arrow.now().date()))
-    #     print '%d : %s' % (sys._getframe().f_lineno, type(arrow.Arrow.now().time()))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().format())
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().format('YYYY-MM-DD HH:mm:ss ZZ'))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().humanize())
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now())
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().replace(hours=-1, weeks=+3))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.utcnow())
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.get('2015-12-22T10:45:29.742000+08:00'))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.get('2015-05-05 12:30:45', 'YYYY-MM-DD HH:mm:ss'))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.get(1450753884.9))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.get('1450753884.9'))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().timestamp)
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().float_timestamp)
+    #     print('%d : %s' % (sys._getframe().f_lineno, type(arrow.Arrow.now().naive))
+    #     print('%d : %s' % (sys._getframe().f_lineno, type(arrow.Arrow.now().date()))
+    #     print('%d : %s' % (sys._getframe().f_lineno, type(arrow.Arrow.now().time()))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().format())
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().format('YYYY-MM-DD HH:mm:ss ZZ'))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().humanize())
 
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.fromtimestamp(time.time()))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.fromdatetime(datetime.now()))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.fromdate(date(2012, 12, 3)))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.fromtimestamp(time.time()))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.fromdatetime(datetime.now()))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.fromdate(date(2012, 12, 3)))
 
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.strptime('2015-05-05 12:30:45', '%Y-%m-%d %H:%M:%S'))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.strptime('2015-05-05 12:30:45', '%Y-%m-%d %H:%M:%S'))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.strptime('2015-05-05 12:30:45', '%Y-%m-%d %H:%M:%S'))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.strptime('2015-05-05 12:30:45', '%Y-%m-%d %H:%M:%S'))
 
     #     start = datetime(2013, 5, 5, 12, 30)
     #     end = datetime(2013, 5, 5, 17, 15)
     #     for r in arrow.Arrow.range('hour', start, end):
-    #         print r
+    #         print(r
 
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().span('day'))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().span('day'))
     #     start = datetime(2013, 5, 5, 12, 30)
     #     end = datetime(2013, 5, 5, 17, 15)
     #     for r in arrow.Arrow.span_range('hour', start, end):
-    #         print r
+    #         print(r
 
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().floor('hour'))
-    #     print '%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().ceil('hour'))
-    #     print time.time()
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().floor('hour'))
+    #     print('%d : %s' % (sys._getframe().f_lineno, arrow.Arrow.now().ceil('hour'))
+    #     print(time.time()

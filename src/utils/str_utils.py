@@ -193,7 +193,7 @@ def json_decode(value):
 
 
 if __name__ == '__main__':
-    # print get_uuid()
+    # print(get_uuid()
     t = int(time.time())
     print(t)
     e = '7000157'
@@ -204,9 +204,9 @@ if __name__ == '__main__':
 
     print(get_uuid())
     # for i in range(0, 100):
-    #     print datetime.now().strftime('%Y%m%d%H%M%S') + get_uuid()[14:]
+    #     print(datetime.now().strftime('%Y%m%d%H%M%S') + get_uuid()[14:]
     #     time.sleep(1)
-    # print str(uuid.uuid1())
+    # print(str(uuid.uuid1())
     # str = '#!@81%sjl=)k' % '123123'
     str = 'wanda123'
 

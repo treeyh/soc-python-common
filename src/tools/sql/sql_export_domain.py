@@ -75,9 +75,9 @@ def format_domain():
     global _db
 
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
@@ -86,7 +86,7 @@ def format_domain():
             continue
         classInfo = u'public class %s { %s' % (tableName['TABLE_NAME'], linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -118,9 +118,9 @@ def format_json_domain():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
@@ -129,7 +129,7 @@ def format_json_domain():
             continue
         classInfo = u'{%s' % (linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -161,9 +161,9 @@ def format_select_sql():
     global _db
 
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
@@ -172,7 +172,7 @@ def format_select_sql():
             continue
         sqlInfo = u'SELECT'
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -187,9 +187,9 @@ def format_insert_sql():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
@@ -199,7 +199,7 @@ def format_insert_sql():
         sqlInfo = u'INSERT INTO %s(' % (tableName['TABLE_NAME'])
         pinfo = ''
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -215,9 +215,9 @@ def format_update_sql():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
@@ -227,7 +227,7 @@ def format_update_sql():
         sqlInfo = u'UPDATE `%s` SET ' % (tableName['TABLE_NAME'])
         pinfo = ''
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -244,9 +244,9 @@ def format_column_list():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
@@ -255,7 +255,7 @@ def format_column_list():
             continue
         sqlInfo = u'['
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -270,15 +270,15 @@ def format_php_domain():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         classInfo = u'public class %s { %s' % (tableName['TABLE_NAME'], linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -310,16 +310,16 @@ def format_php_info():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         if tableName['TABLE_NAME'] not in _table_list:
             continue
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         classInfo = ''
@@ -336,16 +336,16 @@ def format_php_info_object():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         if tableName['TABLE_NAME'] not in _table_list:
             continue
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         classInfo = ''
@@ -362,9 +362,9 @@ def format_php_params():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
@@ -373,7 +373,7 @@ def format_php_params():
             continue
         sqlInfo = u'SELECT '
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -388,9 +388,9 @@ def format_php_data_params():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL INFO'
+        print('NULL INFO')
     tab = '\t'
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
@@ -399,7 +399,7 @@ def format_php_data_params():
             continue
         sqlInfo = u'SELECT '
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
-        print tableColumns
+        print(tableColumns)
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -414,9 +414,9 @@ def format_php_data_domain():
     global _file_path
     global _db
     tableNames = get_db_table_list(_db_name)
-    print tableNames
+    print(tableNames)
     if None == tableNames:
-        print 'NULL TABLE'
+        print('NULL TABLE')
 
     temp = file_utils.read_all_file('./temp.php')
     linesep = file_utils.get_line_sep()
@@ -472,8 +472,8 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-_db_name = 'cloudparking'
-_table_list = ['cloudparking_etcp_order_relation', 'cloudparking_finance', 'cloudparking_finance_coupon_detail']
+_db_name = 'casbin'
+_table_list = ['ppm_tre_trends']
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
 
 _db = {
@@ -495,12 +495,12 @@ _db = {
     # 'charset' : 'utf8',
     # 'port' : 3306,
 
-    'host': '10.209.44.12',
-    'user': 'cloudparking',
-    'passwd': '234fsdsdkjj',
-    'db': 'cloudparking',
-    'charset': 'utf8',
-    'port': 10043,
+    'host': '192.168.1.170',
+    'user': 'root',
+    'passwd': 'mysqldev',
+    'db': 'casbin',
+    'charset': 'utf8mb6',
+    'port': 3306,
 }
 
 if __name__ == '__main__':

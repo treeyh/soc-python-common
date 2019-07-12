@@ -119,5 +119,5 @@ if __name__ == '__main__':
     string = ''
 
     string = format_domain(obj , 'domain', string, 1)
-    print string
+    print(string
 

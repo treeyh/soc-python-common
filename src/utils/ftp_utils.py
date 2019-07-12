@@ -38,7 +38,7 @@ def get_file(ip, port, user, password, filePath, targetPath):
         ftp.connect(ip, port) #连接
         ftp.login(user,password) #登录，如果匿名登录则用空串代替即可
 
-        #print ftp.getwelcome() #显示ftp服务器欢迎信息
+        #print(ftp.getwelcome()) #显示ftp服务器欢迎信息
         bufsize = 1024 #设置缓冲块大小
         fp = open(targetPath,'wb') #以写模式在本地打开文件
         ftp.retrbinary('RETR ' + filePath, fp.write, bufsize) #接收服务器上文件并写入本地文件

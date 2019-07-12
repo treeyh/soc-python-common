@@ -79,7 +79,7 @@ def main():
     sprops = get_props(source_domain_path, sname)
     tprops = get_props(target_domain_path, tname)
 
-    print sprops
+    print(sprops
 
     return build_to_domain_code(sprops, tprops)
 
@@ -88,5 +88,5 @@ def main():
 
 
 if __name__ == '__main__':
-    print main()
+    print(main()
 

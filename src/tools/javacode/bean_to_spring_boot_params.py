@@ -37,7 +37,7 @@ def run():
         if 3 != len(ps):
             continue
         ps[0] = '@RequestParam("'+ps[2]+'")'
-        print ' '.join(ptype) + ' ' +' '.join(ps) + ','
+        print(' '.join(ptype) + ' ' +' '.join(ps) + ','
         ptype = []
 
 

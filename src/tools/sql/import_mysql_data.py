@@ -53,4 +53,4 @@ if __name__ == '__main__':
         save_value(str(i), size, score, random.randint(1, 4), status)
         time.sleep(0.5)
 
-    # print 31 % 16
+    # print(31 % 16

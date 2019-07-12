@@ -24,7 +24,7 @@ def pull_code():
 
     paths = get_folder_son(_target_path)
 
-    print paths
+    print(paths
 
     for path in paths:
         pull_code_by_path(path, 1)
@@ -55,7 +55,7 @@ def pull_code_by_path(path, length):
                 git pull origin
                 ''' % (path)
         result = os.popen(cmd).readlines()
-        print path
+        print(path
         return
 
     for p in paths:

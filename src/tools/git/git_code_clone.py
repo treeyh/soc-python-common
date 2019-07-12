@@ -53,7 +53,7 @@ def clone_code():
         git clone ssh://git@gitlab.ffan.biz:8022/%s/%s.git
         ''' % (target_path, ls[0].strip(), ls[1].strip())
         result = os.popen(cmd).readlines()
-        print result
+        print(result
 
 
 

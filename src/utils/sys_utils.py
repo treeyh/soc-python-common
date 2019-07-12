@@ -87,10 +87,12 @@ def get_os_platform():
 def get_local_ip():
     global Linux
     if Linux == get_os_platform():
-        return os.popen("ifconfig | grep 'inet '|grep -v '127.0'|xargs|awk -F '[ :]' '{print $3}'").readline().rstrip()
+        return os.popen("ifconfig | grep 'inet '|grep -v '127.0'|xargs|awk -F '[ :]' '{print($3}'").readline().rstrip()
     return None
 
 
+def print(msg):
+    print(msg)
 
 
 #计时器
@@ -109,7 +111,7 @@ def my_sum(n, m):
     return sum([i for i in range(n, m)])
 
 if __name__ == '__main__':
-    # print platform.architecture()
-    # print platform.platform()
+    # print(platform.architecture()
+    # print(platform.platform()
 
     pass

@@ -38,8 +38,8 @@ class MysqlUtils(object):
         c = None
         try:
             c = conn.cursor()
-            # print sql
-            # print params
+            # print(sql
+            # print(params
             c.execute(sql, params)
             conn.commit()
             if isbackinsertid == True:

@@ -42,7 +42,7 @@ def rename(olgImgPath, newImgPath, oldNefPath, newNefPath):
 
 def rename_img(imgInfo):
     global img_name
-    # print floder
+    # print(floder
 
     if '.nef' in imgInfo[1][-4:].lower():
         return None
@@ -96,7 +96,7 @@ def main(path):
 
     print(pool.map(rename_img, paths))
 
-    # print rename_img(paths[0])
+    # print(rename_img(paths[0])
 
     
 img_name = u'iphone照片'
@@ -113,7 +113,7 @@ if __name__ == '__main__':
     main(path)
 
     # p = 'xx.xx.jpg'
-    # # print 
-    # print p[0:p.rfind('.')]
+    # # print(
+    # print(p[0:p.rfind('.')]
 
-    # print file_helper.get_file_suffix(u'DSC_4877.JPG')
+    # print(file_helper.get_file_suffix(u'DSC_4877.JPG')

@@ -27,7 +27,7 @@ def run():
         folder = p[0]
         filename = p[1]
         if '.lastUpdated' in filename and os.path.exists(folder):
-            print 'remove:' + folder
+            print('remove:' + folder
             file_helper.remove_folder(folder)
 
 def run_dns_error():
@@ -43,11 +43,11 @@ def run_dns_error():
 
         content = file_helper.read_all_file(path)
         if None == content:
-            print 'None:' + path
+            print('None:' + path
             continue
         if 'DNS解析失败' in content or 'text/javascript' in content:
-            print 'removefile:' + p[0]
-            print 'remove:' + p[0]
+            print('removefile:' + p[0]
+            print('remove:' + p[0]
             file_helper.remove_folder(p[0])
 
 
