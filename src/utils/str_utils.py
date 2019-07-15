@@ -201,8 +201,8 @@ if __name__ == '__main__':
     md5str = e + str(t) + departmentToken
     print(md5str)
     print(get_md5(md5str.encode("utf-8")))
-
-    print(get_uuid())
+    print(get_md5('t0117fa44a6ee11e9be9ff01e3412b52aree`123'.encode("utf-8")))
+    # print(get_uuid())
     # for i in range(0, 100):
     #     print(datetime.now().strftime('%Y%m%d%H%M%S') + get_uuid()[14:]
     #     time.sleep(1)

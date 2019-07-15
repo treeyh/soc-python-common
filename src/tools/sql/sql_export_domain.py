@@ -186,6 +186,7 @@ def format_insert_sql():
     global _db_name
     global _file_path
     global _db
+    global _sql_params_type
     tableNames = get_db_table_list(_db_name)
     print(tableNames)
     if None == tableNames:
@@ -204,7 +205,10 @@ def format_insert_sql():
             continue
         for column in tableColumns:
             sqlInfo = '%s `%s`,' % (sqlInfo, column['COLUMN_NAME'])
-            pinfo = pinfo + ' %s,'
+            if _sql_params_type == 2:
+                pinfo = pinfo + ' {' + column['COLUMN_NAME'] + '},'
+            else:
+                pinfo = pinfo + ' %s,'
         sqlInfo = '%s ) VALUES (%s) ' % (sqlInfo[0:-1], pinfo[0:-1])
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', sqlInfo + os.linesep, 'a')
 
@@ -214,6 +218,7 @@ def format_update_sql():
     global _db_name
     global _file_path
     global _db
+    global _sql_params_type
     tableNames = get_db_table_list(_db_name)
     print(tableNames)
     if None == tableNames:
@@ -232,7 +237,10 @@ def format_update_sql():
             continue
         for column in tableColumns:
             # sqlInfo = '%s `%s` = ? ,' % (sqlInfo, column['COLUMN_NAME'])
-            sqlInfo = sqlInfo + '`' + column['COLUMN_NAME'] + '` = %s ,'
+            if _sql_params_type == 2:
+                sqlInfo = sqlInfo + '`' + column['COLUMN_NAME'] + '` = %s ,'
+            else:
+                sqlInfo = sqlInfo + '`' + column['COLUMN_NAME'] + '` = {' + column['COLUMN_NAME'] + '} ,'
         # sqlInfo = '%s ) VALUES (%s) ' % (sqlInfo[0:-1], pinfo[0:-1])
         sqlInfo = sqlInfo[0:-1]
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', sqlInfo + os.linesep, 'a')
@@ -472,9 +480,11 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-_db_name = 'casbin'
-_table_list = ['ppm_tre_trends']
+_db_name = 'polaris_project_manage'
+_table_list = ['ppm_rol_role_user']
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
+
+_sql_params_type = 2
 
 _db = {
     # # 'host' : '192.168.18.187', 
@@ -495,10 +505,10 @@ _db = {
     # 'charset' : 'utf8',
     # 'port' : 3306,
 
-    'host': '192.168.1.170',
+    'host': '192.168.1.148',
     'user': 'root',
     'passwd': 'mysqldev',
-    'db': 'casbin',
+    'db': 'polaris_project_manage',
     'charset': 'utf8mb4',
     'port': 3306,
 }
@@ -506,8 +516,8 @@ _db = {
 if __name__ == '__main__':
     # format_php_data_domain()
     # format_domain()   #java bean
-    # format_select_sql()   #select 语句
-    # format_update_sql()
+    format_select_sql()   #select 语句
+    format_update_sql()
     format_insert_sql()
     # format_column_list()
     # format_php_params()    #php方法参数
