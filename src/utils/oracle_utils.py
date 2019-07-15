@@ -29,10 +29,9 @@ def _getConnection():
             i=i+1
             conn = cx_Oracle.connect(_user, _passwd, tns)
             return conn
-        except cx_Oracle.Error, e:
-            print(e)
+        except cx_Oracle.Error:
             if(i>= 3):
-                print('sql connection get count %d ' % (count)
+                print('sql connection get count %d ' % (count))
                 return None
             time.sleep(5)
 
@@ -56,8 +55,7 @@ def insert_or_update_or_delete(sql, params = (), isbackinsertid = False):
             return yz[0]
         else:
             return 0
-    except cx_Oracle.Error, e:
-        print(e)
+    except cx_Oracle.Error:
         return 1
     finally:
         if None != c:
@@ -73,8 +71,7 @@ def insert_more(sql, params = []):
         c.executemany(sql, params)
         conn.commit()
         return 0
-    except cx_Oracle.Error, e:
-        print(e)
+    except cx_Oracle.Error:
         return 1
     finally:
         if None != c:
@@ -96,8 +93,7 @@ def find_one(sql, params= {}, mapcol=None):
             return yz
         result = _result_to_map(yz, mapcol)
         return result
-    except cx_Oracle.Error, e:
-        print(e)
+    except cx_Oracle.Error:
         return result
     finally:
         if None != c:
@@ -120,8 +116,7 @@ def find_all(sql, params={}, mapcol=None):
         for y in yz:
             result.append( _result_to_map(y, mapcol))
         return result
-    except cx_Oracle.Error, e:
-        print(e)
+    except cx_Oracle.Error:
         return []
     finally:
         if None != c:
@@ -165,8 +160,7 @@ def find_page(sql, params={}, mapcol=None, page=1, size = 15):
             result.append( _result_to_map(y, mapcol))
         page_result['data'] = result
         return page_result
-    except cx_Oracle.Error, e:
-        print('Error %d: %s' % (e.args[0], e.args[1]))
+    except cx_Oracle.Error:
         return page_result
     finally:
         if None != c:
