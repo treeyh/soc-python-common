@@ -121,9 +121,11 @@ def save(filePath, wb):
 
 
 if __name__ == '__main__':
-    wb = create_excel()
-    ws = get_active_sheet(wb)
-    for i in range(0, 10):
-        for j in range(0, 12):
-            set_cell_val(ws, i, j, str(i)+'--'+str(j))
-    save('C:\\Users\\Administrator\\Desktop\\a.xlsx', wb)
+    # wb = create_excel()
+    # ws = get_active_sheet(wb)
+    # for i in range(0, 10):
+    #     for j in range(0, 12):
+    #         set_cell_val(ws, i, j, str(i)+'--'+str(j))
+    # save('C:\\Users\\Administrator\\Desktop\\a.xlsx', wb)
+    wb = open_excel('/Users/tree/Downloads/初始化数据.xlsx')
+    print(get_active_sheet(wb))
