@@ -7,7 +7,7 @@ import re
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..' + os.sep + '..')
 
-from helper import str_helper, file_helper, pymysql_helper
+from utils import str_utils, file_utils, mysql_utils
 
 '''
 select `TABLE_NAME`, `TABLE_COMMENT` from information_schema.`TABLES` where TABLE_SCHEMA = 'merchant_db' and TABLE_TYPE = 'BASE TABLE';
@@ -32,7 +32,7 @@ def get_db_table_list(dbName):
     global _db
 
     params = (dbName)
-    tableNames = pymysql_helper.get_mysql_helper(**_db).find_all(_get_m_db_name_sql, params, _get_m_db_name_col)
+    tableNames = mysql_utils.get_mysql_utils(**_db).find_all(_get_m_db_name_sql, params, _get_m_db_name_col)
     return tableNames
 
 
@@ -54,7 +54,7 @@ def get_db_table_column_list(dbName, tableName):
     global _db
 
     params = (dbName, tableName)
-    tableColumns = pymysql_helper.get_mysql_helper(**_db).find_all(_get_m_db_column_sql, params,
+    tableColumns = mysql_utils.get_mysql_utils(**_db).find_all(_get_m_db_column_sql, params,
                                                                    _get_m_db_column_col)
     return tableColumns
     #
@@ -126,7 +126,7 @@ def get_column_default(defVal, extra, columnKey):
 
 
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
-_db_name = 'compensate_class'
+_db_name = 'polaris_project_manage'
 
 # 需要打印结构的表，空列表则打印库所有表
 _table_list = []
@@ -134,10 +134,10 @@ _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + 
 
 _db = {
 
-    'host': '192.168.170.82',
+    'host': '192.168.1.148',
     'user': 'root',
     'passwd': 'mysqldev',
-    'db': 'compensate_class',
+    'db': 'polaris_project_manage',
     'charset': 'utf8mb4',
     'port': 3306,
 }
