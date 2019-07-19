@@ -218,6 +218,12 @@ def get_file_name(path):
     '''
     return os.path.basename(path)
 
+def get_file_name_no_suffix(path):
+    '''
+        获取无后缀文件名：
+        path：文件路径，可使用__file__
+    '''
+    return os.path.splitext(os.path.basename(path))[0]
 
 def get_url_file_name(path):
     '''
