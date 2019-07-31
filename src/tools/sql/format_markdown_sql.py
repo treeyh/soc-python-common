@@ -12,14 +12,14 @@ from utils import str_utils, file_utils
 base_path = '/Users/tree/work/99_tree/03_github/soc-python-common/src/tools/sql/md'
 
 file_sqls = [
-    {
-        'name' : 'ppm_bas_project_type.log',
-        'comment' : '项目类型',
-        'begin' : 1,
-        'end' : -1,
-        'sql' : '''INSERT INTO ppm_bas_project_type( `id`, `lang_code`, `name`, `sort`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
-        VALUES ( %s, '%s', '%s', %s, '%s', 1, 1, now(), 1, now(), 1, 0);''',
-    },
+    # {
+    #     'name' : 'ppm_bas_project_type.log',
+    #     'comment' : '项目类型',
+    #     'begin' : 1,
+    #     'end' : -1,
+    #     'sql' : '''INSERT INTO ppm_bas_project_type( `id`, `lang_code`, `name`, `sort`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` )
+    #     VALUES ( %s, '%s', '%s', %s, '%s', 1, 1, now(), 1, now(), 1, 0);''',
+    # },
     {
         'name' : 'ppm_bas_object_id.log',
         'comment' : '对象id生成',
