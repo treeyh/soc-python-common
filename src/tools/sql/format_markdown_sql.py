@@ -26,7 +26,7 @@ file_sqls = [
         'begin' : 1,
         'end' : -1,
         'sql' : '''INSERT INTO ppm_bas_object_id( `id`, `org_id`, `code`, `max_id`, `step`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
-        VALUES ( %s, %s,  '%s', %s, %s, 1, now(), 1, now(), 1, 0);''',
+        VALUES ( %s, %s,  '%s', %s, %s, 1, now(), 1, now(), 1, 2);''',
     },
     {
         'name' : 'ppm_rol_operation.log',
@@ -34,7 +34,7 @@ file_sqls = [
         'begin' : 1,
         'end' : -1,
         'sql' : '''INSERT INTO ppm_rol_operation (`id`, `code`, `name`, `remark`, `status`	, `creator`, `create_time`, `updator`, `update_time`, `version`	, `is_delete`) 
-    VALUES (%s, '%s', '%s', '%s', 1	, 1, now(), 1, now(), 1, 0);''',
+    VALUES (%s, '%s', '%s', '%s', 1	, 1, now(), 1, now(), 1, 2);''',
     },
     {
         'name' : 'ppm_rol_permission.log',
@@ -42,7 +42,7 @@ file_sqls = [
         'begin' : 1,
         'end' : -2,
         'sql' : '''INSERT INTO ppm_rol_permission( `id`, `org_id`, `lang_code`, `code`, `name`, `parent_id`, `type`, `path`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
-    VALUES ( %s, %s, '%s', '%s', '%s', %s, %s, '%s', '', 1, 1, now(), 1, now(), 1, 0);''',
+    VALUES ( %s, %s, '%s', '%s', '%s', %s, %s, '%s', '', 1, 1, now(), 1, now(), 1, 2);''',
     },
     {
         'name' : 'ppm_rol_permission_operation.log',
@@ -50,7 +50,7 @@ file_sqls = [
         'begin' : 1,
         'end' : -1,
         'sql' : '''INSERT INTO ppm_rol_permission_operation( `id`, `org_id`, `permission_id`, `lang_code`, `name`, `operation_codes`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
-    VALUES ( %s, %s, %s, '%s', '%s', '%s', '%s', 1, 1, now(), 1, now(), 1, 0);''',
+    VALUES ( %s, %s, %s, '%s', '%s', '%s', '%s', 1, 1, now(), 1, now(), 1, 2);''',
 
         # |1|1|2|PermissionOperation.Sys.Dic.View|查看数据字典|View||
     },
@@ -60,7 +60,7 @@ file_sqls = [
         'begin' : 1,
         'end' : -1,
         'sql' : '''INSERT INTO ppm_rol_role_group( `id`, `org_id`, `lang_code`, `name`, `remark`, `type`, `is_readonly`, `is_show`, `is_default`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
-        VALUES ( %s, %s, '%s', '%s', '%s', %s, %s, %s, %s, 1, 1, now(), 1, now(), 1, 0);''',
+        VALUES ( %s, %s, '%s', '%s', '%s', %s, %s, %s, %s, 1, 1, now(), 1, now(), 1, 2);''',
     },
     {
         'name' : 'ppm_rol_role.log',
@@ -68,7 +68,7 @@ file_sqls = [
         'begin' : 1,
         'end' : -2,
         'sql' : '''INSERT INTO ppm_rol_role( `id`, `org_id`, `lang_code`, `name`, `remark`, `is_readonly`, `is_modify_permission`, `is_default`, `role_group_id`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
-        VALUES ( %s, %s, '%s', '%s', '%s', %s, %s, %s, %s, 1, 1, now(), 1, now(), 1, 0);''',
+        VALUES ( %s, %s, '%s', '%s', '%s', %s, %s, %s, %s, 1, 1, now(), 1, now(), 1, 2);''',
     },
     {
         'name' : 'ppm_rol_role_permission_operation.log',
@@ -77,7 +77,7 @@ file_sqls = [
         'end' : -1,
         'trans': True,
         'sql' : '''INSERT INTO ppm_rol_role_permission_operation( `id`, `org_id`, `role_id`, `project_id`, `permission_id`, `permission_path`, `operation_codes`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` )        
-        VALUES ( %s, %s, %s, %s, %s, '%s', '%s', 1, now(), 1, now(), 1, 0);''',
+        VALUES ( %s, %s, %s, %s, %s, '%s', '%s', 1, now(), 1, now(), 1, 2);''',
 
     },
     {
@@ -86,7 +86,7 @@ file_sqls = [
         'begin' : 1,
         'end' : -1,
         'sql' : '''INSERT INTO ppm_tre_trends( `id`, `org_id`, `module1`, `module2_id`, `module2`, `module3_id`, `module3`, `oper_code`, `oper_obj_id`, `oper_obj_type`, `oper_obj_property`, `relation_id`, `relation_type`, `new_value`, `old_value`, `ext`, `creator`, `create_time`, `is_delete` ) 
-        VALUES ( %s, %s, '%s', %s, '%s', %s, '%s', '%s', %s, '%s', '%s', %s, '%s', '%s', '%s', '%s', 1, now(), 0);''',
+        VALUES ( %s, %s, '%s', %s, '%s', %s, '%s', '%s', %s, '%s', '%s', %s, '%s', '%s', '%s', '%s', 1, now(), 2);''',
     },
 
 ]
@@ -115,7 +115,7 @@ def run():
     global base_path
     global file_sqls
 
-    init_path = os.path.join(base_path, 'init_test.log')
+    init_path = os.path.join(base_path, 'init.log')
 
     lines = read_file(init_path)
 
@@ -150,7 +150,7 @@ def run():
             content += os.linesep + sql
 
 
-    result_path = os.path.join(base_path, 'init_test_sys_sql.log')
+    result_path = os.path.join(base_path, 'init_sys_sql.log')
     file_utils.write_file(result_path, content)
 
 

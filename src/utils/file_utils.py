@@ -93,7 +93,7 @@ def walk2(path):
     fpaths = []
     for pt, fl, fi in os.walk(path):
         for f in fi:
-            p = os.path.join(pt, f)
+            # p = os.path.join(pt, f)
             fpaths.append((pt, f))
     return fpaths
 
