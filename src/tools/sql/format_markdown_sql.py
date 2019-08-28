@@ -87,6 +87,7 @@ file_sqls = [
         'end' : -1,
         'sql' : '''INSERT INTO ppm_tre_trends( `id`, `org_id`, `module1`, `module2_id`, `module2`, `module3_id`, `module3`, `oper_code`, `oper_obj_id`, `oper_obj_type`, `oper_obj_property`, `relation_obj_id`, `relation_obj_type`, `relation_type`, `new_value`, `old_value`, `ext`, `creator`, `create_time`, `is_delete` ) 
         VALUES ( %s, %s, '%s', %s, '%s', %s, '%s', '%s', %s, '%s', '%s', %s, '%s', '%s', '%s', '%s', '%s', 1, now(), 2);''',
+
     },
 
 ]
