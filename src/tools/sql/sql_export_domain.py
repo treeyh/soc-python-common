@@ -481,7 +481,7 @@ _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
 _db_name = 'polaris_project_manage'
-_table_list = ['ppm_tre_trends']
+_table_list = ['ppm_pro_project_detail']
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
 
 _sql_params_type = 2
