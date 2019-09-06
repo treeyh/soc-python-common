@@ -12,7 +12,7 @@ import exifread
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..')
 
-from helper import str_helper, file_helper, log_helper
+from utils import str_utils, file_utils, log_utils
 
 
 
@@ -27,7 +27,7 @@ def get_img_create_time(path):
         dt = str(dt).replace(' ', '_').replace(':', '')
         return dt
     except Exception as e:
-        log_helper.get_logger('.\\rename_error.log').info(traceback.format_exc())
+        log_utils.get_logger('.\\rename_error.log').info(traceback.format_exc())
         return None
     finally:
         f.close()
@@ -35,9 +35,9 @@ def get_img_create_time(path):
     
 
 def rename(olgImgPath, newImgPath, oldNefPath, newNefPath):
-    file_helper.move(olgImgPath, newImgPath)
-    if file_helper.is_file(oldNefPath):
-        file_helper.move(oldNefPath, newNefPath)
+    file_utils.move(olgImgPath, newImgPath)
+    if file_utils.is_file(oldNefPath):
+        file_utils.move(oldNefPath, newNefPath)
 
 
 def rename_img(imgInfo):
@@ -51,7 +51,7 @@ def rename_img(imgInfo):
     if None == dt or '' == dt:
         dt = imgInfo[1][0:imgInfo[1].rfind('.')]
 
-    suf = file_helper.get_file_suffix(imgInfo[1])
+    suf = file_utils.get_file_suffix(imgInfo[1])
     nef = 'NEF'
 
     newImgPath = '%s\\%s_%s.%s' % (imgInfo[0] , img_name , dt , suf)
@@ -59,7 +59,7 @@ def rename_img(imgInfo):
     oldNefPath = '%s\\%s' % ( imgInfo[0] , imgInfo[1].replace(suf, nef))
     newNefPath = '%s\\%s_%s.%s' % (imgInfo[0] , img_name , dt , nef)
 
-    if not file_helper.is_file(newImgPath):
+    if not file_utils.is_file(newImgPath):
         rename(olgImgPath, newImgPath , oldNefPath, newNefPath)
         return ''
 
@@ -68,7 +68,7 @@ def rename_img(imgInfo):
         newImgPath = '%s\\%s_%s_%d.%s' % (imgInfo[0] , img_name , dt , i, suf)
         newNefPath = '%s\\%s_%s_%d.%s' % (imgInfo[0] , img_name , dt , i , nef)
 
-        if not file_helper.is_file(newImgPath):
+        if not file_utils.is_file(newImgPath):
             rename(olgImgPath, newImgPath , oldNefPath, newNefPath)
             return ''
     return None
