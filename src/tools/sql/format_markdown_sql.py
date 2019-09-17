@@ -143,7 +143,6 @@ def run():
                     ll.append(s.strip().replace(',', '|'))
                 else:
                     ll.append(s.strip())
-            ll
 
             # print( ls)
             sql = format_sql(fs['sql'], ll[fs['begin']:fs['end']])
