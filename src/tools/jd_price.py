@@ -19,4 +19,5 @@ if __name__ == '__main__':
     result = http_helper.http("http://p.3.cn/prices/mgets?skuIds=J_970602&type=1")
     re = str_helper.json_decode(result)
     print(re)
+
     print(re[0]['p'])
