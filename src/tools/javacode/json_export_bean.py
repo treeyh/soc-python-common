@@ -8,7 +8,7 @@ import re
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..' + os.sep + '..')
 
-from helper import str_helper, file_helper
+from utils import str_utils, file_utils
 
 
 
@@ -115,9 +115,9 @@ j = '''
 
 
 if __name__ == '__main__':
-    obj = str_helper.json_decode(j)
+    obj = str_utils.json_decode(j)
     string = ''
 
     string = format_domain(obj , 'domain', string, 1)
-    print(string
+    print(string)
 
