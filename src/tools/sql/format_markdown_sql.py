@@ -150,7 +150,7 @@ def run():
             content += os.linesep + sql
 
 
-    result_path = os.path.join(base_path, 'init_sys_sql.log')
+    result_path = os.path.join(base_path, 'init_data.log')
     file_utils.write_file(result_path, content)
 
 
