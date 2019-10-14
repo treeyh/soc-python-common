@@ -87,7 +87,62 @@ file_sqls = [
         'end' : -1,
         'sql' : '''INSERT INTO ppm_tre_trends( `id`, `org_id`, `uuid`, `module1`, `module2_id`, `module2`, `module3_id`, `module3`, `oper_code`, `oper_obj_id`, `oper_obj_type`, `oper_obj_property`, `relation_obj_id`, `relation_obj_type`, `relation_type`, `new_value`, `old_value`, `ext`, `creator`, `create_time`, `is_delete` ) 
         VALUES ( %s, %s, '%s', '%s', %s, '%s', %s, '%s', '%s', %s, '%s', '%s', %s, '%s', '%s', '%s', '%s', '%s', 1, now(), 2);''',
-
+    },
+    {
+        'name' : 'ppm_prs_process_status.log',
+        'comment' : '流程状态',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_prs_process_status( `id`, `org_id`, `lang_code`, `name`, `sort`, `bg_style`, `font_style`, `type`, `category`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, %s, '%s', '%s', %s, '%s', '%s', %s, %s, '', 1, 1, now(), 1, now(), 1, 2);''',
+    },
+    {
+        'name' : 'ppm_prs_process.log',
+        'comment' : '流程',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_prs_process( `id`, `org_id`, `lang_code`, `name`, `is_default`, `type`, `sort`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, %s, '%s', '%s', %s, %s, %s, 1, now(), 1, now(), 1, 2);''',
+    },
+    {
+        'name' : 'ppm_prs_process_process_status.log',
+        'comment' : '流程与流程状态关联',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_prs_process_process_status( `id`, `org_id`, `process_id`, `process_status_id`, `is_init_status`, `sort`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, %s, %s, %s, %s, %s, 1, now(), 1, now(), 1, 2);''',
+    },
+    {
+        'name' : 'ppm_prs_process_step.log',
+        'comment' : '流程步骤',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_prs_process_step( `id`, `org_id`, `process_id`, `lang_code`, `name`, `start_status`, `end_status`, `sort`, `is_default`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, %s, %s, '%s', '%s', %s, %s, %s, %s, '', 1, 1, now(), 1, now(), 1, 2);''',
+    },
+    {
+        'name' : 'ppm_prs_project_type.log',
+        'comment' : '项目类型',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_prs_project_type( `id`, `org_id`, `lang_code`, `name`, `sort`, `default_process_id`, `category`, `mode`, `is_readonly`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, %s, '%s', '%s', %s, %s, %s, %s, %s, '%s', 1, 1, now(), 1, now(), 1, 2);''',
+    },
+    {
+        'name' : 'ppm_prs_project_object_type.log',
+        'comment' : '项目对象类型',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_prs_project_object_type( `id`, `org_id`, `lang_code`, `pre_code`, `name`, `object_type`, `bg_style`, `font_style`, `icon`, `sort`, `remark`, `is_readonly`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, %s, '%s', '%s', '%s', %s, '', '', '', %s, '%s', %s, 1, 1, now(), 1, now(), 1, 2);''',
+    },
+    {
+        'name' : 'ppm_prs_project_type_project_object_type.log',
+        'comment' : '项目类型项目对象关联',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_prs_project_type_project_object_type( `id`, `org_id`, `project_type_id`, `project_object_type_id`, `remark`, `default_process_id`, `is_readonly`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, %s, %s, %s, '%s', %s, %s, 1, 1, now(), 1, now(), 1, 2);''',
     },
 
 ]
