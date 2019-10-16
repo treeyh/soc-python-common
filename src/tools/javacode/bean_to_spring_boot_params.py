@@ -8,7 +8,7 @@ import re
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..' + os.sep + '..')
 
-from helper import str_helper
+from utils import str_utils
 
 
 java_domain = '''
@@ -37,12 +37,11 @@ def run():
         if 3 != len(ps):
             continue
         ps[0] = '@RequestParam("'+ps[2]+'")'
-        print(' '.join(ptype) + ' ' +' '.join(ps) + ','
+        print(' '.join(ptype) + ' ' +' '.join(ps) + ',')
         ptype = []
 
 
 
-    pass
 
 
 if __name__ == '__main__':
