@@ -8,7 +8,7 @@ import re
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..' + os.sep + '..')
 
-from helper import str_helper, file_helper
+from utils import str_utils, file_utils
 
 
 target_domain_path = 'D:\\06_wd\\07_src\\08_task_manager\\task-dispatch-platform\\task-dispatch-service\\src\\main\\java\\com\\ffan\\task\\dispatch\\domain\\TaskServer.java'
@@ -21,7 +21,7 @@ is_to_none_prop = True
 
 
 def get_props(file_path, name):
-    lines = file_helper.read_all_lines_file(file_path)    
+    lines = file_utils.read_all_lines_file(file_path)    
     props = {
         'map':{},
         'list':[],
@@ -40,7 +40,7 @@ def get_props(file_path, name):
 
 def get_name(file_path):
     sname = os.path.basename(file_path).split('.')[0]
-    return str_helper.lowerFirstWord(sname)
+    return str_utils.lowerFirstWord(sname)
 
 def get_default_val(ptype):
     if 'String' == ptype:
@@ -61,11 +61,11 @@ def build_to_domain_code(sprops, tprops):
         if None == sprops['map'].get(tpk, None):
             if True == is_to_none_prop:
                 content = '%s%s%s.set%s(%s);' % (content, os.linesep, tprops['name'], 
-                    str_helper.upperFirstWord(tpk), get_default_val(tprops['map'][tpk]))
+                    str_utils.upperFirstWord(tpk), get_default_val(tprops['map'][tpk]))
             continue
 
         content = '%s%s%s.set%s(%s.get%s());' % (content, os.linesep, tprops['name'], 
-            str_helper.upperFirstWord(tpk), sprops['name'], str_helper.upperFirstWord(tpk))
+            str_utils.upperFirstWord(tpk), sprops['name'], str_utils.upperFirstWord(tpk))
 
     return content + os.linesep + os.linesep
 
@@ -88,5 +88,5 @@ def main():
 
 
 if __name__ == '__main__':
-    print(main()
+    print(main())
 

@@ -8,7 +8,7 @@ import json
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..' + os.sep + '..')
 
-from helper import str_helper, file_helper
+from utils import str_utils, file_utils
 
 
 
