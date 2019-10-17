@@ -94,7 +94,7 @@ file_sqls = [
         'begin' : 1,
         'end' : -1,
         'sql' : '''INSERT INTO ppm_prs_process_status( `id`, `org_id`, `lang_code`, `name`, `sort`, `bg_style`, `font_style`, `type`, `category`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
-        VALUES ( %s, %s, '%s', '%s', %s, '%s', '%s', %s, %s, '', 1, 1, now(), 1, now(), 1, 2);''',
+        VALUES ( %s, %s, '%s', '%s', %s, '%s', '%s', %s, %s, '%s', 1, 1, now(), 1, now(), 1, 2);''',
     },
     {
         'name' : 'ppm_prs_process.log',
