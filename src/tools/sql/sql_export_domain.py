@@ -481,7 +481,7 @@ _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
 _db_name = 'polaris_project_manage'
-_table_list = ['ppm_prs_project_type_project_object_type']
+_table_list = ['ppm_bas_app_info']
 # _db_name = 'test'
 # _table_list = ['student', 'student_parent', 'student_detail', 'student_class']
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
@@ -507,7 +507,7 @@ _db = {
     # 'charset' : 'utf8',
     # 'port' : 3306,
 
-    'host': '192.168.1.148',
+    'host': '192.168.1.181',
     'user': 'root',
     'passwd': 'mysqldev',
     'db': 'polaris_project_manage',
