@@ -144,6 +144,22 @@ file_sqls = [
         'sql' : '''INSERT INTO ppm_prs_project_type_project_object_type( `id`, `org_id`, `project_type_id`, `project_object_type_id`, `remark`, `default_process_id`, `is_readonly`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
         VALUES ( %s, %s, %s, %s, '%s', %s, %s, 1, 1, now(), 1, now(), 1, 2);''',
     },
+    {
+        'name' : 'ppm_bas_app_info.log',
+        'comment' : '应用信息',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_bas_app_info( `id`, `name`, `code`, `secret1`, `secret2`, `owner`, `check_status`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, '%s', '%s', '%s', '%s', '%s', %s, '%s', 1, 1, now(), 1, now(), 1, 2);''',
+    },
+    {
+        'name' : 'ppm_bas_source_channel.log',
+        'comment' : '来源渠道',
+        'begin' : 1,
+        'end' : -1,
+        'sql' : '''INSERT INTO ppm_bas_source_channel( `id`, `code`, `name`, `remark`, `status`, `creator`, `create_time`, `updator`, `update_time`, `version`, `is_delete` ) 
+        VALUES ( %s, '%s', '%s', '%s', 1, 1, now(), 1, now(), 1, 2);''',
+    },
 
 ]
 
