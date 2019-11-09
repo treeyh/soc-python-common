@@ -83,6 +83,7 @@ def format_excel():
         print('')
 
 
+
 def format_table_excel(dbName, tableName, tableComment):
     tableInfo = ''
     tableInfo += ('表名\t%s\t%s%s' % (tableName, tableComment, os.linesep))

@@ -210,7 +210,6 @@ if __name__ == '__main__':
     md5str = e + str(t) + departmentToken
     print(md5str)
     print(get_md5(md5str.encode("utf-8")))
-    print(get_md5('q4399bfa6a6b211e99c47f01e3412b52awe123'.encode("utf-8")))
     print(get_uuid())
     # for i in range(0, 100):
     #     print(datetime.now().strftime('%Y%m%d%H%M%S') + get_uuid()[14:]
@@ -218,4 +217,5 @@ if __name__ == '__main__':
     # print(str(uuid.uuid1())
     # str = '#!@81%sjl=)k' % '123123'
     str = 'wanda123'
+    print(get_md5('4399bfa6a6b211e99c47f01e3412b52aqwe123'.encode("utf-8")))
 
