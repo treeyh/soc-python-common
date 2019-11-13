@@ -32,6 +32,7 @@ def get_img_create_time(path):
     finally:
         f.close()
 
+
     
 
 def rename(olgImgPath, newImgPath, oldNefPath, newNefPath):
