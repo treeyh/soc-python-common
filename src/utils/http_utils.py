@@ -48,10 +48,10 @@ class MyAdapter(requests.adapters.HTTPAdapter):
 
 
 if __name__ == '__main__':
-    default_encoding = 'utf-8'
-    if sys.getdefaultencoding() != default_encoding:
-        reload(sys)
-        sys.setdefaultencoding(default_encoding)
+    # default_encoding = 'utf-8'
+    # if sys.getdefaultencoding() != default_encoding:
+    #     reload(sys)
+    #     sys.setdefaultencoding(default_encoding)
 
 
     url = 'http://211.151.134.222:80/V3/BookingDriver/getBookingRideList'
