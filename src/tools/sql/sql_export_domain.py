@@ -480,8 +480,8 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-_db_name = 'polaris_project_manage'
-_table_list = ['ppm_bas_source_channel']
+_db_name = 'test_db'
+_table_list = ['test_db']
 # _db_name = 'test'
 # _table_list = ['student', 'student_parent', 'student_detail', 'student_class']
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
@@ -507,12 +507,19 @@ _db = {
     # 'charset' : 'utf8',
     # 'port' : 3306,
 
+    # 'host': '192.168.1.181',
+    # 'user': 'root',
+    # 'passwd': 'mysqldev',
+    # 'db': 'polaris_project_manage',
+    # 'charset': 'utf8mb4',
+    # 'port': 3306,
+
     'host': '192.168.1.181',
     'user': 'root',
     'passwd': 'mysqldev',
-    'db': 'polaris_project_manage',
+    'db': 'test_db',
     'charset': 'utf8mb4',
-    'port': 3306,
+    'port': 3308,
 }
 
 if __name__ == '__main__':
