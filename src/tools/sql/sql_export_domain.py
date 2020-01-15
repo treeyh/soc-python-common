@@ -42,11 +42,15 @@ def get_db_table_list(dbName):
         return []
 
 
-_get_m_db_column_sql = ''' select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLUMN_COMMENT , ORDINAL_POSITION 
+#_get_m_db_column_sql = ''' select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLUMN_COMMENT , ORDINAL_POSITION
+#                         from information_schema.`columns` where TABLE_SCHEMA = %s and TABLE_NAME = %s  ORDER BY TABLE_SCHEMA DESC, TABLE_NAME DESC, ORDINAL_POSITION ASC;  '''
+
+_get_m_db_column_sql = ''' select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, ORDINAL_POSITION, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, 
+				                    NUMERIC_PRECISION, NUMERIC_SCALE,  CHARACTER_SET_NAME, COLLATION_NAME, COLUMN_TYPE, COLUMN_KEY, EXTRA, COLUMN_COMMENT     
                          from information_schema.`columns` where TABLE_SCHEMA = %s and TABLE_NAME = %s  ORDER BY TABLE_SCHEMA DESC, TABLE_NAME DESC, ORDINAL_POSITION ASC;  '''
+
 _get_o_db_column_sql = ''' SELECT 'TABLE_SCHEMA' AS TABLE_SCHEMA, a.TABLE_NAME, a.COLUMN_NAME, a.NULLABLE AS IS_NULLABLE, a.DATA_TYPE, a.DATA_LENGTH AS CHARACTER_MAXIMUM_LENGTH , b.COMMENTS AS COLUMN_COMMENT , a.COLUMN_ID AS ORDINAL_POSITION  from USER_TAB_COLS a, user_col_comments b WHERE a.TABLE_NAME = b.TABLE_NAME(+) AND a.COLUMN_NAME = b.COLUMN_NAME(+) AND a.TABLE_NAME = %s ORDER BY a.TABLE_NAME ASC, a.COLUMN_ID ASC   '''
-_get_m_db_column_col = ['TABLE_SCHEMA', 'TABLE_NAME', 'COLUMN_NAME', 'IS_NULLABLE', 'DATA_TYPE',
-                        'CHARACTER_MAXIMUM_LENGTH', 'COLUMN_COMMENT', 'ORDINAL_POSITION']
+_get_m_db_column_col = ['TABLE_SCHEMA', 'TABLE_NAME', 'COLUMN_NAME', 'ORDINAL_POSITION', 'COLUMN_DEFAULT', 'IS_NULLABLE', 'DATA_TYPE', 'CHARACTER_MAXIMUM_LENGTH', 'NUMERIC_PRECISION', 'NUMERIC_SCALE', 'CHARACTER_SET_NAME', 'COLLATION_NAME', 'COLUMN_TYPE', 'COLUMN_KEY', 'EXTRA', 'COLUMN_COMMENT']
 
 
 def get_db_table_column_list(dbName, tableName):
@@ -82,7 +86,7 @@ def format_domain():
     linesep = file_utils.get_line_sep()
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
-        if tbname not in _table_list or len(_table_list) > 0:
+        if tbname not in _table_list and len(_table_list) > 0:
             continue
         classInfo = u'public class %s { %s' % (tableName['TABLE_NAME'], linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
@@ -104,8 +108,8 @@ def format_domain():
                 t = 'Date'
 
             classInfo = '''%s%s%s/* %s%s * %s%s%s */%s%sprivate %s %s;%s''' % (
-            classInfo, linesep, tab, linesep, tab, column['COLUMN_COMMENT'], linesep, tab, linesep, tab, t,
-            column['COLUMN_NAME'], linesep)
+                classInfo, linesep, tab, linesep, tab, column['COLUMN_COMMENT'], linesep, tab, linesep, tab, t,
+                column['COLUMN_NAME'], linesep)
 
         classInfo = '%s}' % (classInfo)
 
@@ -152,6 +156,100 @@ def format_json_domain():
         classInfo = '%s}' % (classInfo)
 
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', classInfo + os.linesep, 'a')
+
+
+def format_gorm_domain():
+    global _table_list
+    global _db_name
+    global _file_path
+    global _db
+
+    tableNames = get_db_table_list(_db_name)
+    print(tableNames)
+    if None == tableNames:
+        print('NULL INFO')
+    tab = ' ' * 4
+    linesep = file_utils.get_line_sep()
+    for tableName in tableNames:
+        tbname = tableName['TABLE_NAME']
+        if tbname not in _table_list and len(_table_list) > 0:
+            continue
+
+        className = str_utils.under_score_case_to_camel_case(format_table_pre(tableName['TABLE_NAME']))
+
+        classInfo = u'type %s struct { %s' % (className, linesep)
+        tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
+
+
+        if None == tableColumns:
+            continue
+        for column in tableColumns:
+            t = 'UnKnow'
+            c = column['DATA_TYPE'].lower()
+            columnName = str_utils.under_score_case_to_camel_case(column['COLUMN_NAME'])
+            comment = column['COLUMN_COMMENT']
+            columnType = column['COLUMN_TYPE']
+            size = column['CHARACTER_MAXIMUM_LENGTH']
+            key = column['COLUMN_KEY']
+            sizeScale = 0
+            default = column['COLUMN_DEFAULT']
+            isNull = column['IS_NULLABLE']
+
+            extra = ''
+
+            if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext']:
+                t = 'string'
+            elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit']:
+                t = 'int'
+                size = column['NUMERIC_PRECISION']
+            elif c in ['bigint']:
+                t = 'int64'
+                size = column['NUMERIC_PRECISION']
+            elif c in ['float', 'double', 'boolean', 'decimal', 'peal']:
+                t = 'float'
+                size = column['NUMERIC_PRECISION']
+                sizeScale = column['NUMERIC_SCALE']
+            elif c in ['date', 'datetime', 'timestamp', 'time', 'year']:
+                t = 'time.Time'
+                extra = column['EXTRA']
+
+            classInfo = '''%s
+%s// %s %s
+%s%s %s %s %s `gorm:"type:%s;column:%s"
+''' % (
+                classInfo, tab, columnName, comment, tab, columnName,  tab, format_gorm_type_is_null(isNull, key, t), tab, columnType, column['COLUMN_NAME'])
+
+        classInfo = '%s}' % (classInfo)
+
+        classInfo = '''%s
+
+
+
+
+func (%s) TableName() string {
+    return "%s"
+} ''' % (classInfo, className, tableName['TABLE_NAME'])
+
+
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', classInfo + os.linesep, 'w')
+
+
+def format_gorm_type_is_null(isNull, key , type):
+    if isNull == 'NO' or key == 'PRI':
+        return type
+    return '*' + type
+
+
+def format_table_pre(tableName):
+    global _pre_table_names
+    nameLen = len(tableName)
+    name = tableName
+    for pre in _pre_table_names:
+        name = tableName.lstrip(pre)
+        if len(name) != nameLen:
+            break
+    return name
+
 
 
 def format_select_sql():
@@ -480,8 +578,9 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-_db_name = 'test_db'
-_table_list = ['test_db']
+_db_name = 'soc_memory'
+_table_list = ['mem_user']
+_pre_table_names = ['mem_', 'bas_']
 # _db_name = 'test'
 # _table_list = ['student', 'student_parent', 'student_detail', 'student_class']
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
@@ -489,24 +588,6 @@ _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + 
 _sql_params_type = 2
 
 _db = {
-    # # 'host' : '192.168.18.187', 
-    # 'host' : '192.168.36.55',
-    # 'user' : 'root', 
-    # # 'passwd' : 'mysqlpw',
-    # 'passwd' : 'fXL2bO$RQgaRS^lH',
-    # # 'db' : 'soc_stock',
-    # # 'db' : 'soc_server_monitor',
-    # 'db' : 'testdb',
-    # 'charset' : 'utf8', 
-    # 'port' : 3306,
-
-    # 'host' : '192.168.77.66',
-    # 'user' : 'logview',
-    # 'passwd' : 'logview',
-    # 'db' : 'http_status',
-    # 'charset' : 'utf8',
-    # 'port' : 3306,
-
     # 'host': '192.168.1.181',
     # 'user': 'root',
     # 'passwd': 'mysqldev',
@@ -514,21 +595,31 @@ _db = {
     # 'charset': 'utf8mb4',
     # 'port': 3306,
 
-    'host': '192.168.1.181',
+    'host': '127.0.0.1',
     'user': 'root',
-    'passwd': 'mysqldev',
-    'db': 'test_db',
+    'passwd': 'Mysql123',
+    'db': 'soc_memory',
     'charset': 'utf8mb4',
-    'port': 3308,
+    'port': 3306,
+
+
+    # 'host': '192.168.1.181',
+    # 'user': 'root',
+    # 'passwd': 'mysqldev',
+    # 'db': 'crm_db_local',
+    # 'charset': 'utf8mb4',
+    # 'port': 3308,
 }
 
 if __name__ == '__main__':
     # format_php_data_domain()
     # format_domain()   #java bean
-    format_select_sql()   #select 语句
-    format_update_sql()
-    format_insert_sql()
+    # format_select_sql()   #select 语句
+    # format_update_sql()
+    # format_insert_sql()
     # format_column_list()
     # format_php_params()    #php方法参数
     # format_php_data_params()
     # format_json_domain()
+
+    format_gorm_domain()

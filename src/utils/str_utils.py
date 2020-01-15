@@ -201,6 +201,24 @@ def json_decode(value):
     return json.loads(value)
 
 
+
+def under_score_case_to_camel_case(value):
+    if "_" in value:
+        """ 
+                #方法二：
+                strlist = str.split("_")
+                Strlist = [s.capitalize() for s in strlist]
+                outStr = "".join(Strlist)
+                print(outStr)
+        """
+        # 方法一：
+        return "".join(map(lambda x: x.capitalize(), value.split("_")))
+
+    return value.capitalize()
+
+
+
+
 if __name__ == '__main__':
     # print(get_uuid()
     t = int(time.time())
@@ -218,4 +236,6 @@ if __name__ == '__main__':
     # str = '#!@81%sjl=)k' % '123123'
     str = 'wanda123'
     print(get_md5('4399bfa6a6b211e99c47f01e3412b52aqwe123'.encode("utf-8")))
+
+    print(UnderScoreCase2CamelCase("aaaaa_bbbbb_ccccc_123"))
 
