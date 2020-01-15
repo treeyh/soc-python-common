@@ -215,7 +215,7 @@ def format_gorm_domain():
 
             classInfo = '''%s
 %s// %s %s
-%s%s %s %s %s `gorm:"type:%s;column:%s"
+%s%s %s %s %s `gorm:"type:%s;column:%s"`
 ''' % (
                 classInfo, tab, columnName, comment, tab, columnName,  tab, format_gorm_type_is_null(isNull, key, t), tab, columnType, column['COLUMN_NAME'])
 
@@ -579,7 +579,7 @@ _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
 _db_name = 'soc_memory'
-_table_list = ['mem_user']
+_table_list = []
 _pre_table_names = ['mem_', 'bas_']
 # _db_name = 'test'
 # _table_list = ['student', 'student_parent', 'student_detail', 'student_class']
