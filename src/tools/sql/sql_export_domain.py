@@ -175,7 +175,7 @@ def format_gorm_domain():
         if tbname not in _table_list and len(_table_list) > 0:
             continue
 
-        className = str_utils.under_score_case_to_camel_case(format_table_pre(tableName['TABLE_NAME']))
+        className = str_utils.under_score_case_to_camel_case(format_table_pre(tableName['TABLE_NAME'])) + 'Po'
 
         classInfo = u'type %s struct { %s' % (className, linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
@@ -215,23 +215,91 @@ def format_gorm_domain():
 
             classInfo = '''%s
 %s// %s %s
-%s%s %s %s %s `gorm:"type:%s;column:%s"`
-''' % (
-                classInfo, tab, columnName, comment, tab, columnName,  tab, format_gorm_type_is_null(isNull, key, t), tab, columnType, column['COLUMN_NAME'])
+%s%s %s %s %s `gorm:"type:%s;column:%s" json:"%s"`
+''' % (classInfo, tab, columnName, comment, tab, columnName,  tab, format_gorm_type_is_null(isNull, key, t),
+       tab, columnType, column['COLUMN_NAME'], columnName[:1].lower() + columnName[1:])
 
         classInfo = '%s}' % (classInfo)
-
         classInfo = '''%s
-
-
-
 
 func (%s) TableName() string {
     return "%s"
 } ''' % (classInfo, className, tableName['TABLE_NAME'])
 
-
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', classInfo + os.linesep, 'w')
+
+
+
+
+def format_go_bo_domain():
+    global _table_list
+    global _db_name
+    global _file_path
+    global _db
+
+    tableNames = get_db_table_list(_db_name)
+    print(tableNames)
+    if None == tableNames:
+        print('NULL INFO')
+    tab = ' ' * 4
+    linesep = file_utils.get_line_sep()
+    for tableName in tableNames:
+        tbname = tableName['TABLE_NAME']
+        if tbname not in _table_list and len(_table_list) > 0:
+            continue
+
+        className = str_utils.under_score_case_to_camel_case(format_table_pre(tableName['TABLE_NAME'])) + 'Bo'
+
+        classInfo = u'type %s struct { %s' % (className, linesep)
+        tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
+
+
+        if None == tableColumns:
+            continue
+        for column in tableColumns:
+            t = 'UnKnow'
+            c = column['DATA_TYPE'].lower()
+            columnName = str_utils.under_score_case_to_camel_case(column['COLUMN_NAME'])
+            comment = column['COLUMN_COMMENT']
+            columnType = column['COLUMN_TYPE']
+            size = column['CHARACTER_MAXIMUM_LENGTH']
+            key = column['COLUMN_KEY']
+            sizeScale = 0
+            default = column['COLUMN_DEFAULT']
+            isNull = column['IS_NULLABLE']
+
+            extra = ''
+
+            if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext']:
+                t = 'string'
+            elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit']:
+                t = 'int'
+                size = column['NUMERIC_PRECISION']
+            elif c in ['bigint']:
+                t = 'int64'
+                size = column['NUMERIC_PRECISION']
+            elif c in ['float', 'double', 'boolean', 'decimal', 'peal']:
+                t = 'float'
+                size = column['NUMERIC_PRECISION']
+                sizeScale = column['NUMERIC_SCALE']
+            elif c in ['date', 'datetime', 'timestamp', 'time', 'year']:
+                t = 'time.Time'
+                extra = column['EXTRA']
+
+            classInfo = '''%s
+%s// %s %s
+%s%s %s %s %s `json:"%s"`
+''' % (classInfo, tab, columnName, comment, tab, columnName,  tab, format_gorm_type_is_null(isNull, key, t),
+       tab, columnName[:1].lower() + columnName[1:])
+
+        classInfo = '%s}' % (classInfo)
+        classInfo = '''%s
+
+func (%s) TableName() string {
+    return "%s"
+} ''' % (classInfo, className, tableName['TABLE_NAME'])
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', classInfo + os.linesep, 'w')
+
 
 
 def format_gorm_type_is_null(isNull, key , type):
@@ -242,11 +310,11 @@ def format_gorm_type_is_null(isNull, key , type):
 
 def format_table_pre(tableName):
     global _pre_table_names
-    nameLen = len(tableName)
     name = tableName
     for pre in _pre_table_names:
-        name = tableName.lstrip(pre)
-        if len(name) != nameLen:
+        plen = len(pre)
+        if pre == tableName[:plen]:
+            name = tableName[plen:]
             break
     return name
 
@@ -580,7 +648,7 @@ _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'testdb'
 _db_name = 'soc_memory'
 _table_list = []
-_pre_table_names = ['mem_', 'bas_']
+_pre_table_names = ['mem_', 'bas_', 'sys_']
 # _db_name = 'test'
 # _table_list = ['student', 'student_parent', 'student_detail', 'student_class']
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
