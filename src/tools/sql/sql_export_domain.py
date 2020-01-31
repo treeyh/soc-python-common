@@ -666,6 +666,13 @@ _db = {
     'charset': 'utf8mb4',
     'port': 3306,
 
+    'host': '192.168.1.101',
+    'user': 'root',
+    'passwd': 'mysqldev',
+    'db': 'soc_memory_local',
+    'charset': 'utf8mb4',
+    'port': 3306,
+
 
     # 'host': '192.168.1.181',
     # 'user': 'root',
