@@ -7,7 +7,7 @@ import re
 path = os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(path + os.sep + '..')
 
-from utils import str_utils, file_utils, mysql_utils, oracle_utils
+from utils import str_utils, file_utils, mysql_utils
 
 '''
 select `TABLE_NAME` from information_schema.`TABLES` where TABLE_SCHEMA = 'merchant_db' and TABLE_TYPE = 'BASE TABLE';
@@ -35,9 +35,9 @@ def get_db_table_list(dbName):
         params = (dbName)
         tableNames = mysql_utils.get_mysql_utils(**_db).find_all(_get_m_db_name_sql, params, _get_m_db_name_col)
         return tableNames
-    elif 'o' == _db_type:
-        tableNames = oracle_utils.find_all(_get_o_db_name_sql, params, _get_o_db_name_col)
-        return tableNames
+    # elif 'o' == _db_type:
+    #     tableNames = oracle_utils.find_all(_get_o_db_name_sql, params, _get_o_db_name_col)
+    #     return tableNames
     else:
         return []
 
@@ -64,10 +64,10 @@ def get_db_table_column_list(dbName, tableName):
         tableColumns = mysql_utils.get_mysql_utils(**_db).find_all(_get_m_db_column_sql, params,
                                                                        _get_m_db_column_col)
         return tableColumns
-    elif 'o' == _db_type:
-        params = (tableName)
-        tableNames = oracle_utils.find_all(_get_o_db_column_sql, params, _get_m_db_column_col)
-        return tableNames
+    # elif 'o' == _db_type:
+    #     params = (tableName)
+    #     tableNames = oracle_utils.find_all(_get_o_db_column_sql, params, _get_m_db_column_col)
+    #     return tableNames
     else:
         return []
 
@@ -216,7 +216,7 @@ def format_gorm_domain():
             classInfo = '''%s
 %s// %s %s
 %s%s %s %s %s `gorm:"type:%s;column:%s" json:"%s"`
-''' % (classInfo, tab, columnName, comment, tab, columnName,  tab, format_gorm_type_is_null(isNull, key, t),
+''' % (classInfo, tab, columnName, comment, tab, columnName,  tab, format_go_db_type_is_null(isNull, key, t),
        tab, columnType, column['COLUMN_NAME'], columnName[:1].lower() + columnName[1:])
 
         classInfo = '%s}' % (classInfo)
@@ -226,7 +226,7 @@ func (%s) TableName() string {
     return "%s"
 } ''' % (classInfo, className, tableName['TABLE_NAME'])
 
-        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', classInfo + os.linesep, 'w')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '_po.log', classInfo + os.linesep, 'w')
 
 
 
@@ -289,20 +289,16 @@ def format_go_bo_domain():
             classInfo = '''%s
 %s// %s %s
 %s%s %s %s %s `json:"%s"`
-''' % (classInfo, tab, columnName, comment, tab, columnName,  tab, format_gorm_type_is_null(isNull, key, t),
+''' % (classInfo, tab, columnName, comment, tab, columnName,  tab, format_go_db_type_is_null(isNull, key, t),
        tab, columnName[:1].lower() + columnName[1:])
 
         classInfo = '%s}' % (classInfo)
-        classInfo = '''%s
 
-func (%s) TableName() string {
-    return "%s"
-} ''' % (classInfo, className, tableName['TABLE_NAME'])
-        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', classInfo + os.linesep, 'w')
+        file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '_bo.log', classInfo + os.linesep, 'w')
 
 
 
-def format_gorm_type_is_null(isNull, key , type):
+def format_go_db_type_is_null(isNull, key , type):
     if isNull == 'NO' or key == 'PRI':
         return type
     return '*' + type
@@ -691,3 +687,5 @@ if __name__ == '__main__':
     # format_json_domain()
 
     format_gorm_domain()
+
+    format_go_bo_domain()
