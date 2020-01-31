@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 
 import time
-import pymysql.cursors
-
+# import pymysql.cursors
+# pip install mysql-connector-python
+import mysql.connector
 
 class MysqlUtils(object):
     """docstring for MysqlHelper"""
@@ -23,10 +24,10 @@ class MysqlUtils(object):
         while (1):
             try:
                 i = i + 1
-                conn = pymysql.connect(host=self.host, user=self.user, passwd=self.passwd, db=self.db,
-                                       charset=self.charset, port=self.port)
+                conn = mysql.connector.connect(host=self.host, user=self.user, passwd=self.passwd, db=self.db,
+                                       charset=self.charset, port=self.port, use_unicode=True)
                 return conn
-            except pymysql.MySQLError as e:
+            except mysql.connector.MySQLError as e:
                 print('Error %d: %s' % (e.args[0], e.args[1]))
                 if (i >= 3):
                     print('sql connection get count %d ' % (count))
@@ -48,7 +49,7 @@ class MysqlUtils(object):
                 return yz[0]
             else:
                 return 0
-        except pymysql.MySQLError as e:
+        except mysql.connector.MySQLError as e:
             print('Error %d: %s' % (e.args[0], e.args[1]))
             return 1
         finally:
@@ -65,7 +66,7 @@ class MysqlUtils(object):
             c.executemany(sql, params)
             conn.commit()
             return 0
-        except pymysql.MySQLError as e:
+        except mysql.connector.MySQLError as e:
             print('Error %d: %s' % (e.args[0], e.args[1]))
             return 1
         finally:
@@ -88,7 +89,7 @@ class MysqlUtils(object):
                 return yz
             result = self._result_to_map(yz, mapcol)
             return result
-        except pymysql.MySQLError as e:
+        except mysql.connector.MySQLError as e:
             print('Error %d: %s' % (e.args[0], e.args[1]))
             return result
         finally:
@@ -112,7 +113,7 @@ class MysqlUtils(object):
             for y in yz:
                 result.append(self._result_to_map(y, mapcol))
             return result
-        except pymysql.MySQLError as e:
+        except mysql.connector.MySQLError as e:
             print('Error %d: %s' % (e.args[0], e.args[1]))
             return result
         finally:
@@ -157,7 +158,7 @@ class MysqlUtils(object):
                 result.append(self._result_to_map(y, mapcol))
             page_result['data'] = result
             return page_result
-        except pymysql.MySQLError as e:
+        except mysql.connector.MySQLError as e:
             print('Error %d: %s' % (e.args[0], e.args[1]))
             return page_result
         finally:
