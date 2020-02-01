@@ -32,7 +32,7 @@ def get_db_table_list(dbName):
     global _db
 
     if 'm' == _db_type:
-        params = (dbName)
+        params = (dbName, )
         tableNames = mysql_utils.get_mysql_utils(**_db).find_all(_get_m_db_name_sql, params, _get_m_db_name_col)
         return tableNames
     # elif 'o' == _db_type:
