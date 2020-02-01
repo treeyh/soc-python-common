@@ -177,7 +177,11 @@ def format_gorm_domain():
 
         className = str_utils.under_score_case_to_camel_case(format_table_pre(tableName['TABLE_NAME'])) + 'Po'
 
-        classInfo = u'type %s struct { %s' % (className, linesep)
+        classInfo = u'''package po
+
+import "time"
+
+type %s struct { %s''' % (className, linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
 
 
@@ -250,7 +254,11 @@ def format_go_bo_domain():
 
         className = str_utils.under_score_case_to_camel_case(format_table_pre(tableName['TABLE_NAME'])) + 'Bo'
 
-        classInfo = u'type %s struct { %s' % (className, linesep)
+        classInfo = u'''package bo
+
+import "time"
+
+type %s struct { %s''' % (className, linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
 
 
@@ -642,7 +650,7 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-_db_name = 'soc_memory'
+_db_name = 'soc_memory_local'
 _table_list = []
 _pre_table_names = ['mem_', 'bas_', 'sys_']
 # _db_name = 'test'
@@ -659,12 +667,12 @@ _db = {
     # 'charset': 'utf8mb4',
     # 'port': 3306,
 
-    'host': '127.0.0.1',
-    'user': 'root',
-    'passwd': 'Mysql123',
-    'db': 'soc_memory',
-    'charset': 'utf8mb4',
-    'port': 3306,
+    # 'host': '127.0.0.1',
+    # 'user': 'root',
+    # 'passwd': 'Mysql123',
+    # 'db': 'soc_memory',
+    # 'charset': 'utf8mb4',
+    # 'port': 3306,
 
     'host': '192.168.1.101',
     'user': 'root',
