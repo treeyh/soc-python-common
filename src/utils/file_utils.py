@@ -184,7 +184,7 @@ def write_file(filePath, content, method='w'):
         method：写入方式，'w'覆盖写，'a' 续写，'wb' 二进制覆盖写
     '''
     mkdirs(filePath, False)
-    fh = open(filePath, method)
+    fh = open(filePath, method, encoding='utf-8')
 
     try:
         fh.write(content)
