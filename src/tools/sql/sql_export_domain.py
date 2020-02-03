@@ -32,7 +32,7 @@ def get_db_table_list(dbName):
     global _db
 
     if 'm' == _db_type:
-        params = (dbName, )
+        params = (dbName,)
         tableNames = mysql_utils.get_mysql_utils(**_db).find_all(_get_m_db_name_sql, params, _get_m_db_name_col)
         return tableNames
     # elif 'o' == _db_type:
@@ -42,7 +42,7 @@ def get_db_table_list(dbName):
         return []
 
 
-#_get_m_db_column_sql = ''' select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLUMN_COMMENT , ORDINAL_POSITION
+# _get_m_db_column_sql = ''' select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLUMN_COMMENT , ORDINAL_POSITION
 #                         from information_schema.`columns` where TABLE_SCHEMA = %s and TABLE_NAME = %s  ORDER BY TABLE_SCHEMA DESC, TABLE_NAME DESC, ORDINAL_POSITION ASC;  '''
 
 _get_m_db_column_sql = ''' select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, ORDINAL_POSITION, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, 
@@ -50,7 +50,9 @@ _get_m_db_column_sql = ''' select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, ORDINAL
                          from information_schema.`columns` where TABLE_SCHEMA = %s and TABLE_NAME = %s  ORDER BY TABLE_SCHEMA DESC, TABLE_NAME DESC, ORDINAL_POSITION ASC;  '''
 
 _get_o_db_column_sql = ''' SELECT 'TABLE_SCHEMA' AS TABLE_SCHEMA, a.TABLE_NAME, a.COLUMN_NAME, a.NULLABLE AS IS_NULLABLE, a.DATA_TYPE, a.DATA_LENGTH AS CHARACTER_MAXIMUM_LENGTH , b.COMMENTS AS COLUMN_COMMENT , a.COLUMN_ID AS ORDINAL_POSITION  from USER_TAB_COLS a, user_col_comments b WHERE a.TABLE_NAME = b.TABLE_NAME(+) AND a.COLUMN_NAME = b.COLUMN_NAME(+) AND a.TABLE_NAME = %s ORDER BY a.TABLE_NAME ASC, a.COLUMN_ID ASC   '''
-_get_m_db_column_col = ['TABLE_SCHEMA', 'TABLE_NAME', 'COLUMN_NAME', 'ORDINAL_POSITION', 'COLUMN_DEFAULT', 'IS_NULLABLE', 'DATA_TYPE', 'CHARACTER_MAXIMUM_LENGTH', 'NUMERIC_PRECISION', 'NUMERIC_SCALE', 'CHARACTER_SET_NAME', 'COLLATION_NAME', 'COLUMN_TYPE', 'COLUMN_KEY', 'EXTRA', 'COLUMN_COMMENT']
+_get_m_db_column_col = ['TABLE_SCHEMA', 'TABLE_NAME', 'COLUMN_NAME', 'ORDINAL_POSITION', 'COLUMN_DEFAULT',
+                        'IS_NULLABLE', 'DATA_TYPE', 'CHARACTER_MAXIMUM_LENGTH', 'NUMERIC_PRECISION', 'NUMERIC_SCALE',
+                        'CHARACTER_SET_NAME', 'COLLATION_NAME', 'COLUMN_TYPE', 'COLUMN_KEY', 'EXTRA', 'COLUMN_COMMENT']
 
 
 def get_db_table_column_list(dbName, tableName):
@@ -62,7 +64,7 @@ def get_db_table_column_list(dbName, tableName):
     if 'm' == _db_type:
         params = (dbName, tableName)
         tableColumns = mysql_utils.get_mysql_utils(**_db).find_all(_get_m_db_column_sql, params,
-                                                                       _get_m_db_column_col)
+                                                                   _get_m_db_column_col)
         return tableColumns
     # elif 'o' == _db_type:
     #     params = (tableName)
@@ -186,7 +188,6 @@ import "time"
 type %s struct { %s''' % (className, linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
 
-
         if None == tableColumns:
             continue
         for column in tableColumns:
@@ -194,8 +195,8 @@ type %s struct { %s''' % (className, linesep)
             c = column['DATA_TYPE'].lower()
             columnName = str_utils.under_score_case_to_camel_case(column['COLUMN_NAME'])
 
-            if columnNames.get(columnName , None) == None:
-                columnNames['CN'+columnName] = column['COLUMN_NAME']
+            if columnNames.get(columnName, None) == None:
+                columnNames['CN' + columnName] = column['COLUMN_NAME']
 
             comment = column['COLUMN_COMMENT']
             columnType = column['COLUMN_TYPE']
@@ -226,7 +227,7 @@ type %s struct { %s''' % (className, linesep)
             classInfo = '''%s
 %s// %s %s
 %s%s %s %s %s `gorm:"type:%s;column:%s" json:"%s"`
-''' % (classInfo, tab, columnName, comment, tab, columnName,  tab, format_go_db_type_is_null(isNull, key, t),
+''' % (classInfo, tab, columnName, comment, tab, columnName, tab, format_go_db_type_is_null(isNull, key, t),
        tab, columnType, column['COLUMN_NAME'], columnName[:1].lower() + columnName[1:])
 
         classInfo = '%s}' % (classInfo)
@@ -246,10 +247,6 @@ func (%s) TableName() string {
     for k, v in columnNames.items():
         columnContent = '%s%sconst %s = "%s"' % (columnContent, linesep, k, v)
     file_utils.write_file(_file_path + 'column_name.log', columnContent + os.linesep, 'w')
-
-
-
-
 
 
 def format_go_bo_domain():
@@ -278,8 +275,7 @@ import "time"
 type %s struct { %s''' % (className, linesep)
         tableColumns = get_db_table_column_list(_db_name, tableName['TABLE_NAME'])
 
-
-        if None == tableColumns:
+        if tableColumns is None:
             continue
         for column in tableColumns:
             t = 'UnKnow'
@@ -314,7 +310,7 @@ type %s struct { %s''' % (className, linesep)
             classInfo = '''%s
 %s// %s %s
 %s%s %s %s %s `json:"%s"`
-''' % (classInfo, tab, columnName, comment, tab, columnName,  tab, format_go_db_type_is_null(isNull, key, t),
+''' % (classInfo, tab, columnName, comment, tab, columnName, tab, format_go_db_type_is_null(isNull, key, t),
        tab, columnName[:1].lower() + columnName[1:])
 
         classInfo = '%s}' % (classInfo)
@@ -322,8 +318,7 @@ type %s struct { %s''' % (className, linesep)
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '_bo.log', classInfo + os.linesep, 'w')
 
 
-
-def format_go_db_type_is_null(isNull, key , type):
+def format_go_db_type_is_null(isNull, key, type):
     if isNull == 'NO' or key == 'PRI':
         return type
     return '*' + type
@@ -338,7 +333,6 @@ def format_table_pre(tableName):
             name = tableName[plen:]
             break
     return name
-
 
 
 def format_select_sql():
@@ -491,8 +485,8 @@ def format_php_domain():
                 t = "''"
 
             classInfo = '''%s%s%s/* %s%s * %s%s%s */%s%spublic $%s = %s;%s''' % (
-            classInfo, linesep, tab, linesep, tab, column['COLUMN_COMMENT'], linesep, tab, linesep, tab,
-            column['COLUMN_NAME'], t, linesep)
+                classInfo, linesep, tab, linesep, tab, column['COLUMN_COMMENT'], linesep, tab, linesep, tab,
+                column['COLUMN_NAME'], t, linesep)
 
         classInfo = '%s}' % (classInfo)
 
@@ -520,7 +514,7 @@ def format_php_info():
         classInfo = ''
         for column in tableColumns:
             classInfo = '''%s%s//%s%s%s$item['%s'] = %s;%s''' % (
-            classInfo, tab, column['COLUMN_COMMENT'], linesep, tab, column['COLUMN_NAME'], '""', linesep)
+                classInfo, tab, column['COLUMN_COMMENT'], linesep, tab, column['COLUMN_NAME'], '""', linesep)
 
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', classInfo + os.linesep, 'a')
 
@@ -546,7 +540,7 @@ def format_php_info_object():
         classInfo = ''
         for column in tableColumns:
             classInfo = '''%s%s//%s%s%s$item->%s = %s;%s''' % (
-            classInfo, tab, column['COLUMN_COMMENT'], linesep, tab, column['COLUMN_NAME'], '""', linesep)
+                classInfo, tab, column['COLUMN_COMMENT'], linesep, tab, column['COLUMN_NAME'], '""', linesep)
 
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '.log', classInfo + os.linesep, 'a')
 
@@ -652,7 +646,7 @@ def format_php_data_domain():
             if 'title' == column['COLUMN_NAME']:
                 fname = column['COLUMN_NAME']
             fields = '''%s%s        $fields['%s'] = $this->setFieldInfo('%s' ,'%s' ,0 , '%s'); ''' % (
-            fields, linesep, column['COLUMN_NAME'], column['COLUMN_NAME'], t, column['COLUMN_COMMENT'])
+                fields, linesep, column['COLUMN_NAME'], column['COLUMN_NAME'], t, column['COLUMN_COMMENT'])
 
         domain = temp.replace('{DomainName}', dmName)
         domain = domain.replace('{TableName}', tbname)
@@ -697,7 +691,6 @@ _db = {
     'db': 'soc_memory_local',
     'charset': 'utf8mb4',
     'port': 3306,
-
 
     # 'host': '192.168.1.181',
     # 'user': 'root',
