@@ -713,7 +713,7 @@ _db = {
 if __name__ == '__main__':
     # format_php_data_domain()
     # format_domain()   #java bean
-    # format_select_sql()   #select 语句
+    format_select_sql()   #select 语句
     # format_update_sql()
     # format_insert_sql()
     # format_column_list()
@@ -721,6 +721,6 @@ if __name__ == '__main__':
     # format_php_data_params()
     # format_json_domain()
 
-    format_gorm_domain()
-
-    format_go_bo_domain()
+    # format_gorm_domain()
+    #
+    # format_go_bo_domain()
