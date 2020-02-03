@@ -174,12 +174,15 @@ def format_gorm_domain():
     linesep = file_utils.get_line_sep()
 
     columnNames = {}
+    tableNamess = {}
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list and len(_table_list) > 0:
             continue
 
         className = str_utils.under_score_case_to_camel_case(format_table_pre(tableName['TABLE_NAME'])) + 'Po'
+
+        tableNamess['TN'+str_utils.under_score_case_to_camel_case(format_table_pre(tableName['TABLE_NAME']))] = tableName['TABLE_NAME']
 
         classInfo = u'''package po
 
@@ -239,14 +242,21 @@ func (%s) TableName() string {
 
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '_po.log', classInfo + os.linesep, 'w')
 
+
     # 写列名常量
     columnContent = '''package po 
 
 '''
-
     for k, v in columnNames.items():
         columnContent = '%s%sconst %s = "%s"' % (columnContent, linesep, k, v)
     file_utils.write_file(_file_path + 'column_name.log', columnContent + os.linesep, 'w')
+
+    tableContent = '''package po
+
+'''
+    for k, v in tableNamess.items():
+        tableContent = '%s%sconst %s = "%s"' % (tableContent, linesep, k, v)
+    file_utils.write_file(_file_path + 'table_name.log', tableContent + os.linesep, 'w')
 
 
 def format_go_bo_domain():
