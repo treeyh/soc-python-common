@@ -170,6 +170,8 @@ def format_gorm_domain():
         print('NULL INFO')
     tab = ' ' * 4
     linesep = file_utils.get_line_sep()
+
+    columnNames = {}
     for tableName in tableNames:
         tbname = tableName['TABLE_NAME']
         if tbname not in _table_list and len(_table_list) > 0:
@@ -191,6 +193,10 @@ type %s struct { %s''' % (className, linesep)
             t = 'UnKnow'
             c = column['DATA_TYPE'].lower()
             columnName = str_utils.under_score_case_to_camel_case(column['COLUMN_NAME'])
+
+            if columnNames.get(columnName , None) == None:
+                columnNames['CN'+columnName] = column['COLUMN_NAME']
+
             comment = column['COLUMN_COMMENT']
             columnType = column['COLUMN_TYPE']
             size = column['CHARACTER_MAXIMUM_LENGTH']
@@ -231,6 +237,17 @@ func (%s) TableName() string {
 } ''' % (classInfo, className, tableName['TABLE_NAME'])
 
         file_utils.write_file(_file_path + tableName['TABLE_NAME'] + '_po.log', classInfo + os.linesep, 'w')
+
+    # 写列名常量
+    columnContent = '''package po 
+
+'''
+
+    for k, v in columnNames.items():
+        columnContent = '%s%sconst %s = "%s"' % (columnContent, linesep, k, v)
+    file_utils.write_file(_file_path + 'column_name.log', columnContent + os.linesep, 'w')
+
+
 
 
 
