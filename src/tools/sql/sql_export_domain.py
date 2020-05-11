@@ -671,11 +671,11 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-_db_name = 'soc_memory_local'
+_db_name = 'stream_im'
 _table_list = []
-_pre_table_names = ['mem_', 'bas_', 'sys_']
+_pre_table_names = ['im_']
 # _db_name = 'test'
-# _table_list = ['student', 'student_parent', 'student_detail', 'student_class']
+_table_list = []
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
 
 _sql_params_type = 2
@@ -688,19 +688,21 @@ _db = {
     # 'charset': 'utf8mb4',
     # 'port': 3306,
 
-    # 'host': '127.0.0.1',
-    # 'user': 'root',
-    # 'passwd': 'Mysql123',
-    # 'db': 'soc_memory',
-    # 'charset': 'utf8mb4',
-    # 'port': 3306,
-
-    'host': '192.168.1.101',
+    'host': '127.0.0.1',
     'user': 'root',
-    'passwd': 'mysqldev',
+    'passwd': 'Mysql123',
     'db': 'soc_memory_local',
     'charset': 'utf8mb4',
     'port': 3306,
+
+
+
+    # 'host': '192.168.1.101',
+    # 'user': 'root',
+    # 'passwd': 'mysqldev',
+    # 'db': 'soc_memory_local',
+    # 'charset': 'utf8mb4',
+    # 'port': 3306,
 
     # 'host': '192.168.1.181',
     # 'user': 'root',
@@ -713,7 +715,7 @@ _db = {
 if __name__ == '__main__':
     # format_php_data_domain()
     # format_domain()   #java bean
-    format_select_sql()   #select 语句
+    # format_select_sql()   #select 语句
     # format_update_sql()
     # format_insert_sql()
     # format_column_list()
@@ -721,6 +723,6 @@ if __name__ == '__main__':
     # format_php_data_params()
     # format_json_domain()
 
-    # format_gorm_domain()
-    #
-    # format_go_bo_domain()
+    format_gorm_domain()
+
+    format_go_bo_domain()
