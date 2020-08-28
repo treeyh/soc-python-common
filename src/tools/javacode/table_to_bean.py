@@ -1,8 +1,17 @@
 #-*- encoding: utf-8 -*-
 
+from datetime import datetime
+import pyperclip
 
+# 作者
+_author = '余海'
+# email
+_email = 'hai.yu@snowballtech.com'
+# 生成类名
 _class_name = 'CreateOrderRequest'
+# 类描述
 _class_comment = '创建订单请求'
+
 
 _fields = '''
 appCode	String	6	通卡编号	M
@@ -21,19 +30,37 @@ refundInfo	JSON		退款信息	M/O
 
 _class_format = '''
 
+import javax.validation.constraints.NotNull;
+import com.snowballtech.fp.transit.model.bean.BaseRequest;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * @author {author}
+ * @version 1.0
+ * @description: {comment}
+ * @date {time}
+ * @email {email}
+ */
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "{comments}", description = "{comments}")
-public class {classNames} extends BaseRequest {{
-{fieldss}
+@ApiModel(value = "{comment}", description = "{comment}")
+public class {className} extends BaseRequest {{
+{fields}
 }}
 '''
 
-_field_format = '''
+_field_format = '''{notnull}
     @ApiModelProperty(value = "{remark}")
     private {typ} {name};
 '''
+
+_not_null = '''
+@NotNull(message = "{remark}不能为空")'''
 
 
 _type_map = {
@@ -56,6 +83,11 @@ def trans_type(typ):
         return 'Object[]'
     return 'Object'
 
+def build_not_null(remark, must_type):
+    global _not_null
+    if 'm' == must_type.lower():
+        return _not_null.format(remark = remark)
+    return ''
 
 def build_fields():
     global _fields, _field_format
@@ -66,15 +98,24 @@ def build_fields():
         if f == '':
             continue
         fs = f.split('\t')
-        fields += _field_format.format(name = fs[0], remark = fs[3], typ = trans_type(fs[1]))
+        name = fs[0]
+        remark = fs[3]
+        typ = fs[1]
+        must_type = fs[4]
+        fields += _field_format.format(name = name, remark = remark, typ = trans_type(typ), 
+                                        notnull = build_not_null(remark, must_type))
     return fields
 
 def exchange():
-    global _class_comment, _class_name, _class_format
+    global _class_comment, _class_name, _class_format, _author, _email
     fields = build_fields()
 
-    class_content = _class_format.format(comments = _class_comment, classNames = _class_name, fieldss = fields)
+    class_content = _class_format.format(comment = _class_comment, className = _class_name, 
+                                        fields = fields, author = _author, email = _email, 
+                                        time = datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     print(class_content)
+    pyperclip.copy(class_content)
+    print('生成内容已复制到剪贴板中.')
 
 
 
