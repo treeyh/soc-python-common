@@ -8,35 +8,25 @@ _author = '余海'
 # email
 _email = 'hai.yu@snowballtech.com'
 # 生成类名
-_class_name = 'CreateOrderRequest'
+_class_name = 'CardGetUidRequest'
 # 类描述
-_class_comment = '创建订单请求'
+_class_comment = '获取UID请求'
+# 是否生成请求bean, True：request，False：response
+_request_type = True
 
 
 _fields = '''
-appCode	String	6	通卡编号	M
-cardType	int	1	虚拟卡卡种	M
-paymentMethod	int	2	扣款通道	M
-orderType	int	1	订单类型	M
-originAmount	int	8	标准金额（应付金额）	M
-issueCardFee	int	8	开卡费	M
-topupAmount	int	8	充值金额	M
-transAmount	int	8	交易金额/实付金额	M
-cardNumber	String	32	物理卡号	M/O
-productSerialNumber	String	128	票号	M/O
-refundInfo	JSON		退款信息	M/O
+orderNumber	String	32	雪球订单编号	M
 '''
 
 
-_class_format = '''
+_request_class_format = '''
 
 import javax.validation.constraints.NotNull;
 import com.snowballtech.fp.transit.model.bean.BaseRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * @author {author}
@@ -47,9 +37,36 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "{comment}", description = "{comment}")
 public class {className} extends BaseRequest {{
+{fields}
+}}
+'''
+
+
+_response_class_format = '''
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
+
+/**
+ * @author {author}
+ * @version 1.0
+ * @description: {comment}
+ * @date {time}
+ * @email {email}
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@ApiModel(value = "{comment}", description = "{comment}")
+public class {className} implements Serializable {{
 {fields}
 }}
 '''
@@ -84,8 +101,8 @@ def trans_type(typ):
     return 'Object'
 
 def build_not_null(remark, must_type):
-    global _not_null
-    if 'm' == must_type.lower():
+    global _not_null, _request_type
+    if 'm' == must_type.lower() and _request_type:
         return _not_null.format(remark = remark)
     return ''
 
@@ -98,6 +115,8 @@ def build_fields():
         if f == '':
             continue
         fs = f.split('\t')
+        if len(fs) < 5:
+            continue
         name = fs[0]
         remark = fs[3]
         typ = fs[1]
@@ -107,12 +126,14 @@ def build_fields():
     return fields
 
 def exchange():
-    global _class_comment, _class_name, _class_format, _author, _email
+    global _class_comment, _class_name, _request_class_format, _response_class_format, _author, _email, _request_type
     fields = build_fields()
 
-    class_content = _class_format.format(comment = _class_comment, className = _class_name, 
-                                        fields = fields, author = _author, email = _email, 
-                                        time = datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    class_content = (_request_class_format if _request_type else _response_class_format).format(
+                                    comment = _class_comment, className = _class_name, 
+                                    fields = fields, author = _author, email = _email, 
+                                    time = datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
     print(class_content)
     pyperclip.copy(class_content)
     print('生成内容已复制到剪贴板中.')
