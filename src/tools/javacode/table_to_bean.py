@@ -4,19 +4,30 @@ from datetime import datetime
 import pyperclip
 
 # 作者
-_author = '余海'
+_author = ''
 # email
-_email = 'hai.yu@snowballtech.com'
+_email = ''
 # 生成类名
-_class_name = 'CardGetUidRequest'
+_class_name = ''
 # 类描述
-_class_comment = '获取UID请求'
+_class_comment = ''
 # 是否生成请求bean, True：request，False：response
-_request_type = True
+_request_type = False
 
 
 _fields = '''
-orderNumber	String	32	雪球订单编号	M
+appCode	String	6	通卡应用编号	M
+cardType	int	1	虚拟卡卡种	M
+orderNumber	String	32	订单号	M
+cardNumber	String	32	卡号	O
+paymentMethod	String	2	支付渠道	M
+paymentStatus	String	2	支付状态	M
+orderType	int	1	订单类型	M
+orderStatus	int	1	订单状态	M
+orderStatusDesc	String	32	订单状态描述	M
+orderAmount	int	8	订单金额	M
+orderTime	int	11	订单创建时间的时间戳	M
+orderFinishTime	int	11	订单完成时的时间戳	O
 '''
 
 
