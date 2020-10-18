@@ -237,5 +237,5 @@ if __name__ == '__main__':
     str = 'wanda123'
     print(get_md5('4399bfa6a6b211e99c47f01e3412b52aqwe123'.encode("utf-8")))
 
-    print(UnderScoreCase2CamelCase("aaaaa_bbbbb_ccccc_123"))
+    # print(UnderScoreCase2CamelCase("aaaaa_bbbbb_ccccc_123"))
 
