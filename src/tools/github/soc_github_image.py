@@ -255,9 +255,7 @@ def run():
     finally:
         close(image_path)
 
-    
 
-    
 
 
 if __name__ == "__main__":
