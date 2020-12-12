@@ -9,6 +9,9 @@ import time
 from decimal import Decimal
 import json
 
+import hmac
+import base64
+
 
 def is_null_or_empty(str):
     return True if str == None or str == '' else False
@@ -44,6 +47,11 @@ def get_sha1(str):
     m = hashlib.sha1(str)
     # m.digest()
     return m.hexdigest()
+
+def get_hmac_sha256(mac, str):
+
+    return hmac.new(mac, str, digestmod=hashlib.sha256).hexdigest()
+
 
 
 def get_uuid():
@@ -221,21 +229,52 @@ def under_score_case_to_camel_case(value):
 
 if __name__ == '__main__':
     # print(get_uuid()
-    t = int(time.time())
-    print(t)
-    e = '7000157'
-    departmentToken = 'bba76e258bd70fc83b7bd27a9c8e3e62'
-    md5str = e + str(t) + departmentToken
-    print(md5str)
-    print(get_md5(md5str.encode("utf-8")))
-    print(get_uuid())
-    # for i in range(0, 100):
-    #     print(datetime.now().strftime('%Y%m%d%H%M%S') + get_uuid()[14:]
-    #     time.sleep(1)
-    # print(str(uuid.uuid1())
-    # str = '#!@81%sjl=)k' % '123123'
-    str = 'wanda123'
-    print(get_md5('4399bfa6a6b211e99c47f01e3412b52aqwe123'.encode("utf-8")))
+    # t = int(time.time())
+    # print(t)
+    # e = '7000157'
+    # departmentToken = 'bba76e258bd70fc83b7bd27a9c8e3e62'
+    # md5str = e + str(t) + departmentToken
+    # print(md5str)
+    # print(get_md5(md5str.encode("utf-8")))
+    # print(get_uuid())
+    # # for i in range(0, 100):
+    # #     print(datetime.now().strftime('%Y%m%d%H%M%S') + get_uuid()[14:]
+    # #     time.sleep(1)
+    # # print(str(uuid.uuid1())
+    # # str = '#!@81%sjl=)k' % '123123'
+    # str = 'wanda123'
+    # print(get_md5('4399bfa6a6b211e99c47f01e3412b52aqwe123'.encode("utf-8")))
 
     # print(UnderScoreCase2CamelCase("aaaaa_bbbbb_ccccc_123"))
+
+    print(get_uuid())
+
+    # ms = {
+    #     'app_code': 'abc',
+    #     'type': '1',
+    #     'x-snbps-cplc': '1234567890',
+    #     'x-snbps-vendor': 'xiaomi',
+    #     'x-snbps-module': 'Redmi k20 pro',
+    #     'x-snbps-imei': 'imei',
+    #     'x-snbps-rom-version': 'Android 11',
+    #     'x-snbps-os-version': 'Android 11',
+    #     'x-snbps-account-id': '0',
+    #     'x-snbps-sdk-ver': 'v1.0.0',
+    # }
+
+    # # ks = sorted(ms.keys())
+    # # print(ks)
+    # str = '123&1600313751&'
+    # body = '{"id":1,"name":"abc"}'
+    # for k in sorted(ms.keys()):
+    #     str += k + '=' + ms[k] + '&'
+    # str1 = str + body
+    # str += body + '&abcdefg'
+
+    # print(str.encode('utf-8'))
+    # print(get_sha1(str.encode('utf-8')))
+
+    # print(str1)
+    # print(get_hmac_sha256('abcdefg'.encode('utf-8'), str1.encode('utf-8')))
+
 
