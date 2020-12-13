@@ -16,7 +16,6 @@ def get_logger():
     _logger = log_utils.get_logger(os.path.join(_log_path, _log_file_name))
     return _logger
 
-
 def get_process_memory(processName):
     ''' 获取进程内存 '''
     cmd = 'pgrep -f %s' % (processName)
