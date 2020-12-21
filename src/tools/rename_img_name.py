@@ -101,15 +101,15 @@ def main(path):
     # print(rename_img(paths[0])
 
     
-img_name = u'iphone照片'
+img_name = u'iphone6'
 
 # img_name = u'桃花村鲜花港'
 
 if __name__ == '__main__':
-    sys.setdefaultencoding('utf-8') 
+    # sys.setdefaultencoding('utf-8') 
 
     print('b')
-    path = u'C:\\iphone'
+    path = u'F:\\iphone6s照片\\1213\\102APPLE'
     paths = walk2(path)
     print(paths)
     main(path)
