@@ -1,15 +1,17 @@
 #-*- encoding: utf-8 -*-
 
-
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
+
+from multiprocessing import Pool
+import time
 
 
 
 def build_order_body(index, start):
   orders = []
 
-  for i in range(start, start + 500):
+  for i in range(start, start + 1000):
     id = str(i)
     order_index = {
       '_op_type': 'index',
@@ -63,17 +65,36 @@ def build_order_body(index, start):
   return orders
 
 
-
-def es_run():
+def es_index(orders):
   index = 'order_index'
-  es = Elasticsearch(["10.0.54.105"], port="9200")
+  es = Elasticsearch(["10.0.54.105:19200", "10.0.54.113:19200", "10.0.54.114:19200"])
   res = es.exists(index=index, id=1)
   print(res)
+  
+  helpers.bulk(es, orders)
 
-  for i in range(3233001, 30000000, 500):
-    orders = build_order_body(index, i)
-    helpers.bulk(es, orders)
+
+
+def es_run():
+
+  index = 'order_index'
+  orderss = []
+
+  for i in range(1, 1000000, 1000):
+    orderss.append(build_order_body(index, i))
     print(str(i))
+
+
+  pool = Pool(4)
+
+  tt = time.time()
+  pool.map(es_index, orderss)
+  pool.close()
+  pool.join()
+  tt2 = time.time()
+
+  print(tt2 - tt)
+
 
   # res = es.indices.get_mapping()
   # print(res)

@@ -1,26 +1,25 @@
 
 
 
-class Solution:
-    def twoSum(self, nums, target):
+def run():
+    sql = '''insert into os_order(snb_order_no) values('%(id)d');
+insert into os_order_amt (snb_order_no, oem_issue_coupon ) values ('%(id)d', %(id)d);
+'''
+    ids = ''
+    ids1 = ''
+    ids2 = ''
+    for i in range(1000000101, 1000000600):
+        # print(sql % ({'id':i}))
+        ids = '''%(ids)s, '%(id)d' ''' % ({'ids':ids, 'id': i})
+        ids1 = '''%(ids)s, ('%(id)d') ''' % ({'ids':ids1, 'id': i})
+        ids2 = '''%(ids)s, ('%(id)d', %(id)d) ''' % ({'ids':ids2, 'id': i})
 
-        tmpMap = {}
-        index = 0
-        for i in nums:
-            if i not in tmpMap.keys():
-                tmpMap[i] = []
-            tmpMap[i].append(index)
-            index += 1
+    print(ids)
+    print('insert into os_order(snb_order_no) values ' + ids1 + ';')
+    print('insert into os_order_amt (snb_order_no, oem_issue_coupon ) values ' + ids2 + ';')
 
-        for i in nums:
-            diff = target - i
-            if diff == i and len(tmpMap[i]) > 1:
-                return [tmpMap[i][0], tmpMap[diff][1]]
-            if diff != i and diff in tmpMap.keys():
-                return [tmpMap[i][0], tmpMap[diff][0]]
-        return []
+
+
 
 if __name__ == '__main__':
-    s = Solution()
-    val = s.twoSum([-1,-2,-3,-4,-5], -8)
-    print(val)
+    run()
