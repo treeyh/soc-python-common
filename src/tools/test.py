@@ -19,6 +19,12 @@ insert into os_order_amt (snb_order_no, oem_issue_coupon ) values ('%(id)d', %(i
     print('insert into os_order_amt (snb_order_no, oem_issue_coupon ) values ' + ids2 + ';')
 
 
+# insert into os_order(snb_order_no) values('1000000101');
+# insert into os_order_amt (snb_order_no, oem_issue_coupon ) values ('1000000101', 1000000101);
+# delete from `os_order_amt` where `snb_order_no` in ('1000000101');
+# delete from `os_order` where  `snb_order_no` in ('1000000101');
+
+
 
 
 if __name__ == '__main__':
