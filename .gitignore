@@ -73,4 +73,7 @@ atlassian-ide-plugin.xml
 /venv
 /dd
 
+
+*/__pycache__
+
 .config.json

@@ -25,7 +25,7 @@ class MysqlUtils(object):
             try:
                 i = i + 1
                 conn = mysql.connector.connect(host=self.host, user=self.user, passwd=self.passwd, db=self.db,
-                                       charset=self.charset, port=self.port, use_unicode=True)
+                    charset=self.charset, port=self.port, use_unicode=True)
                 return conn
             except BaseException as e:
                 print('Error %d: %s' % (e.args[0], e.args[1]))

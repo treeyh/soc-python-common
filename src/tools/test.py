@@ -33,4 +33,4 @@ insert into os_order_amt (snb_order_no, oem_issue_coupon ) values ('%(id)d', %(i
 
 
 if __name__ == '__main__':
-    run()
+    run()    
