@@ -85,9 +85,13 @@ def get_java_memory(cid:str, pid:str):
   cmd = 'docker exec -it %s /bin/bash -c  "jstat -gc %s"' % (cid, pid)
   logger('get_java_memory:%s' % cmd)
   memorys = run_cmd(cmd)
+  if None != memorys:
+    logger('get_java_memory result:%s' % ' '.join(memorys))
+  else:
+    logger('get_java_memory result:None')
 
   if len(memorys) != 2:
-    return None
+    return 0
   logger('get_java_memory0:%s' % memorys[0].strip())
   logger('get_java_memory1:%s' % memorys[1].strip())
   titles = memorys[0].split()
@@ -159,35 +163,54 @@ def run():
   
   while True:
   
-    logger('jdk-memory-monitor start....')
+    try:
+      logger('jdk-memory-monitor start....')
 
-    docker = get_docker(_docker_filter_name)
-    cid = get_docker_container_id(docker)
-    logger('docker cid:%s' % cid)
+      docker = get_docker(_docker_filter_name)
+      if None == docker:
+        logger('jdk-memory-monitor get_docker None.')
+        time.sleep(_period_sleep)
+        continue
 
-    jpid = get_java_pid(_java_filter_name, cid)
-    logger('docker java pid:%s' % jpid)
+      cid = get_docker_container_id(docker)
+      if None == cid:
+        logger('jdk-memory-monitor get_docker_container_id None.')
+        time.sleep(_period_sleep)
+        continue
+      logger('docker cid:%s' % cid)
 
-    memoryCount = get_java_memory(cid, jpid)
-    logger('docker java memory:%f' % memoryCount)
+      jpid = get_java_pid(_java_filter_name, cid)
+      if None == jpid:
+        logger('jdk-memory-monitor get_java_pid None.')
+        time.sleep(_period_sleep)
+        continue
+      logger('docker java pid:%s' % jpid)
 
-    if memoryCount <= _memory_limit:
-      logger('jdk-memory-monitor end.')
+      memoryCount = get_java_memory(cid, jpid)
+      logger('docker java memory:%f' % memoryCount)
+
+      if memoryCount <= _memory_limit:
+        logger('jdk-memory-monitor end.')
+        time.sleep(_period_sleep)
+        continue
+        
+      path = dump_java_memory(cid, jpid)
+      logger('docker java memory dump:%s' % path)
+      cp_docker_file(cid, path)
+      rm_docker_file(cid, path)
+
+      path = dump_java_stack(cid, jpid)
+      logger('docker java stack:%s' % path)
+      cp_docker_file(cid, path)
+      rm_docker_file(cid, path)
+
+      logger('jdk-memory-monitor memory dump end.')
+      break
+    except:
+      logger(traceback.format_exc())
       time.sleep(_period_sleep)
-      continue
-      
-    path = dump_java_memory(cid, jpid)
-    logger('docker java memory dump:%s' % path)
-    cp_docker_file(cid, path)
-    rm_docker_file(cid, path)
-
-    path = dump_java_stack(cid, jpid)
-    logger('docker java stack:%s' % path)
-    cp_docker_file(cid, path)
-    rm_docker_file(cid, path)
-
-    logger('jdk-memory-monitor memory dump end.')
-    time.sleep(_period_dump_sleep)
+    
+    
 
 if __name__ == '__main__':
   run()
