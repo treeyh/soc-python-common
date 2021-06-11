@@ -114,6 +114,8 @@ if __name__ == '__main__':
     print(paths)
     main(path)
 
+    
+
     # p = 'xx.xx.jpg'
     # # print(
     # print(p[0:p.rfind('.')]

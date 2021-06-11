@@ -134,7 +134,7 @@ def read_all_lines_file(filePath, method='r'):
     '''
     if not exists_file(filePath=filePath):
         return None
-    fh = open(filePath, method)
+    fh = open(filePath, method, encoding='utf-8')
     try:
         c = fh.readlines()
         return c

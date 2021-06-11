@@ -25,7 +25,7 @@ class MysqlUtils(object):
             try:
                 i = i + 1
                 conn = mysql.connector.connect(host=self.host, user=self.user, passwd=self.passwd, db=self.db,
-                    charset=self.charset, port=self.port, use_unicode=True)
+                    port=self.port) # , use_unicode=True, charset=self.charset, 
                 return conn
             except BaseException as e:
                 print('Error %d: %s' % (e.args[0], e.args[1]))
@@ -114,7 +114,7 @@ class MysqlUtils(object):
                 result.append(self._result_to_map(y, mapcol))
             return result
         except BaseException as e:
-            print('Error %d: %s' % (e.args[0], e.args[1]))
+            print('sql %s, %s ;Error %d: %s' % (sql, str(params), e.args[0], e.args[1]))
             return result
         finally:
             if None != c:
