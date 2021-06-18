@@ -131,7 +131,7 @@ if __name__ == "__main__":
     if status != "green":
       txt = "ES集群异常"
       print(txt, url)
-      dingmessage(txt)
+      dingmessage(txt, url)
     else:
       print("ES集群正常")
 

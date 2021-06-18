@@ -1,12 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-from utils import str_utils, file_utils, mysql_utils
+from soc_common.utils import str_utils, file_utils, mysql_utils
 import os
 import sys
 import re
-
-path = os.path.split(os.path.realpath(__file__))[0]
-sys.path.append(path + os.sep + '..' + os.sep + '..')
+import logging
 
 
 '''
@@ -170,12 +168,13 @@ def format_gorm_domain():
   global _db
 
   tableNames = get_db_table_list(_db_name)
-  print(tableNames)
   if None == tableNames:
-    print('NULL INFO')
+    logging.info('NULL INFO')
+    return
 
-  build_path = _file_path + 'po' + os.sep
-  file_utils.mkdirs(build_path, True)
+  _file_path = os.path.split(os.path.realpath(__file__))[
+      0] + os.sep + 'template' + os.sep + 'po' + os.sep
+  file_utils.mkdirs(_file_path, True)
 
   tab = ' ' * 4
   linesep = file_utils.get_line_sep()
@@ -250,7 +249,7 @@ func (%s) TableName() string {
 } ''' % (classInfo, className, tableName['TABLE_NAME'])
 
     file_utils.write_file(
-        build_path + format_table_pre(tableName['TABLE_NAME']) + '_po.go', classInfo + os.linesep, 'w')
+        _file_path + format_table_pre(tableName['TABLE_NAME']) + '_po.go', classInfo + os.linesep, 'w')
 
   # 写列名常量
   columnContent = '''package po 
@@ -258,32 +257,32 @@ func (%s) TableName() string {
 '''
   for k, v in columnNames.items():
     columnContent = '%s%sconst %s = "%s"' % (columnContent, linesep, k, v)
-  file_utils.write_file(build_path + 'column_name.go', columnContent + os.linesep, 'w')
+  file_utils.write_file(_file_path + 'column_name.go', columnContent + os.linesep, 'w')
 
   tableContent = '''package po
 
 '''
   for k, v in tableNamess.items():
     tableContent = '%s%sconst %s = "%s"' % (tableContent, linesep, k, v)
-  file_utils.write_file(build_path + 'table_name.go', tableContent + os.linesep, 'w')
+  file_utils.write_file(_file_path + 'table_name.go', tableContent + os.linesep, 'w')
 
 
 def format_go_bo_domain():
   global _table_list
   global _db_name
-  global _file_path
   global _db
 
   tableNames = get_db_table_list(_db_name)
-  print(tableNames)
   if None == tableNames:
-    print('NULL INFO')
+    logging.info('NULL INFO')
+    return
 
-  build_path = _file_path + 'bo' + os.sep
-  file_utils.mkdirs(build_path, True)
+  _file_path = os.path.split(os.path.realpath(__file__))[
+      0] + os.sep + 'template' + os.sep + 'bo' + os.sep
+  file_utils.mkdirs(_file_path, True)
 
   tab = ' ' * 4
-  linesep = file_utils.get_line_sep()
+  linesep = str_utils.get_line_sep()
   for tableName in tableNames:
     tbname = tableName['TABLE_NAME']
     if tbname not in _table_list and len(_table_list) > 0:
@@ -340,7 +339,7 @@ type %s struct { %s''' % (className, linesep)
     classInfo = '%s}' % (classInfo)
 
     file_utils.write_file(
-        build_path + format_table_pre(tableName['TABLE_NAME']) + '_bo.go', classInfo + os.linesep, 'w')
+        _file_path + format_table_pre(tableName['TABLE_NAME']) + '_bo.go', classInfo + os.linesep, 'w')
 
 
 def format_go_db_type_is_null(isNull, key, type):

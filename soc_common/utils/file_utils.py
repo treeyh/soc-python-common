@@ -47,7 +47,7 @@ def make_folder(path):
   '''
   if exists_file(path):
     return
-  os.makedir(path)
+  os.makedirs(path)
 
 
 def make_folders(path):

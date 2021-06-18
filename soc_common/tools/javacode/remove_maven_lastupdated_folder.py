@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from utils import str_utils, file_utils, mail_utils, date_utils, log_utils
+from soc_common.utils import str_utils, file_utils, mail_utils, date_utils, log_utils
 import os
 import sys
 import time
