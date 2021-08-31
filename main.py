@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from soc_common.tools.jira import batch_issue
+from soc_common.tools.toolkit.config import convert_length
 
 if __name__ == '__main__':
-  batch_issue.run()
+  convert_length.build_config()
