@@ -16,8 +16,8 @@ def open_excel(filePath):
       filePath:excel文件路径
   '''
   try:
-    data = openpyxl.reader.excel.load_workbook(filePath)
-    return data
+    wb = openpyxl.reader.excel.load_workbook(filePath)
+    return wb
   except Exception as e:
     print(str(e))
     return None
@@ -29,6 +29,14 @@ def get_active_sheet(wb):
       wb：excel的workbook对象
   '''
   return wb.get_active_sheet()
+
+
+def get_all_sheet(wb):
+  '''
+      返回所有的sheet
+      wb：excel的workbook对象
+  '''
+  return wb.sheetnames
 
 
 def get_sheet_by_name(wb, title):
