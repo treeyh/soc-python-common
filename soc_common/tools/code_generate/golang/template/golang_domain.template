@@ -1,0 +1,17 @@
+package {{ packageName }}
+
+{{ comment }}
+type {{ name }} struct {
+
+{% for extend in extends %}
+  {{ extend }}
+
+{% endfor %}
+
+{% for field in fields %}
+        {{ field.comment }}
+	{{field.name}} {{ field.typeName }} `json:"{{field.jsonName}}"`
+
+
+{% endfor %}
+}

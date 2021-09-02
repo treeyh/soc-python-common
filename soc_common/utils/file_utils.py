@@ -110,7 +110,7 @@ def get_folder_son(path):
   return pps
 
 
-def read_all_file(filePath, method='r'):
+def read_all_file(filePath, method='r', encoding='utf-8'):
   '''
       读取所有文件，一次性读取所有内容，文件不存在返回None
       filePath：文件路径
@@ -118,7 +118,7 @@ def read_all_file(filePath, method='r'):
   '''
   if not exists_file(filePath=filePath):
     return None
-  fh = open(filePath, method)
+  fh = open(filePath, method, encoding=encoding)
   try:
     c = fh.read()
     return c
@@ -126,7 +126,7 @@ def read_all_file(filePath, method='r'):
     fh.close()
 
 
-def read_all_lines_file(filePath, method='r'):
+def read_all_lines_file(filePath, method='r', encoding='utf-8'):
   '''
       读取所有文件，一次性读取所有内容， 文件不存在返回None
       filePath：文件路径
@@ -134,7 +134,7 @@ def read_all_lines_file(filePath, method='r'):
   '''
   if not exists_file(filePath=filePath):
     return None
-  fh = open(filePath, method, encoding='utf-8')
+  fh = open(filePath, method, encoding=encoding)
   try:
     c = fh.readlines()
     return c
@@ -142,7 +142,7 @@ def read_all_lines_file(filePath, method='r'):
     fh.close()
 
 
-def read_line_file(filePath, method='r', callBack=None):
+def read_line_file(filePath, method='r', callBack=None, encoding='utf-8'):
   '''
       读取所有文件，一次性读取所有内容， 文件不存在返回None
       filePath：文件路径
@@ -154,7 +154,7 @@ def read_line_file(filePath, method='r', callBack=None):
   if not exists_file(filePath=filePath):
     return
 
-  fh = open(filePath, method)
+  fh = open(filePath, method, encoding=encoding)
   try:
     limit = 10000
     lineIndex = 0
@@ -176,7 +176,7 @@ def read_line_file(filePath, method='r', callBack=None):
 #     for line in lines:
 #         pass # do something
 
-def write_file(filePath, content, method='w'):
+def write_file(filePath, content, method='w', encoding='utf-8'):
   '''
       写文件
       filePath：文件路径
@@ -184,7 +184,7 @@ def write_file(filePath, content, method='w'):
       method：写入方式，'w'覆盖写，'a' 续写，'wb' 二进制覆盖写
   '''
   mkdirs(filePath, False)
-  fh = open(filePath, method, encoding='utf-8')
+  fh = open(filePath, method, encoding=encoding)
 
   try:
     fh.write(content)

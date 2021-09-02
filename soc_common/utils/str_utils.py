@@ -193,6 +193,17 @@ def get_url_host(url):
   #    port = 80
 
 
+def clear_str_end_chart(source: str, clears: list = []) -> str:
+  target = source
+  for clear in clears:
+    count = len(clear)
+    if count <= 0:
+      continue
+    if target[-count:] == clear:
+      target = target[:-count]
+  return target
+
+
 class JsonEncoder(json.JSONEncoder):
   def default(self, obj):
     if isinstance(obj, datetime):

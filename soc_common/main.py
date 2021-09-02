@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-from soc_common.tools.toolkit.config import convert_unit
+from soc_common.tools.code_generate.golang import generate_by_java
 
 
 def main():
-  convert_unit.build_config()
+  generate_by_java.run()
 
 
 if __name__ == '__main__':
-  convert_unit.build_config()
+  generate_by_java.run()
