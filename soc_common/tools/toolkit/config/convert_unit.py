@@ -3,13 +3,15 @@
 
 import os
 import sys
+import time
 
 import json
 from soc_common.utils import file_utils, excel_utils, str_utils
 
 
 _excel_file = 'D:\\data\\note\\知识记录\\10_项目资料\\toolkit\\单位.xlsx'
-_config_file = 'D:\\convert_config.json'
+_config_file = 'D:\\convert_tool.json'
+_config_map_file = 'D:\\convert_config.json'
 _config_item_column = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                        'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']
 
@@ -93,12 +95,14 @@ def load_config_item_info(ws, titleList):
 
 
 def build_config():
-  global _excel_file, _config_file
+  global _excel_file, _config_file, _config_map_file
 
   wb = excel_utils.open_excel(_excel_file)
   sheetnames = wb.get_sheet_names()
 
   configList = []
+  configMap = {}
+  configListObj = {}
 
   for name in sheetnames:
     ws = wb.get_sheet_by_name(name)
@@ -109,7 +113,11 @@ def build_config():
     if len(items) > 0:
       info['items'] = items
       configList.append(info)
+      configMap[info['code']] = info
 
-  file_utils.write_file(_config_file, json.dumps(configList, ensure_ascii=False))
+  configListObj['version'] = int(time.time())
+  configListObj['items'] = configList
+  file_utils.write_file(_config_file, json.dumps(configListObj, ensure_ascii=False))
+  file_utils.write_file(_config_map_file, json.dumps(configMap, ensure_ascii=False))
 
   return configList
