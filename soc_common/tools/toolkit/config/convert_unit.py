@@ -33,9 +33,10 @@ def load_type_info(ws):
       'namezh': ws['B1'].value,
       'nameen': ws['B2'].value,
       'code': ws['B3'].value,
-      'sourceId': ws['B4'].value,
-      'targetId': ws['B5'].value,
-      'baselineId': ws['B6'].value,
+      'source': ws['B4'].value,
+      'target': ws['B5'].value,
+      'baseline': ws['B6'].value,
+      'ratioFlag': int(ws['B7'].value),
   }
   return info
 
@@ -116,6 +117,7 @@ def build_config():
       configMap[info['code']] = info
 
   configListObj['version'] = int(time.time())
+  configListObj['default'] = configList[0]['code']
   configListObj['items'] = configList
   file_utils.write_file(_config_file, json.dumps(configListObj, ensure_ascii=False))
   file_utils.write_file(_config_map_file, json.dumps(configMap, ensure_ascii=False))
