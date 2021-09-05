@@ -30,12 +30,12 @@ def load_type_info(ws):
     return None
 
   info = {
-      'namezh': ws['B1'].value,
-      'nameen': ws['B2'].value,
-      'code': ws['B3'].value,
-      'source': ws['B4'].value,
-      'target': ws['B5'].value,
-      'baseline': ws['B6'].value,
+      'namezh': str(ws['B1'].value),
+      'nameen': str(ws['B2'].value),
+      'code': str(ws['B3'].value),
+      'source': str(ws['B4'].value),
+      'target': str(ws['B5'].value),
+      'baseline': str(ws['B6'].value),
       'ratioFlag': int(ws['B7'].value),
   }
   return info
@@ -85,8 +85,10 @@ def load_config_item_info(ws, titleList):
       if str_utils.is_null_or_empty(val) and index == 0:
         overFlag = True
         break
-      if titleList[index] == 'code' and val == None:
+      if titleList[index] == 'unit' and val == None:
         val = ''
+      if titleList[index] == 'code':
+        val = str(val)
       info[titleList[index]] = val
       index += 1
     if overFlag:
