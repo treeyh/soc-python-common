@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+# 检测java进程内容，如果超过阈值，则进行内存dump
 
 import os
 import sys

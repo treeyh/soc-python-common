@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from utils import str_utils, file_utils, mysql_utils
+from soc_common.utils import str_utils, file_utils, mysql_utils
 import os
 import sys
 import re
