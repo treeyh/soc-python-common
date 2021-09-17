@@ -9,7 +9,7 @@ import json
 from soc_common.utils import file_utils, excel_utils, str_utils
 
 
-_excel_file = 'D:\\data\\note\\知识记录\\10_项目资料\\toolkit\\单位.xlsx'
+_excel_file = 'D:\\data\\note\\知识记录\\10_项目资料\\toolkit\\货币.xlsx'
 _config_file = 'D:\\convert_tool.json'
 _config_map_file = 'D:\\convert_config.json'
 _config_item_column = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
