@@ -1614,15 +1614,22 @@ cu = {
 
 
 def main():
-  # global cu
-  convert_unit.build_config()
 
-  # from soc_common.utils import file_utils
 
-  # for i in cu['items'][0]['items']:
-  #   fileName = 'D:\\01_work\\flags\\4x3\\'+ i['code'][:2].lower() +'.svg'
-  #   if not file_utils.exists_file(fileName):
-  #     print(fileName)
+<< << << < HEAD
+# global cu
+convert_unit.build_config()
+== == == =
+# convert_unit.build_config()
+currency.run()
+>>>>>> > 3d60f8416e55c93e2b2a7299ed2dec8e43491b35
+
+# from soc_common.utils import file_utils
+
+# for i in cu['items'][0]['items']:
+#   fileName = 'D:\\01_work\\flags\\4x3\\'+ i['code'][:2].lower() +'.svg'
+#   if not file_utils.exists_file(fileName):
+#     print(fileName)
 
 
 if __name__ == '__main__':
