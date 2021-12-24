@@ -277,6 +277,22 @@ def json_hump2underline(hump_json_str):
   return sub
 
 
+def format_bytes_to_str(val):
+  """bytes对象转str
+
+  Args:
+      val ([type]): [description]
+
+  Returns:
+      [type]: [description]
+  """
+  vtype = type(val).__name__
+  if vtype == 'bytes':
+    return val.decode('utf-8', 'replace')
+  else:
+    return val
+
+
 if __name__ == '__main__':
   # print(get_uuid()
   # t = int(time.time())

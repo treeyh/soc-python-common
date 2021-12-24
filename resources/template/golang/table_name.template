@@ -1,0 +1,5 @@
+package po
+
+{% for k, v in tables.items() %}
+const {{k}} = "{{v}}"
+{% endfor %}

@@ -76,4 +76,6 @@ atlassian-ide-plugin.xml
 
 */__pycache__
 
+
+/export/*
 .config.json

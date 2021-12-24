@@ -1,0 +1,6 @@
+package po 
+
+
+{% for k, v in fields.items() %}
+const {{k}} = "{{v}}"
+{% endfor %}

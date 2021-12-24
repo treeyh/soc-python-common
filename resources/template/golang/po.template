@@ -1,0 +1,16 @@
+package po
+
+import "time"
+
+// {{ tb.comment_str() }}
+type {{tb.go_model_name()}}Po struct { 
+
+    {% for fl in tb.fields %}
+    // {{fl.go_field_name()}} {{fl.comment_str()}}
+    {{fl.go_field_name()}}      {{ fl.go_field_type() }}      `{{fl.go_attribute_gorm_json()}}`
+    {% endfor %}
+}
+
+func ({{ tb.go_model_name() }}Po) TableName() string {
+    return "{{ tb.name }}"
+} 

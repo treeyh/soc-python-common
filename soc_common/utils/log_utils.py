@@ -49,6 +49,25 @@ def init_logging(logFile: str = './log.log', level: int = logging.INFO, formatte
   logging.basicConfig(handlers=handlers, level=level, format=formatter)
 
 
+def log_init(path: str):
+  global __logger
+
+  if True == __logger:
+    return
+  __logger = True
+
+  fmt = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s - %(message)s'
+  consoleLog = logging.StreamHandler()
+  consoleLog.setLevel(logging.INFO)
+
+  if path != None and path != '':
+    fileLog = logging.FileHandler(path)
+    fileLog.setLevel(logging.INFO)
+    logging.basicConfig(handlers=[consoleLog, fileLog], level=logging.INFO, format=fmt)
+  else:
+    logging.basicConfig(handlers=[consoleLog], level=logging.INFO, format=fmt)
+
+
 def get_logger(logFile: str = './log.log', level: int = logging.INFO, formatter: str = _default_format, isAddStreamHandler: bool = True):
   global _loggers
   if None != _loggers.get(logFile, None):
