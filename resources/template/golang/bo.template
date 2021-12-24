@@ -3,8 +3,9 @@ package bo
 import "time"
 
 // 代码生成器自动生成
-// {{ tb.comment_str() }}
-type {{tb.go_model_name()}}Po struct { 
+
+// {{tb.go_model_name()}}Bo {{ tb.comment_str() }}
+type {{tb.go_model_name()}}Bo struct { 
 
     {% for fl in tb.fields %}
     // {{fl.go_field_name()}} {{fl.comment_str()}}

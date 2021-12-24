@@ -3,7 +3,8 @@ package po
 import "time"
 
 // 代码生成器自动生成
-// {{ tb.comment_str() }}
+
+// {{tb.go_model_name()}}Po {{ tb.comment_str() }}
 type {{tb.go_model_name()}}Po struct { 
 
     {% for fl in tb.fields %}
