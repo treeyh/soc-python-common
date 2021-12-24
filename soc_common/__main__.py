@@ -42,7 +42,7 @@ def main():
   shutil.rmtree(path=config.ExportPath, ignore_errors=True)
 
   generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_po_bo_file(config.exportDsConfig[0], ds_model.DataSourceModel(name='test'))
+  generate.generate_po_bo_file(config.exportDsConfig[0])
 
 
 if __name__ == '__main__':

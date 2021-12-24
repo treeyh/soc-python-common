@@ -147,7 +147,7 @@ class FieldModel(object):
       return '\'\'' if defaultStr == '' else defaultStr + ', \'\''
     return self.default if defaultStr == '' else defaultStr + ', ' + self.default
 
-  def comment_str(self) -> str:
+  def comment_str(self, lineSpan: str = '<br />') -> str:
     """返回默认值str
 
     Returns:
@@ -155,7 +155,7 @@ class FieldModel(object):
     """
     if None == self.comment:
       return ''
-    return self.comment.replace('|', '\|').replace('\r\n', '<br />').replace('\n', '<br />')
+    return self.comment.replace('|', '\|').replace('\r\n', lineSpan).replace('\n', lineSpan)
 
   def go_field_name(self) -> str:
     """输出类属性名
@@ -264,7 +264,7 @@ class TableModel(object):
     """
     return str_utils.under_score_case_to_camel_case(self.go_model_file_name())
 
-  def comment_str(self) -> str:
+  def comment_str(self, lineSpan: str = '<br />') -> str:
     """返回默认值str
 
     Returns:
@@ -272,7 +272,7 @@ class TableModel(object):
     """
     if None == self.comment:
       return ''
-    return self.comment.replace('|', '\|').replace('\r\n', '<br />').replace('\n', '<br />')
+    return self.comment.replace('|', '\|').replace('\r\n', lineSpan).replace('\n', lineSpan)
 
   def __repr__(self):
     """返回一个对象的描述信息"""

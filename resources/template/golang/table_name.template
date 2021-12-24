@@ -1,5 +1,6 @@
 package po
 
+// 代码生成器自动生成
 {% for k, v in tables.items() %}
 const {{k}} = "{{v}}"
 {% endfor %}

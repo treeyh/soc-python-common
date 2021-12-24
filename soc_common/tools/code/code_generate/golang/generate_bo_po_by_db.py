@@ -31,7 +31,7 @@ class GolangBoPoGenerate(object):
     self.columnNameTemplate = self.env.get_template('column_name.template')
     self.exportPath = exportPath
 
-  def generate_po_bo_file(self, conf: config_model.DataSourceConfig, ds: ds_model.DataSourceModel):
+  def generate_po_bo_file(self, conf: config_model.DataSourceConfig):
     """生成bo po文件
 
     Args:
@@ -53,11 +53,11 @@ class GolangBoPoGenerate(object):
       # file_util.mkdirs(dsPath, True)
       for table in db.tables:
         # filePath = os.path.join(dbPath, table.name + '_po.go')
-        poFilePath = os.path.join(poPath, table.name + '_po.go')
+        poFilePath = os.path.join(poPath, table.go_model_file_name() + '_po.go')
         poContent = self.poTemplate.render(tb=table)
         file_utils.write_file(filePath=poFilePath, content=poContent)
 
-        boFilePath = os.path.join(boPath, table.name + '_bo.go')
+        boFilePath = os.path.join(boPath, table.go_model_file_name() + '_bo.go')
         boContent = self.boTemplate.render(tb=table)
         file_utils.write_file(filePath=boFilePath, content=boContent)
 
