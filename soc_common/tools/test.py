@@ -3,7 +3,7 @@
 import os
 import sys
 
-from soc_common.utils import file_utils
+from soc_common.utils import file_utils, str_utils
 
 
 _permission_content = '''
@@ -125,17 +125,39 @@ def export_card_data_sql(path: str, product_line: str, partner_code: str, partne
   file_utils.write_file('d:\\card'+product_line+'.txt', content)
 
 
+def format_langs():
+  langMap = {
+
+
+      'tool.queryIp.inputIp': '输入IP',
+      'tool.queryIp.ip': 'IP',
+      'tool.queryIp.country': '国家',
+      'tool.queryIp.province': '省份',
+      'tool.queryIp.city': '城市',
+      'tool.queryIp.area': '区县',
+      'tool.queryIp.location': '运营商节点',
+  }
+
+  content = ''
+  for k, v in langMap.items():
+    ks = k.split('.')
+    key = ks[0] + ''.join([str_utils.upperFirstWord(i) for i in ks[1:]])
+    content += '  static String get %s =>\'%s\'.tr;\n' % (key, k)
+  print(content)
+
+
 def run():
   # export_permission()
   # print('\n' * 3)
   # export_role()
   # print('\n' * 3)
   # export_role_permission()
-  export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\calypso_cardData\\calypso_cardData',
-                       product_line='calypso', partner_code='CALYPSO-PTA1', partner_card_category_id='1', start_id=1)
-  print('\n' * 3)
-  export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\ITSO_cardData\\ITSO_cardData',
-                       product_line='itso', partner_code='ITSO-PTA1', partner_card_category_id='2', start_id=1000)
+  # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\calypso_cardData\\calypso_cardData',
+  #                      product_line='calypso', partner_code='CALYPSO-PTA1', partner_card_category_id='1', start_id=1)
+  # print('\n' * 3)
+  # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\ITSO_cardData\\ITSO_cardData',
+  #                      product_line='itso', partner_code='ITSO-PTA1', partner_card_category_id='2', start_id=1000)
+  format_langs()
 
 
 if __name__ == '__main__':
