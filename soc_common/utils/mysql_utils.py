@@ -4,6 +4,7 @@ import time
 # pip install mysql-connector-python
 import mysql.connector
 import logging
+import traceback
 
 
 class MysqlUtils(object):
@@ -76,6 +77,90 @@ class MysqlUtils(object):
     except BaseException as e:
       logging.error('sql %s, %s ;Error %d: %s' % (sql, str(params), e.args[0], e.args[1]))
       return result
+    finally:
+      if None != c:
+        c.close()
+      if None != conn:
+        conn.close()
+
+  def insert_or_update_or_delete(self, sql, params=(), isbackinsertid=False):
+    conn = self._getConnection()
+    c = None
+    try:
+      c = conn.cursor()
+      c.execute(sql, params)
+      conn.commit()
+      if isbackinsertid == True:
+        c.execute('select last_insert_id()')
+        yz = c.fetchone()
+        return yz[0]
+      else:
+        return 0
+    except BaseException as e:
+      logging.error('Error %d: %s, %s' % (e.args[0], e.args[1], traceback.format_exc()))
+      return 1
+    finally:
+      if None != c:
+        c.close()
+      if None != conn:
+        conn.close()
+
+  def insert_more(self, sql, params=[]):
+    conn = self._getConnection()
+    c = None
+    try:
+      c = conn.cursor()
+      c.executemany(sql, params)
+      conn.commit()
+      return 0
+    except BaseException as e:
+      logging.error('Error %d: %s, %s' % (e.args[0], e.args[1], traceback.format_exc()))
+      return 1
+    finally:
+      if None != c:
+        c.close()
+      if None != conn:
+        conn.close()
+
+  def _get_count_sql(self, sql):
+    sql = sql.lower()
+    a = ' select count(1) ' + sql[sql.find(' from '):-1]
+    return a
+
+  def _get_page_sql(self, sql, page, size):
+    f = (page - 1) * size
+    sql = sql + ' limit ' + str(f) + ', ' + str(size)
+    return sql
+
+  def find_page(self, sql, params=(), mapcol=None, page=1, size=15):
+    conn = self._getConnection()
+    c = None
+    page_result = {'total': 0, 'pagetotal': 0, 'page': page, 'size': size, 'data': []}
+    try:
+      c = conn.cursor()
+      countsql = self._get_count_sql(sql)
+      pagesql = self._get_page_sql(sql, page, size)
+      c.execute(countsql, params)
+      total = c.fetchone()
+      if None == total or 0 == int(total[0]):
+        return page_result
+      page_result['total'] = int(total[0])
+      page_result['pagetotal'] = int((page_result['total'] + size - 1) / size)
+      c.execute(pagesql, params)
+      yz = c.fetchall()
+      if yz == None:
+        return page_result
+      if mapcol == None:
+        page_result['data'] = yz
+        return page_result
+      result = []
+      for y in yz:
+        result.append(self._result_to_map(y, mapcol))
+      page_result['data'] = result
+      return page_result
+    except BaseException as e:
+      logging.error('Error %d: %s, %s' % (e.args[0], e.args[1], traceback.format_exc()))
+      return page_result
     finally:
       if None != c:
         c.close()
