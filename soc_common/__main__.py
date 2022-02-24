@@ -38,15 +38,15 @@ def init():
 
 def main():
   init()
-  options, args = _parse_option()
+  # options, args = _parse_option()
 
-  shutil.rmtree(path=config.ExportPath, ignore_errors=True)
-  generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_po_bo_file(config.exportDsConfig[0])
+  # shutil.rmtree(path=config.ExportPath, ignore_errors=True)
+  # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
+  # generate.generate_po_bo_file(config.exportDsConfig[0])
 
-  # from soc_common.tools import test
+  from soc_common.tools import test
 
-  # test.run()
+  test.run()
 
 
 if __name__ == '__main__':
