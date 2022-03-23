@@ -147,6 +147,24 @@ class FieldModel(object):
       return '\'\'' if defaultStr == '' else defaultStr + ', \'\''
     return self.default if defaultStr == '' else defaultStr + ', ' + self.default
 
+  def python_default_value(self) -> str:
+    c = self.ftype.lower()
+    none_flag = False
+    if None == self.default:
+      none_flag = True
+
+    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext']:
+      return '\'\'' if none_flag else '\'' + self.default + '\''
+    elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit']:
+      return '0' if none_flag else self.default
+    elif c in ['bigint']:
+      return '0' if none_flag else self.default
+    elif c in ['float', 'double', 'boolean', 'decimal', 'peal']:
+      return '0.0' if none_flag else self.default
+    elif c in ['date', 'datetime', 'timestamp', 'time', 'year']:
+      return 'datetime.now()'
+    return 'UnKnow'
+
   def comment_str(self, lineSpan: str = '<br />') -> str:
     """返回默认值str
 
@@ -164,6 +182,14 @@ class FieldModel(object):
         str: [description]
     """
     return str_utils.under_score_case_to_camel_case(self.name)
+
+  def python_field_name(self) -> str:
+    """输出类属性名
+
+    Returns:
+        str: [description]
+    """
+    return self.name
 
   def go_field_type(self) -> str:
     """输出go属性类型
@@ -183,6 +209,26 @@ class FieldModel(object):
       return nullFlag+'float'
     elif c in ['date', 'datetime', 'timestamp', 'time', 'year']:
       return nullFlag+'time.Time'
+    return 'UnKnow'
+
+  def python_field_type(self) -> str:
+    """输出python属性类型
+
+    Returns:
+        str: [description]
+    """
+    c = self.ftype.lower()
+
+    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext']:
+      return 'str'
+    elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit']:
+      return 'int'
+    elif c in ['bigint']:
+      return 'int'
+    elif c in ['float', 'double', 'boolean', 'decimal', 'peal']:
+      return 'float'
+    elif c in ['date', 'datetime', 'timestamp', 'time', 'year']:
+      return 'datetime'
     return 'UnKnow'
 
   def go_attribute_gorm_json(self) -> str:
@@ -273,6 +319,17 @@ class TableModel(object):
     if None == self.comment:
       return ''
     return self.comment.replace('|', '\|').replace('\r\n', lineSpan).replace('\n', lineSpan)
+
+  def python__repr(self) -> str:
+    """返回一个对象的__repr__"""
+    repr1 = '"{'
+    repr2 = '('
+    for field in self.fields:
+      repr1 += field.name + ':%s, '
+      repr2 += 'str(self.%s), ' % field.name
+    repr1 = repr1[:-2] + '}"'
+    repr2 = repr2[:-2] + ')'
+    return repr1 + ' % ' + repr2
 
   def __repr__(self):
     """返回一个对象的描述信息"""
