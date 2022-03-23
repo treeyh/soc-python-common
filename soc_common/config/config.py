@@ -52,8 +52,8 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
     # config_model.DataSourceConfig(dsType=DsClickHouse, host='10.0.3.94', port=9000, db='system',
     #                               user='default', passwd='123456', includes=[], name='clickhouse测试环境', code='clickhouse-test', comment='clickhouse测试环境'),
 
-    config_model.DataSourceConfig(dsType=DsMysql, host='101.133.223.80', port=33310, db='soc_word_db',
-                                  user='root', passwd='2Dv_v2VXnZ8PgG26f', includes=['soc_word_db'], excludes=[], name='MySql测试导出数据库', code='Mysql-export', comment='MySql测试导出数据库'),
+    config_model.DataSourceConfig(dsType=DsMysql, host='192.168.80.129', port=33310, db='soc_word_db',
+                                  user='root', passwd='192.168.80.129', includes=['soc_word_db'], excludes=[], name='MySql测试导出数据库', code='Mysql-export', comment='MySql测试导出数据库'),
     config_model.DataSourceConfig(dsType=DsMariaDB, host='192.168.80.129', port=3307, db='tb_school_db',
                                   user='root', passwd='123456', includes=[], name='MariaDB测试导出数据库', code='MariaDB-export', comment='MariaDB测试导出数据库'),
     config_model.DataSourceConfig(dsType=DsClickHouse, host='10.0.3.94', port=9000, db='system',

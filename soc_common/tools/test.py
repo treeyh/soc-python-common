@@ -98,24 +98,24 @@ def export_card_data_sql(path: str, product_line: str, partner_code: str, partne
   for filePath in filePaths:
     if len(filePath) != 2:
       continue
-    sql = ''' INSERT INTO `oscm_card_data` (`id`, `product_line_code`, `partner_code`, `partner_card_category_id`, `card_no`, `card_info`, `backup_info`, `active_time`, `effective_time`, `task_batch_id`, `renew_count`, `card_id`, `issuer_biz_id`, `order_id`, `backup_biz_id`, `remark`, `status`, `create_time`, `update_time`, `version`, `del_flag`) VALUES (%s, '%s', '%s', %s, '%s', '%s', '', '2021-12-28 14:50:12', '2099-01-01 00:00:00', 0, 0, 0, 0, 0, 0, '', 1, '2021-12-28 14:50:12', '2021-12-28 14:50:12', 1, 2);
+    card_no = filePath[1].replace('.json', '')
+    cid = int(card_no[8:], 16)
+    sql = ''' INSERT INTO `oscm_card_data` (`id`, `product_line_code`, `partner_code`, `partner_card_category_id`, `card_no`, `uid`, `card_info`, `backup_info`, `active_time`, `effective_time`, `task_batch_id`, `renew_count`, `card_id`, `issuer_biz_id`, `backup_biz_id`, `remark`, `status`, `create_time`, `update_time`, `version`, `del_flag`) VALUES (%s, '%s', '%s', %s, '%d', %d, '%s', '', '2021-12-28 14:50:12', '2099-01-01 00:00:00', 0, 0, 0, 0, 0, '', 1, '2021-12-28 14:50:12', '2021-12-28 14:50:12', 1, 2);
     ''' % (
-        id, product_line, partner_code, partner_card_category_id, filePath[1].replace('.json', ''), file_utils.read_all_file(os.path.join(filePath[0], filePath[1])).strip())
+        id, product_line, partner_code, partner_card_category_id, cid, cid, file_utils.read_all_file(os.path.join(filePath[0], filePath[1])).strip())
     id += 1
     content += sql
-  file_utils.write_file('d:\\card'+product_line+'.txt', content)
+  file_utils.write_file('d:\\card_'+product_line+'.txt', content)
 
 
 def format_langs():
   langMap = {
 
-      'tool.convertDigitalBase.radix': '进制',
-      'tool.convertDigitalBase.radix2': '二进制',
-      'tool.convertDigitalBase.radix8': '八进制',
-      'tool.convertDigitalBase.radix10': '十进制',
-      'tool.convertDigitalBase.radix16': '十六进制',
-      'tool.convertDigitalBase.radixCustom': '自定义进制',
-      'tool.convertDigitalBase.radixCustomError': '自定义进制请输入2-36之间的数字',
+
+
+      'tool.lifeGeoCode.lat': '纬度',
+      'tool.lifeGeoCode.lng': '经度',
+      'tool.lifeGeoCode.latOrlngEmpty': '请输入经纬度',
   }
 
   content = ''
@@ -149,17 +149,21 @@ def format_langs():
 #   pass
 
 def format_b():
-  path = 'd:\\b.txt'
+  path = 'd:\\jc.txt'
   lines = file_utils.read_all_lines_file(path)
-  for line in lines:
-    l = line.strip()
-    ls = l.split(' = ')
+  content = ''
 
+  for line in lines:
+
+    ls = line.strip().split(',')
     if len(ls) != 2:
       continue
-    name = str_utils.lowerFirstWord(ls[1])
-    # print('    state.'+name+' = await exif.getAttribute('+ls[0]+');')
-    print('    es.add(TableKV(\''+name+'\', await exif.getAttribute('+ls[0]+')));')
+
+    sql = ''' INSERT INTO `t_tool_factorial` (`id`, `factorial`) VALUES (%s, '%s'); ''' % (
+        ls[0], ls[1])
+
+    content += sql + '\n'
+  file_utils.write_file('d:\\jc.sql', content)
 
 
 def run():
@@ -169,15 +173,16 @@ def run():
   # print('\n' * 3)
   # export_role_permission()
 
-  # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\calypso_card_data_1000\\calypso_card_data_1000',
-  #                      product_line='calypso', partner_code='CALYPSO-PTA1', partner_card_category_id='1', start_id=2000)
+  # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\calypso_card_data_2000',
+  #                      product_line='calypso', partner_code='CALYPSO-PTA1', partner_card_category_id='1', start_id=5000)
+
   # print('\n' * 3)
   # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\ITSO_cardData\\ITSO_cardData',
   #                      product_line='itso', partner_code='ITSO-PTA1', partner_card_category_id='2', start_id=1000)
 
-  # format_langs()
+  format_langs()
 
-  format_b()
+  # format_b()
 
   # import_id()
 
