@@ -52,8 +52,8 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
     # config_model.DataSourceConfig(dsType=DsClickHouse, host='10.0.3.94', port=9000, db='system',
     #                               user='default', passwd='123456', includes=[], name='clickhouse测试环境', code='clickhouse-test', comment='clickhouse测试环境'),
 
-    config_model.DataSourceConfig(dsType=DsMysql, host='192.168.80.129', port=3306, db='tb_school_db',
-                                  user='root', passwd='mysqlpwd', includes=['tb_school_db'], excludes=[], name='MySql测试导出数据库', code='Mysql-export', comment='MySql测试导出数据库'),
+    config_model.DataSourceConfig(dsType=DsMysql, host='101.133.223.80', port=33309, db='soc_toolkit_data_db',
+                                  user='root', passwd='123', includes=['soc_toolkit_data_db'], excludes=[], name='MySql测试导出数据库', code='Mysql-export', comment='MySql测试导出数据库'),
     config_model.DataSourceConfig(dsType=DsMariaDB, host='192.168.80.129', port=3307, db='tb_school_db',
                                   user='root', passwd='123456', includes=[], name='MariaDB测试导出数据库', code='MariaDB-export', comment='MariaDB测试导出数据库'),
     config_model.DataSourceConfig(dsType=DsClickHouse, host='10.0.3.94', port=9000, db='system',
@@ -68,10 +68,10 @@ class CodeGenerateByDb:
   exportPath = os.path.join(ExportPath, 'golang')
 
   # 生成对象是需要去除的表名前缀
-  ignoreTablePres = ['oscm_', 'osa_', 'osm_', 'ost_', 't_tool_', 't_']
+  ignoreTablePres = ['oscm_', 'osa_', 'osm_', 'ost_', 't_']
 
   # 需要生成对象的表名列表，为空则库中所有表都生成
   exportTables = []
 
   # json 属性格式，1驼峰，2下划线
-  jsonPropertyType = 2
+  jsonPropertyType = 1

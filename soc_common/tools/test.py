@@ -112,10 +112,13 @@ def format_langs():
   langMap = {
 
 
+      'tool.queryAreaCode.areaCode': '地区号',
+      'tool.queryAreaCode.countryOrRegion': '国家或地区',
 
-      'tool.lifeGeoCode.lat': '纬度',
-      'tool.lifeGeoCode.lng': '经度',
-      'tool.lifeGeoCode.latOrlngEmpty': '请输入经纬度',
+      'tool.developHttpStatus.status': '状态码',
+      'tool.developHttpStatus.meaning': '含义',
+
+      'tool.developContentType.suffix': '后缀',
   }
 
   content = ''
@@ -149,21 +152,33 @@ def format_langs():
 #   pass
 
 def format_b():
-  path = 'd:\\jc.txt'
+  path = 'd:\\areacode-c.txt'
   lines = file_utils.read_all_lines_file(path)
   content = ''
 
+  id = 500
+  province = ''
   for line in lines:
 
-    ls = line.strip().split(',')
+    ls = line.strip().split(' -- ')
     if len(ls) != 2:
+      print(ls)
       continue
 
-    sql = ''' INSERT INTO `t_tool_factorial` (`id`, `factorial`) VALUES (%s, '%s'); ''' % (
-        ls[0], ls[1])
+    lss = ls[0].split('（')
+
+    area_code = ls[0].strip()
+    country_en = ''
+    if len(lss) == 2:
+      area_code = lss[0].strip()
+      country_en = lss[1].replace('）', '').strip()
+
+    sql = '''INSERT INTO `soc_toolkit_data_db`.`t_tool_area_code`(`id`, `area_code`, `city`, `province`, `country_zh`, `country_en`, `sync_time`, `status`, `create_time`, `update_time`, `version`, `del_flag`) VALUES (%d, '%s', '', '', '%s', '%s', now(), 1, now(), now(), 1, 2); ''' % (
+        id, area_code, ls[1].strip(), country_en)
+    id += 1
 
     content += sql + '\n'
-  file_utils.write_file('d:\\jc.sql', content)
+  file_utils.write_file('d:\\areacode_c.sql', content)
 
 
 def run():
