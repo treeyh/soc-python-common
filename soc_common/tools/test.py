@@ -105,7 +105,7 @@ def export_card_data_sql(path: str, product_line: str, partner_code: str, partne
         id, product_line, partner_code, partner_card_category_id, cid, cid, file_utils.read_all_file(os.path.join(filePath[0], filePath[1])).strip())
     id += 1
     content += sql
-  file_utils.write_file('d:\\card_'+product_line+'.txt', content)
+  file_utils.write_file('d:\\card_'+product_line+'.sql', content)
 
 
 def format_langs():
@@ -149,21 +149,28 @@ def format_langs():
 #   pass
 
 def format_b():
-  path = 'd:\\jc.txt'
+  path = 'd:\\contenttype.csv'
   lines = file_utils.read_all_lines_file(path)
   content = ''
 
+  index = 1
+  index2 = 2
   for line in lines:
 
     ls = line.strip().split(',')
-    if len(ls) != 2:
+    if len(ls) != 4:
       continue
 
-    sql = ''' INSERT INTO `t_tool_factorial` (`id`, `factorial`) VALUES (%s, '%s'); ''' % (
-        ls[0], ls[1])
+    sql = '''INSERT INTO `t_tool_content_type_comparison` (`id`, `suffix`, `code`, `remark_zh`, `remark_en`, `sync_time`, `status`, `create_time`, `update_time`, `version`, `del_flag`) VALUES (%d, '%s', '%s', '', '', '2022-04-02 19:54:17', 1, '2022-04-02 19:54:17', '2022-04-02 19:54:17', 1, 2);
+INSERT INTO `t_tool_content_type_comparison` (`id`, `suffix`, `code`, `remark_zh`, `remark_en`, `sync_time`, `status`, `create_time`, `update_time`, `version`, `del_flag`) VALUES (%d, '%s', '%s', '', '', '2022-04-02 19:54:17', 1, '2022-04-02 19:54:17', '2022-04-02 19:54:17', 1, 2);
+''' % (
+        index, ls[0][1:], ls[1], index2, ls[2][1:], ls[3])
+
+    index += 2
+    index2 += 2
 
     content += sql + '\n'
-  file_utils.write_file('d:\\jc.sql', content)
+  file_utils.write_file('d:\\contenttype.sql', content)
 
 
 def run():
@@ -176,13 +183,16 @@ def run():
   # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\calypso_card_data_2000',
   #                      product_line='calypso', partner_code='CALYPSO-PTA1', partner_card_category_id='1', start_id=5000)
 
+  # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\calypso_card_data_2000',
+  #                      product_line='snb_obot', partner_code='SNB', partner_card_category_id='4', start_id=7000)
+
   # print('\n' * 3)
   # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\ITSO_cardData\\ITSO_cardData',
   #                      product_line='itso', partner_code='ITSO-PTA1', partner_card_category_id='2', start_id=1000)
 
-  format_langs()
+  # format_langs()
 
-  # format_b()
+  format_b()
 
   # import_id()
 

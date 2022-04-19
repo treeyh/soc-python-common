@@ -689,7 +689,7 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-_db_name = 'soc_toolkit_local'
+_db_name = 'tb_school_db'
 # _table_list = []
 _pre_table_names = ['tol_']
 # _db_name = 'test'
@@ -700,10 +700,10 @@ _sql_params_type = 2
 
 _db = {
 
-    'host': '192.168.1.101',
+    'host': '192.168.80.129',
     'user': 'root',
-    'passwd': 'mysqldev',
-    'db': 'soc_memory_local',
+    'passwd': 'mysqlpwd',
+    'db': 'tb_school_db',
     'charset': 'utf8mb4',
     'port': 3306,
 
@@ -716,10 +716,19 @@ _db = {
 
 }
 
+
+def run():
+
+  format_select_sql()  # select 语句
+  format_update_sql()
+  format_insert_sql()
+  format_column_list()
+
+
 if __name__ == '__main__':
   # format_php_data_domain()
   # format_domain()   #java bean
-  # format_select_sql()   #select 语句
+  # format_select_sql()  # select 语句
   # format_update_sql()
   format_insert_sql()
   # format_column_list()
