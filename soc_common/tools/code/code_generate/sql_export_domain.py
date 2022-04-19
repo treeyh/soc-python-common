@@ -689,7 +689,11 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
+<< << << < HEAD
 _db_name = 'tb_school_db'
+== == == =
+_db_name = 'soc_toolkit_data_db'
+>>>>>> > ea4d3671d5840166f9859a6eca8124d2dd039ce9
 # _table_list = []
 _pre_table_names = ['tol_']
 # _db_name = 'test'
@@ -705,7 +709,7 @@ _db = {
     'passwd': 'mysqlpwd',
     'db': 'tb_school_db',
     'charset': 'utf8mb4',
-    'port': 3306,
+    'port': 33309,
 
     # 'host': '192.168.1.181',
     # 'user': 'root',
