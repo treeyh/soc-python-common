@@ -689,13 +689,9 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-<< << << < HEAD
 _db_name = 'tb_school_db'
-== == == =
-_db_name = 'soc_toolkit_data_db'
->>>>>> > ea4d3671d5840166f9859a6eca8124d2dd039ce9
 # _table_list = []
-_pre_table_names = ['tol_']
+_pre_table_names = ['t_']
 # _db_name = 'test'
 _table_list = []
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
