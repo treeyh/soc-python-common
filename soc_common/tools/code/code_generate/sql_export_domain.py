@@ -689,9 +689,9 @@ def format_php_data_domain():
 _db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle soc_toolkit_data_warehouse
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
-_db_name = 'soc_toolkit_data_warehouse'
+_db_name = 'tb_school_db'
 # _table_list = []
-_pre_table_names = ['tol_']
+_pre_table_names = ['t_']
 # _db_name = 'test'
 _table_list = []
 _file_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + 'domain' + os.sep
@@ -700,7 +700,14 @@ _sql_params_type = 2
 
 _db = {
 
-    # 'host': '101.133.223.80',
+    'host': '192.168.80.129',
+    'user': 'root',
+    'passwd': 'mysqlpwd',
+    'db': 'tb_school_db',
+    'charset': 'utf8mb4',
+    'port': 33309,
+
+    # 'host': '192.168.1.181',
     # 'user': 'root',
     # 'passwd': '2Dv_v2VXnZ8PgG26f',
     # 'db': 'soc_toolkit_data_db',
@@ -716,10 +723,19 @@ _db = {
 
 }
 
+
+def run():
+
+  format_select_sql()  # select 语句
+  format_update_sql()
+  format_insert_sql()
+  format_column_list()
+
+
 if __name__ == '__main__':
   # format_php_data_domain()
   # format_domain()   #java bean
-  # format_select_sql()   #select 语句
+  # format_select_sql()  # select 语句
   # format_update_sql()
   format_insert_sql()
   # format_column_list()

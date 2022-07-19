@@ -12,6 +12,7 @@ from soc_common.config import config
 from soc_common.utils import log_utils, file_utils
 from soc_common.model import ds_model, config_model
 from soc_common.tools.export_db_model import mysql_export_db_model
+from soc_common.tools.code.code_generate import sql_export_domain
 from soc_common.tools.code.code_generate.golang import generate_bo_po_by_db
 from soc_common.tools.code.code_generate.python import generate_model_by_db
 

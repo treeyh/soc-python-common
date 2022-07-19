@@ -105,7 +105,7 @@ def export_card_data_sql(path: str, product_line: str, partner_code: str, partne
         id, product_line, partner_code, partner_card_category_id, cid, cid, file_utils.read_all_file(os.path.join(filePath[0], filePath[1])).strip())
     id += 1
     content += sql
-  file_utils.write_file('d:\\card_'+product_line+'.txt', content)
+  file_utils.write_file('d:\\card_'+product_line+'.sql', content)
 
 
 def format_langs():
@@ -279,13 +279,18 @@ def run():
   # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\calypso_card_data_2000',
   #                      product_line='calypso', partner_code='CALYPSO-PTA1', partner_card_category_id='1', start_id=5000)
 
+  # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\calypso_card_data_2000',
+  #                      product_line='snb_obot', partner_code='SNB', partner_card_category_id='4', start_id=7000)
+
   # print('\n' * 3)
   # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\ITSO_cardData\\ITSO_cardData',
   #                      product_line='itso', partner_code='ITSO-PTA1', partner_card_category_id='2', start_id=1000)
 
-  format_langs()
-
+  # format_langs()
   # build_all_widget()
+  format_b()
+
+  # import_id()
 
 
 if __name__ == '__main__':
