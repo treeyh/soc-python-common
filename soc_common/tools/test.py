@@ -110,10 +110,14 @@ def export_card_data_sql(path: str, product_line: str, partner_code: str, partne
 
 def format_langs():
   langMap = {
+      'tool.networkDns.host': 'Host',
+      'tool.networkDns.aRecord': 'A record',
+      'tool.networkDns.cname': 'Cname',
+      'tool.networkDns.ptrRecord': 'Ptr record',
+      'tool.networkDns.nsRecord': 'Ns record',
+      'tool.networkDns.maxRecord': 'Max record',
+      'tool.networkDns.txtRecord': 'Txt record',
 
-      'setting.setTheme': 'Set Theme',
-      'setting.theme.light': 'Default Theme',
-      'setting.theme.dark': 'Dark Theme',
   }
 
   content = ''
@@ -124,56 +128,145 @@ def format_langs():
   print(content)
 
 
-# def import_id():
-#   path = 'D:\\01_work\\77_github\\chinese-xinhua\\data\\xiehouyu.json'
-#   content = file_utils.read_all_file(path)
-#   cs = json.loads(content)
+def build_late_widget(v, count):
+  code = v['code']
+  code2 = str_utils.upperFirstWord(code)
+  name = v['name']
+  for i in range(1, count):
+    print('/// '+name + ' ' + str(i))
+    print('late final FocusNode '+code+'ValueFocusNode'+str(i) +
+          ';\nlate final TextEditingController '+code+'ValueController'+str(i)+';\n')
 
-#   sql = ''' INSERT INTO `tb_school_db`.`t_tool_xiehouyu` ( `riddle`, `answer`) VALUES ( %s, %s);
-# '''
-#   print(len(cs))
-#   mysqlUtil = mysql_utils.get_mysql_utils('192.168.80.129', 3306, 'root',
-#                                           'mysqlpwd', 'tb_school_db', 'utf8mb4')
-#   index = 0
-#   for c in cs:
-#     # if len(c['answer']) > 64:
-#     #   print(c['riddle'])
-#     #   print(c['answer'])
-#     mysqlUtil.insert_or_update_or_delete(
-#         sql, (c['riddle'], c['answer']))
-#     index += 1
-#     if index % 100 == 0:
-#       print(index)
-#   pass
 
-def format_b():
-  path = 'd:\\areacode-c.txt'
-  lines = file_utils.read_all_lines_file(path)
+def build_dispose_widget(v, count):
+  code = v['code']
+  code2 = str_utils.upperFirstWord(code)
+  name = v['name']
+  for i in range(1, count):
+    print(code+'ValueFocusNode'+str(i)+'.dispose();\n' +
+          code+'ValueController'+str(i)+'.dispose();\n')
+
+
+def build_init_widget(v, count):
+  code = v['code']
+  code2 = str_utils.upperFirstWord(code)
+  name = v['name']
+  for i in range(1, count):
+    print(code+'ValueFocusNode'+str(i)+' = FocusNode();\n' +
+          code+'ValueController'+str(i)+' = TextEditingController();\n' +
+          code+'ValueController'+str(i)+'.text = \'\';\n')
+
+
+def build_focus_widget(v, count):
+  code = v['code']
+  code2 = str_utils.upperFirstWord(code)
+  name = v['name']
+  for i in range(1, count):
+    print('controller.' + code+'ValueFocusNode'+str(i)+',')
+
+
+def build_func_widget(v, count):
+  code = v['code']
+  code2 = str_utils.upperFirstWord(code)
+  name = v['name']
   content = ''
 
-  id = 500
-  province = ''
-  for line in lines:
+  for i in range(1, count):
+    content += '''        SocTextField(
+          key: const Key('%(code)sValueController%(i)s'),
+          keyName: '%(code)sValueController%(i)s',
+          focusNode: controller.%(code)sValueFocusNode%(i)s,
+          controller: controller.%(code)sValueController%(i)s,
+          labelText: \'${Langs.toolCalcVolumeSideLength}(a)\',
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
+          maxDecimalLength: 8,
+          clearIconFlag: true,
+        ),
+        BaseStyle.vGap12,''' % {'code': code, 'i': str(i)}
 
-    ls = line.strip().split(' -- ')
-    if len(ls) != 2:
-      print(ls)
-      continue
+  print('''  /// 构建%(name)s输入view
+  Widget _build%(code2)sInputs(BuildContext context) {
+    return Column(
+      children: [
+        %(content)s
+      ],
+    );
+  }''' % {'name': name, 'code2': code2, 'content': content})
 
-    lss = ls[0].split('（')
 
-    area_code = ls[0].strip()
-    country_en = ''
-    if len(lss) == 2:
-      area_code = lss[0].strip()
-      country_en = lss[1].replace('）', '').strip()
+def build_const_widget(v, count):
+  code = v['code']
+  code2 = str_utils.upperFirstWord(code)
+  name = v['name']
 
-    sql = '''INSERT INTO `soc_toolkit_data_db`.`t_tool_area_code`(`id`, `area_code`, `city`, `province`, `country_zh`, `country_en`, `sync_time`, `status`, `create_time`, `update_time`, `version`, `del_flag`) VALUES (%d, '%s', '', '', '%s', '%s', now(), 1, now(), now(), 1, 2); ''' % (
-        id, area_code, ls[1].strip(), country_en)
-    id += 1
+  print('  /// %(name)s\n  static const String %(code)s = \'%(code)s\';' %
+        {'code': code, 'name': name})
 
-    content += sql + '\n'
-  file_utils.write_file('d:\\areacode_c.sql', content)
+
+def build_supports_widget(v, count):
+  print(v['code'] + ',')
+
+
+def build_map_widget(v, count):
+  code = v['code']
+  print('CalcPerimeterController.%s: _build%sInputs,' % (code, str_utils.upperFirstWord(code)))
+
+
+def build_all_widget():
+  lists = []
+
+  lists.append({
+      'code': 'square',
+      'name': '正方形',
+      'count': 2,
+  })
+  lists.append({
+      'code': 'rectangle',
+      'name': '长方形',
+      'count': 3,
+  })
+  lists.append({
+      'code': 'circular',
+      'name': '圆形',
+      'count': 3,
+  })
+  lists.append({
+      'code': 'triangle',
+      'name': '三角形',
+      'count': 4,
+  })
+  lists.append({
+      'code': 'parallelogram',
+      'name': '四边形',
+      'count': 5,
+  })
+  lists.append({
+      'code': 'ellipse',
+      'name': '椭圆形',
+      'count': 3,
+  })
+  lists.append({
+      'code': 'sector1',
+      'name': '扇形1',
+      'count': 3,
+  })
+  lists.append({
+      'code': 'sector2',
+      'name': '扇形2',
+      'count': 3,
+  })
+
+  for v in lists:
+    # build_late_widget(v, v['count'])
+    # build_dispose_widget(v, v['count'])
+
+    # build_init_widget(v, v['count'])
+    # build_focus_widget(v, v['count'])
+    build_func_widget(v, v['count'])
+
+    # build_const_widget(v, v['count'])
+    # build_supports_widget(v, v['count'])
+    # build_map_widget(v, v['count'])
 
 
 def run():
@@ -193,13 +286,20 @@ def run():
   # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\ITSO_cardData\\ITSO_cardData',
   #                      product_line='itso', partner_code='ITSO-PTA1', partner_card_category_id='2', start_id=1000)
 
-  format_langs()
 
-  # print('0'*1792)
+<< << << < HEAD
+format_langs()
 
-  # format_b()
+# print('0'*1792)
 
-  # import_id()
+# format_b()
+== == == =
+# format_langs()
+# build_all_widget()
+format_b()
+>>>>>> > 2d13acd0ae95d927ccff84cf1a0fdd81bb824d51
+
+# import_id()
 
 
 if __name__ == '__main__':

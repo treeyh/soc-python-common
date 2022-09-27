@@ -686,7 +686,7 @@ def format_php_data_domain():
   return
 
 
-_db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle
+_db_type = 'm'  # 数据库类型，m表示mysql，o表示oracle soc_toolkit_data_warehouse
 # _db_name = 'soc_stock'
 # _db_name = 'testdb'
 _db_name = 'tb_school_db'
@@ -709,10 +709,17 @@ _db = {
 
     # 'host': '192.168.1.181',
     # 'user': 'root',
-    # 'passwd': 'mysqldev',
-    # 'db': 'soc_memory_local',
+    # 'passwd': '2Dv_v2VXnZ8PgG26f',
+    # 'db': 'soc_toolkit_data_db',
     # 'charset': 'utf8mb4',
-    # 'port': 3306,
+    # 'port': 33309,
+
+    'host': '192.168.223.134',
+    'user': 'root',
+    'passwd': 'mysqlpwd',
+    'db': 'soc_toolkit_data_warehouse',
+    'charset': 'utf8mb4',
+    'port': 3306,
 
 }
 

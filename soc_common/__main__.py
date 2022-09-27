@@ -57,8 +57,6 @@ def main():
   # sql_export_domain.format_insert_sql()  # select 语句
   # sql_export_domain.format_column_list()
 
-  # sql_export_domain.run()
-
   from soc_common.tools import test
   test.run()
 
