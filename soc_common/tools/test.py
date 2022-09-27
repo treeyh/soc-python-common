@@ -111,14 +111,9 @@ def export_card_data_sql(path: str, product_line: str, partner_code: str, partne
 def format_langs():
   langMap = {
 
-
-      'tool.queryAreaCode.areaCode': '地区号',
-      'tool.queryAreaCode.countryOrRegion': '国家或地区',
-
-      'tool.developHttpStatus.status': '状态码',
-      'tool.developHttpStatus.meaning': '含义',
-
-      'tool.developContentType.suffix': '后缀',
+      'setting.setTheme': 'Set Theme',
+      'setting.theme.light': 'Default Theme',
+      'setting.theme.dark': 'Dark Theme',
   }
 
   content = ''
@@ -198,9 +193,11 @@ def run():
   # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\ITSO_cardData\\ITSO_cardData',
   #                      product_line='itso', partner_code='ITSO-PTA1', partner_card_category_id='2', start_id=1000)
 
-  # format_langs()
+  format_langs()
 
-  format_b()
+  # print('0'*1792)
+
+  # format_b()
 
   # import_id()
 

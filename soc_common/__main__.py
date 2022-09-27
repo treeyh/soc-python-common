@@ -52,15 +52,15 @@ def main():
   # generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
   # generate.generate_model_file(config.exportDsConfig[0])
 
-  sql_export_domain.format_select_sql()  # select 语句
-  sql_export_domain.format_update_sql()  # select 语句
-  sql_export_domain.format_insert_sql()  # select 语句
-  sql_export_domain.format_column_list()
+  # sql_export_domain.format_select_sql()  # select 语句
+  # sql_export_domain.format_update_sql()  # select 语句
+  # sql_export_domain.format_insert_sql()  # select 语句
+  # sql_export_domain.format_column_list()
 
   # sql_export_domain.run()
 
-  # from soc_common.tools import test
-  # test.run()
+  from soc_common.tools import test
+  test.run()
 
 
 if __name__ == '__main__':
