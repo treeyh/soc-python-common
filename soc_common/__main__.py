@@ -57,8 +57,12 @@ def main():
   # sql_export_domain.format_insert_sql()  # select 语句
   # sql_export_domain.format_column_list()
 
-  from soc_common.tools import test
-  test.run()
+  # from soc_common.tools import test
+  # test.run()
+  from soc_common.tools.toolkit.lang import convert_lang_2_ts
+  from soc_common.tools import rename_img_name
+  # convert_lang_2_ts.run()
+  rename_img_name.main()
 
 
 if __name__ == '__main__':
