@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from utils import str_utils, file_utils, log_utils
+from soc_common.utils import str_utils, file_utils, log_utils
 import os
 import sys
 import re
@@ -9,10 +9,6 @@ import multiprocessing
 import traceback
 
 import exifread
-
-
-path = os.path.split(os.path.realpath(__file__))[0]
-sys.path.append(path + os.sep + '..')
 
 
 def get_img_create_time(path):
@@ -30,6 +26,16 @@ def get_img_create_time(path):
     return None
   finally:
     f.close()
+
+
+def video_duration_3(filename):
+  cap = cv2.VideoCapture(filename)
+  if cap.isOpened():
+    rate = cap.get(5)
+    frame_num = cap.get(7)
+    duration = frame_num / rate
+    return duration
+  return -1
 
 
 def rename(olgImgPath, newImgPath, oldNefPath, newNefPath):
@@ -84,7 +90,8 @@ def walk2(path):
   return fpaths
 
 
-def main(path):
+def main():
+  path = u'F:\\MT7-CL00'
 
   paths = walk2(path)
   cpu_count = multiprocessing.cpu_count()
@@ -96,17 +103,14 @@ def main(path):
   # print(rename_img(paths[0])
 
 
-img_name = u'iphone6'
+img_name = u'YH-MT7'
 
 # img_name = u'桃花村鲜花港'
 
 if __name__ == '__main__':
   # sys.setdefaultencoding('utf-8')
 
-  print('b')
-  path = u'F:\\iphone6s照片\\1213\\102APPLE'
-  paths = walk2(path)
-  print(paths)
+  path = u'F:\\MT7-CL00'
   main(path)
 
   # p = 'xx.xx.jpg'
