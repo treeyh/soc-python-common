@@ -128,6 +128,49 @@ def format_langs():
   print(content)
 
 
+def format_item2():
+  langMap = {
+      'auto': '自动检测',
+      'zh': '中文',
+      'en': '英语',
+      'fra': '法语',
+      'spa': '西班牙语',
+      'jp': '日语',
+      'kor': '韩语',
+      'de': '德语',
+      'ru': '俄语',
+      'yue': '粤语',
+      'cht': '繁体中文',
+      'ara': '阿拉伯语',
+      'pt': '葡萄牙语',
+      'it': '意大利语',
+      'el': '希腊语',
+      'bul': '保加利亚语',
+      'fin': '芬兰语',
+      'slo': '斯洛文尼亚语',
+      'nl': '荷兰语',
+      'est': '爱沙尼亚语',
+      'cs': '捷克语',
+      'swe': '瑞典语',
+      'vie': '越南语',
+      'pl': '波兰语',
+      'dan': '丹麦语',
+      'rom': '罗马尼亚语',
+      'hu': '匈牙利语',
+      'th': '泰语',
+      'wyw': '文言文',
+
+  }
+
+  content = ''
+  for k, v in langMap.items():
+    content += '''{
+    text: '%s',
+    value: '%s'
+  },\n''' % (v, k)
+  print(content)
+
+
 def build_late_widget(v, count):
   code = v['code']
   code2 = str_utils.upperFirstWord(code)
@@ -286,20 +329,13 @@ def run():
   # export_card_data_sql(path='C:\\Users\\Tree\\Downloads\\ITSO_cardData\\ITSO_cardData',
   #                      product_line='itso', partner_code='ITSO-PTA1', partner_card_category_id='2', start_id=1000)
 
+  # format_langs()
+  format_item2()
+  # format_langs()
+  # build_all_widget()
+  # format_b()
 
-<< << << < HEAD
-format_langs()
-
-# print('0'*1792)
-
-# format_b()
-== == == =
-# format_langs()
-# build_all_widget()
-format_b()
->>>>>> > 2d13acd0ae95d927ccff84cf1a0fdd81bb824d51
-
-# import_id()
+  # import_id()
 
 
 if __name__ == '__main__':
