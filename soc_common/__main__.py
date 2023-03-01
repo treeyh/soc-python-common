@@ -18,6 +18,8 @@ from soc_common.tools.code.code_generate.python import generate_model_by_db
 
 from soc_common.tools.code.code_generate import sql_export_domain
 
+from soc_common.tools.git import pull_code
+
 
 def _parse_option():
   """获取命令行参数
@@ -59,10 +61,12 @@ def main():
 
   # from soc_common.tools import test
   # test.run()
-  from soc_common.tools.toolkit.lang import convert_lang_2_ts
-  from soc_common.tools import rename_img_name
-  # convert_lang_2_ts.run()
-  rename_img_name.main()
+
+  pull_code.main()
+  # from soc_common.tools.toolkit.lang import convert_lang_2_ts
+  # from soc_common.tools import rename_img_name
+  # # convert_lang_2_ts.run()
+  # rename_img_name.main()
 
 
 if __name__ == '__main__':

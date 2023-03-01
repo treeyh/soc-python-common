@@ -81,14 +81,14 @@ def move(src, dst):
 
 def walk(path):
   '''
-      列举path下的所有文件、文件夹
+    列举path下的所有文件、文件夹
   '''
   return os.walk(path)
 
 
 def walk2(path):
   '''
-      列举path下的所有文件、文件夹
+    列举path下的所有文件、文件夹
   '''
   fpaths = []
   for pt, fl, fi in os.walk(path):
@@ -100,12 +100,12 @@ def walk2(path):
 
 def get_folder_son(path):
   '''
-      列举path下一层的所有文件、文件夹
+    列举path下一层的所有文件、文件夹
   '''
   paths = os.listdir(path)
   pps = []
   for s in paths:
-    p = '%s%s%s' % (path, os.sep, s)
+    p = os.path.join(path, s)
     pps.append(p)
   return pps
 

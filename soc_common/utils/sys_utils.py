@@ -2,8 +2,9 @@
 
 import sys
 import os
-import commands
 import time
+
+import subprocess
 
 import platform
 from functools import wraps
@@ -50,9 +51,11 @@ def add_path(path):
 
 def run_sys_cmd(cmd):
   '''
-      系统命令，没有返回
+    系统命令，返回输出
+    将字符串转化成命令在服务器上运行
+    其返回值是指令运行后返回的状态码，0表示指令成功执行，1表示失败，256表示没有返回结果，该方法适用于系统命令不需要输出内容的场景。
   '''
-  os.system(cmd)
+  return os.system(cmd)
 
 
 def run_sys_cmd_result(cmd):
@@ -66,7 +69,8 @@ def run_sys_cmd_status_output(cmd):
   '''
       系统命令，返回输出，获得到返回值和输出，输出为(status, output)。
   '''
-  return commands.getstatusoutput(cmd)
+  result, value = subprocess.getstatusoutput(cmd)
+  return (result, value)
 
 
 Windows = 'Windows'
