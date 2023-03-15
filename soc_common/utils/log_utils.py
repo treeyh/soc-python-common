@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 
+import os
 import logging
 import logging.handlers
 
-from soc_common.utils import str_utils
+from soc_common.utils import file_utils
 
 
 ############################
@@ -19,70 +20,59 @@ from soc_common.utils import str_utils
 # %(process)d	打印进程 ID
 # %(message)s	打印日志信息
 ############################
-_default_format = logging.Formatter(
-    fmt='%(asctime)s %(levelname)s [%(process)d %(threadName)s %(module)s %(funcName)s:%(lineno)d] %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S')
+# _default_format = logging.Formatter(
+#     fmt='%(asctime)s - %(levelname)s - [%(process)d %(threadName)s %(module)s %(filename)s %(funcName)s:%(lineno)d] - %(message)s',
+#     datefmt='%Y-%m-%d %H:%M:%S')
+__default_format = '%(asctime)s - %(levelname)s - [%(process)d %(threadName)s %(module)s %(filename)s %(funcName)s:%(lineno)d] - %(message)s'
 
 _loggers = {}
 
 __logger = False
 
+__default_logger = None
 
-def init_logging(logFile: str = './log.log', level: int = logging.INFO, formatter: str = _default_format, isAddStreamHandler: bool = True):
-  global __logger
-  if True == __logger:
-    return
-  __logger = True
-
-  handlers = []
-  if isAddStreamHandler or str_utils.is_null_or_empty(logFile):
-    consoleLog = logging.StreamHandler()
-    consoleLog.setFormatter(formatter)
-    consoleLog.setLevel(level)
-    handlers.append(consoleLog)
-
-  if not str_utils.is_null_or_empty(logFile):
-    fileLog = logging.handlers.TimedRotatingFileHandler(
-        filename=logFile, when='d', interval=1, backupCount=0, encoding='utf-8', delay=False, utc=False)
-    fileLog.setFormatter(formatter)
-    fileLog.setLevel(level)
-  logging.basicConfig(handlers=handlers, level=level, format=formatter)
+__folder_path = ''
 
 
-def log_init(path: str):
-  global __logger
+def init(path: str, level: int = logging.INFO):
+  global __logger, __folder_path, __default_format, __default_logger
 
   if True == __logger:
     return
   __logger = True
 
-  fmt = '%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s - %(message)s'
   consoleLog = logging.StreamHandler()
-  consoleLog.setLevel(logging.INFO)
+  consoleLog.setLevel(level)
+  logging.basicConfig(handlers=[consoleLog], level=level, format=__default_format)
 
   if path != None and path != '':
-    fileLog = logging.FileHandler(path)
-    fileLog.setLevel(logging.INFO)
-    logging.basicConfig(handlers=[consoleLog, fileLog], level=logging.INFO, format=fmt)
-  else:
-    logging.basicConfig(handlers=[consoleLog], level=logging.INFO, format=fmt)
+    __folder_path = os.path.dirname(path)
+    if not file_utils.exists_file(__folder_path):
+      file_utils.make_folders(__folder_path)
+
+    logger = logging.getLogger(path)
+    logger.setLevel(level)
+    handler = logging.handlers.TimedRotatingFileHandler(filename=path, when='d', interval=1, backupCount=0,
+                                                        encoding='utf-8', delay=False, utc=False)
+    handler.setFormatter(logging.Formatter(__default_format))
+    logger.addHandler(handler)
+    _loggers[os.path.basename(path)] = logger
+    __default_logger = logger
 
 
-def get_logger(logFile: str = './log.log', level: int = logging.INFO, formatter: str = _default_format, isAddStreamHandler: bool = True):
-  global _loggers
+def get_logger(logFile: str = '', level: int = logging.INFO, formatter: str = __default_format):
+  global _loggers, __folder_path
+  if '' == logFile:
+    return __default_logger
   if None != _loggers.get(logFile, None):
     return _loggers[logFile]
-  logger = logging.getLogger(logFile)
+  log_path = os.path.join(__folder_path, logFile)
+  logger = logging.getLogger(log_path)
   logger.setLevel(level)
-  handler = logging.handlers.TimedRotatingFileHandler(filename=logFile, when='d', interval=1, backupCount=0,
+  handler = logging.handlers.TimedRotatingFileHandler(filename=log_path, when='d', interval=1, backupCount=0,
                                                       encoding='utf-8', delay=False, utc=False)
-  handler.setFormatter(formatter)
+  handler.setFormatter(logging.Formatter(formatter))
   logger.addHandler(handler)
-
-  if isAddStreamHandler:
-    sh = logging.StreamHandler()
-    sh.setFormatter(formatter)
-    logger.addHandler(sh)
 
   _loggers[logFile] = logger
   return logger

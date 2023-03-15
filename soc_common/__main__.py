@@ -39,7 +39,7 @@ def init():
   """初始化
   """
   file_utils.mkdirs(config.LogPath, False)
-  log_utils.log_init(path=config.LogPath)
+  log_utils.init(path=config.LogPath)
 
 
 def main():
@@ -59,10 +59,10 @@ def main():
   # sql_export_domain.format_insert_sql()  # select 语句
   # sql_export_domain.format_column_list()
 
-  # from soc_common.tools import test
-  # test.run()
+  from soc_common.tools import test
+  test.run()
 
-  pull_code.main()
+  # pull_code.main()
   # from soc_common.tools.toolkit.lang import convert_lang_2_ts
   # from soc_common.tools import rename_img_name
   # # convert_lang_2_ts.run()
