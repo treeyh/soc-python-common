@@ -9,13 +9,14 @@ from soc_common.utils import file_utils, str_utils, mysql_utils
 
 def format_langs():
   langMap = {
-      'tool.networkDns.host': 'Host',
-      'tool.networkDns.aRecord': 'A record',
-      'tool.networkDns.cname': 'Cname',
-      'tool.networkDns.ptrRecord': 'Ptr record',
-      'tool.networkDns.nsRecord': 'Ns record',
-      'tool.networkDns.maxRecord': 'Max record',
-      'tool.networkDns.txtRecord': 'Txt record',
+
+      'tool.calcDogAge.dogAge': 'Dog age',
+      'tool.calcDogAge.dogModel': 'Dog type',
+      'tool.calcDogAge.age': 'age',
+      'tool.calcDogAge.month': 'month',
+      'tool.calcDogAge.humanAge': 'Human age',
+
+      'tool.calcCatAge.catAge': 'Cat age',
 
   }
 
@@ -58,8 +59,8 @@ def run():
   # print('\n' * 3)
   # export_role_permission()
 
-  # format_langs()
-  load_user_id()
+  format_langs()
+  # load_user_id()
 
 
 if __name__ == '__main__':

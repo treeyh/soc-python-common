@@ -59,8 +59,12 @@ def main():
   # sql_export_domain.format_insert_sql()  # select 语句
   # sql_export_domain.format_column_list()
 
-  from soc_common.tools import test
-  test.run()
+  # from soc_common.tools import test
+  # test.run()
+
+  from soc_common.tools.toolkit.config import convert_unit
+
+  convert_unit.build_config()
 
   # pull_code.main()
   # from soc_common.tools.toolkit.lang import convert_lang_2_ts
