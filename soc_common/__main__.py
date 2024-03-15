@@ -19,6 +19,7 @@ from soc_common.tools.code.code_generate.python import generate_model_by_db
 from soc_common.tools.code.code_generate import sql_export_domain
 
 from soc_common.tools.git import pull_code
+from soc_common.tools.encrypt import ecc_demo
 
 
 def _parse_option():
@@ -62,15 +63,15 @@ def main():
   # from soc_common.tools import test
   # test.run()
 
-  from soc_common.tools.toolkit.config import convert_unit
-
-  convert_unit.build_config()
+  # from soc_common.tools.toolkit.config import convert_unit
+  # convert_unit.build_config()
 
   # pull_code.main()
   # from soc_common.tools.toolkit.lang import convert_lang_2_ts
   # from soc_common.tools import rename_img_name
   # # convert_lang_2_ts.run()
   # rename_img_name.main()
+  ecc_demo.run()
 
 
 if __name__ == '__main__':
