@@ -124,12 +124,12 @@ class MysqlUtils(object):
 
   def _get_count_sql(self, sql):
     sql = sql.lower()
-    a = ' select count(1) ' + sql[sql.find(' from '):-1]
+    a = ' select count(*) ' + sql[sql.find(' from '):-1]
     return a
 
   def _get_page_sql(self, sql, page, size):
     f = (page - 1) * size
-    sql = sql + ' limit ' + str(f) + ', ' + str(size)
+    sql = sql + ' limit ' + str(size) + ' offset ' + str(f)
     return sql
 
   def find_page(self, sql, params=(), mapcol=None, page=1, size=15):

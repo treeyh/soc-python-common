@@ -70,6 +70,7 @@ atlassian-ide-plugin.xml
 .nbattrs
 
 # Python venv
+/.venv
 /venv
 /dd
 

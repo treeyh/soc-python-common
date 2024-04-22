@@ -11,15 +11,16 @@ from typing import Dict, List
 from soc_common.config import config
 from soc_common.utils import log_utils, file_utils
 from soc_common.model import ds_model, config_model
-from soc_common.tools.export_db_model import mysql_export_db_model
-from soc_common.tools.code.code_generate import sql_export_domain
-from soc_common.tools.code.code_generate.golang import generate_bo_po_by_db
-from soc_common.tools.code.code_generate.python import generate_model_by_db
+from soc_common.tools.export_db_model import postgresql_export_db_model
+# from soc_common.tools.code.code_generate import sql_export_domain
+# from soc_common.tools.code.code_generate.golang import generate_bo_po_by_db
+# from soc_common.tools.code.code_generate.python import generate_model_by_db
 
-from soc_common.tools.code.code_generate import sql_export_domain
+# from soc_common.tools.code.code_generate import sql_export_domain
 
-from soc_common.tools.git import pull_code
-from soc_common.tools.encrypt import ecc_demo
+# from soc_common.tools.git import pull_code
+# from soc_common.tools.encrypt import ecc_demo
+from soc_common.tools.gitlab import gitlab_utils
 
 
 def _parse_option():
@@ -71,7 +72,13 @@ def main():
   # from soc_common.tools import rename_img_name
   # # convert_lang_2_ts.run()
   # rename_img_name.main()
-  ecc_demo.run()
+  # ecc_demo.run()
+  # gitlab_utils.get_project_access()
+
+  dbConf = config_model.DataSourceConfig(dsType=config.DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_expense_tracker_db',
+                                  user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=[], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
+  postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
+  postgresqlExp.export_model(dbConf)
 
 
 if __name__ == '__main__':
