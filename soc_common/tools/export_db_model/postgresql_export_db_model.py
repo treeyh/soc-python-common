@@ -164,7 +164,7 @@ ORDER BY
         nullFlag = str_utils.format_bytes_to_str(d['is_nullable'])
         char_length = str_utils.format_bytes_to_str(d['character_maximum_length'])
         indexFlag = 0 if fname == str_utils.format_bytes_to_str(d['pk_column_name']) else 1
-        autoInc = True if default != None and 'nextval' in default and '_seq' in default else False
+        autoInc = True if default != None and 'nextval' in default else False
         field_index = int(str_utils.format_bytes_to_str(d['dtd_identifier']))
 
         if char_length != None:
