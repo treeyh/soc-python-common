@@ -11,7 +11,7 @@ from typing import Dict, List
 from soc_common.config import config
 from soc_common.utils import file_utils, date_utils
 from soc_common.model import ds_model, config_model
-from soc_common.tools.export_db_model import mysql_export_db_model
+from soc_common.tools.export_db_model import mysql_export_db_model, postgresql_export_db_model
 
 
 class GolangBoPoGenerate(object):
@@ -41,7 +41,11 @@ class GolangBoPoGenerate(object):
     Returns:
         [type]: [description]
     """
-    ds = mysql_export_db_model.MysqlExportDbModel().export_model(conf)
+    if conf.dsType == 'mysql':
+      ds = mysql_export_db_model.MysqlExportDbModel().export_model(conf)
+    else:
+      ds = postgresql_export_db_model.PostgresqlExportDbModel().export_model(conf=conf)
+
     poPath = os.path.join(self.exportPath, conf.code, 'po')
     boPath = os.path.join(self.exportPath, conf.code, 'bo')
     file_utils.mkdirs(poPath, True)

@@ -58,6 +58,8 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
                                   user='root', passwd='123456', includes=[], name='MariaDB测试导出数据库', code='MariaDB-export', comment='MariaDB测试导出数据库'),
     config_model.DataSourceConfig(dsType=DsClickHouse, host='10.0.3.94', port=9000, db='system',
                                   user='default', passwd='123456', includes=[], name='clickhouse测试环境', code='clickhouse-test', comment='clickhouse测试环境'),
+    config_model.DataSourceConfig(dsType=DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_expense_tracker_db',
+                                  user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_expense_tracker_db'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库'),
 ]
 
 

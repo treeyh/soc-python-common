@@ -13,7 +13,7 @@ from soc_common.utils import log_utils, file_utils
 from soc_common.model import ds_model, config_model
 from soc_common.tools.export_db_model import postgresql_export_db_model
 # from soc_common.tools.code.code_generate import sql_export_domain
-# from soc_common.tools.code.code_generate.golang import generate_bo_po_by_db
+from soc_common.tools.code.code_generate.golang import generate_bo_po_by_db
 # from soc_common.tools.code.code_generate.python import generate_model_by_db
 
 # from soc_common.tools.code.code_generate import sql_export_domain
@@ -51,10 +51,10 @@ def main():
   # shutil.rmtree(path=config.ExportPath, ignore_errors=True)
 
   # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_po_bo_file(config.exportDsConfig[0])
+  # generate.generate_po_bo_file(config.exportDsConfig[3])
 
   # generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_model_file(config.exportDsConfig[0])
+  # generate.generate_model_file(config.exportDsConfig[3])
 
   # sql_export_domain.format_select_sql()  # select 语句
   # sql_export_domain.format_update_sql()  # select 语句
@@ -76,7 +76,7 @@ def main():
   # gitlab_utils.get_project_access()
 
   dbConf = config_model.DataSourceConfig(dsType=config.DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_expense_tracker_db',
-                                  user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=[], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
+                                  user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_expense_tracker_db'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
   postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
   postgresqlExp.export_model(dbConf)
 

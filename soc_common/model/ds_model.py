@@ -13,7 +13,7 @@ class FieldModel(object):
       object ([type]): [description]
   """
 
-  def __init__(self, name: str, ftype: str, column_type: str, length: int = 0, scale: int = 0, default: str = '', nullFlag: bool = False, comment: str = '', charset: str = '', collation_name: str = '', indexFlag: int = 0, indexName: str = '', autoInc: bool = False, in_partition_key_flag: int = 0, in_sorting_key_flag: int = 0, in_primary_key_flag: int = 0, in_sampling_key_flag: int = 0):
+  def __init__(self, name: str, ftype: str, column_type: str, length: int = 0, scale: int = 0, default: str = '', nullFlag: str = 'YES', comment: str = '', charset: str = '', collation_name: str = '', indexFlag: int = 0, indexName: str = '', autoInc: bool = False, in_partition_key_flag: int = 0, in_sorting_key_flag: int = 0, in_primary_key_flag: int = 0, in_sampling_key_flag: int = 0, field_index: int = -1):
     """初始化
 
     Args:
@@ -23,7 +23,7 @@ class FieldModel(object):
         length (int, optional): 长度. Defaults to 0.
         scale (int, optional): 小数点后几位. Defaults to 0.
         default (str, optional): 默认值. Defaults to ''.
-        nullFlag (bool, optional): 是否可为空. Defaults to False.
+        nullFlag (string, optional): 是否可为空, 不允许为空为NO. Defaults to YES.
         comment (str, optional): 描述. Defaults to ''.
         charset (str, optional): 字符集. Defaults to ''.
         collation_name (str, optional): 字符集. Defaults to 'utf8'.
@@ -34,6 +34,7 @@ class FieldModel(object):
         in_sorting_key_flag (int, optional): 排序key标识. Defaults to 0.
         in_primary_key_flag (int, optional): 主键key标识. Defaults to 0.
         in_sampling_key_flag (int, optional): 抽样key标识. Defaults to 0.
+        field_index (int, optional): 列计数,供postgresql使用. Defaults to 0.
     """
     super(FieldModel, self).__init__()
     self.name = name
@@ -53,6 +54,7 @@ class FieldModel(object):
     self.in_sorting_key_flag = in_sorting_key_flag
     self.in_primary_key_flag = in_primary_key_flag
     self.in_sampling_key_flag = in_sampling_key_flag
+    self.field_index = field_index
 
   def get_markdown_table_row(self, dsType: str = 'mysql') -> str:
     """获取markdown表格行
@@ -153,17 +155,19 @@ class FieldModel(object):
     if None == self.default:
       none_flag = True
 
-    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext']:
+    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext', 'json', 'jsonb']:
       return '\'\'' if none_flag else '\'' + self.default + '\''
-    elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit']:
+    elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit', 'int2', 'int4']:
       return '0' if none_flag else self.default
-    elif c in ['bigint']:
+    elif c in ['bigint', 'int8']:
       return '0' if none_flag else self.default
-    elif c in ['float', 'double', 'boolean', 'decimal', 'peal']:
+    elif c in ['float', 'double', 'boolean', 'decimal', 'peal', 'numeric']:
       return '0.0' if none_flag else self.default
-    elif c in ['date', 'datetime', 'timestamp', 'time', 'year']:
+    elif c in ['boolean', 'bool']:
+      return None if none_flag else self.default
+    elif c in ['date', 'datetime', 'timestamp', 'timestamptz', 'time', 'year']:
       return 'datetime.now()'
-    return 'UnKnow'
+    return '\'\'' if none_flag else '\'' + self.default + '\''
 
   def comment_str(self, lineSpan: str = '<br />') -> str:
     """返回默认值str
@@ -199,17 +203,19 @@ class FieldModel(object):
     """
     c = self.ftype.lower()
     nullFlag = '' if 'NO' == self.nullFlag else '*'
-    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext']:
+    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext', 'json', 'jsonb']:
       return nullFlag+'string'
-    elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit']:
+    elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit', 'int2', 'int4']:
       return nullFlag+'int'
-    elif c in ['bigint']:
+    elif c in ['bigint', 'int8']:
       return nullFlag+'int64'
-    elif c in ['float', 'double', 'boolean', 'decimal', 'peal']:
+    elif c in ['float', 'double', 'decimal', 'peal', 'numeric']:
       return nullFlag+'float'
-    elif c in ['date', 'datetime', 'timestamp', 'time', 'year']:
+    elif c in ['boolean', 'bool']:
+      return nullFlag + 'bool'
+    elif c in ['date', 'datetime', 'timestamp', 'timestamptz', 'time', 'year']:
       return nullFlag+'time.Time'
-    return 'UnKnow'
+    return c
 
   def python_field_type(self) -> str:
     """输出python属性类型
@@ -219,17 +225,19 @@ class FieldModel(object):
     """
     c = self.ftype.lower()
 
-    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext']:
+    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext', 'json', 'jsonb']:
       return 'str'
-    elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit']:
+    elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit', 'int2', 'int4']:
       return 'int'
-    elif c in ['bigint']:
+    elif c in ['bigint', 'int8']:
       return 'int'
-    elif c in ['float', 'double', 'boolean', 'decimal', 'peal']:
+    elif c in ['float', 'double', 'decimal', 'peal', 'numeric']:
       return 'float'
-    elif c in ['date', 'datetime', 'timestamp', 'time', 'year']:
+    elif c in ['boolean', 'bool']:
+      return 'bool'
+    elif c in ['date', 'datetime', 'timestamp', 'timestamptz', 'time', 'year']:
       return 'datetime'
-    return 'UnKnow'
+    return c
 
   def go_attribute_gorm_json(self) -> str:
     """输出go属性特性 gorm和json
@@ -261,7 +269,7 @@ class TableModel(object):
       object ([type]): [description]
   """
 
-  def __init__(self, name: str, comment: str = '', collation_name: str = 'utf8', engine: str = '', fields: List[FieldModel] = [], create_script: str = ''):
+  def __init__(self, name: str, comment: str = '', collation_name: str = 'utf8', engine: str = '', fields: List[FieldModel] = [], create_script: str = '', table_schema: str = ''):
     """初始化
 
     Args:
@@ -271,6 +279,7 @@ class TableModel(object):
         engine (str, optional): db引擎. Defaults to ''.
         fields (List[FieldModel], optional): 字段列表. Defaults to [].
         create_script (str, optional): 创建脚本. Defaults to ''.
+        table_schema (str, optional): 表所属schema, 供postgresql使用. Defaults to ''.
     """
     super(TableModel, self).__init__()
     self.name = name
@@ -279,6 +288,7 @@ class TableModel(object):
     self.engine = engine
     self.fields = fields
     self.create_script = create_script
+    self.table_schema = table_schema
 
   def link_comment(self):
     """输出表名目录跳转链接
@@ -333,7 +343,7 @@ class TableModel(object):
 
   def __repr__(self):
     """返回一个对象的描述信息"""
-    return "{name:%s, comment:%s, collation_name:%s, engine:%s, fields:%s, create_script:%s}" % (self.name, self.comment, self.collation_name, self.engine, self.fields, self.create_script)
+    return "{name:%s, comment:%s, collation_name:%s, engine:%s, fields:%s, create_script:%s, table_schema:%s}" % (self.name, self.comment, self.collation_name, self.engine, self.fields, self.create_script, self.table_schema)
 
 
 class DbModel(object):
