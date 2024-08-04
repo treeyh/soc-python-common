@@ -69,16 +69,16 @@ def main():
 
   # pull_code.main()
   # from soc_common.tools.toolkit.lang import convert_lang_2_ts
-  # from soc_common.tools import rename_img_name
+  from soc_common.tools import rename_img_name
   # # convert_lang_2_ts.run()
-  # rename_img_name.main()
+  rename_img_name.main()
   # ecc_demo.run()
   # gitlab_utils.get_project_access()
 
-  dbConf = config_model.DataSourceConfig(dsType=config.DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_expense_tracker_db',
-                                  user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_expense_tracker_db'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
-  postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
-  postgresqlExp.export_model(dbConf)
+  # dbConf = config_model.DataSourceConfig(dsType=config.DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_expense_tracker_db',
+  #                                 user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_expense_tracker_db'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
+  # postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
+  # postgresqlExp.export_model(dbConf)
 
 
 if __name__ == '__main__':
