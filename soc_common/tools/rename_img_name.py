@@ -35,13 +35,15 @@ def get_img_create_time(path):
       tags = exifread.process_file(f)
       dt = tags.get('EXIF DateTimeOriginal', None) if tags.get(
           'EXIF DateTimeOriginal', None) != None else tags.get('Image DateTime', '')
-      if dt == '':
-        dt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(os.stat(path).st_birthtime))
+    if dt == '':
+      dt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(os.stat(path).st_mtime))
     dt = str(dt).replace(' ', '_').replace('-', '').replace(':', '').replace('b', '').replace('\'', '')
+    if len(dt) > 15:
+      return dt[0:15]
     return dt
   except Exception as e:
     print(traceback.format_exc())
-    dt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(os.stat(path).st_birthtime))
+    dt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(os.stat(path).st_mtime))
     dt = str(dt).replace(' ', '_').replace('-', '').replace(':', '').replace('b', '').replace('\'', '')
     return dt
   finally:
@@ -49,21 +51,30 @@ def get_img_create_time(path):
 
 
 def get_video_time(filename):
-  properties = propsys.SHGetPropertyStoreFromParsingName(filename)
-  dt = properties.GetValue(pscon.PKEY_Media_DateEncoded).GetValue()
-  if not isinstance(dt, datetime.datetime):
-    # In Python 2, PyWin32 returns a custom time type instead of
-    # using a datetime subclass. It has a Format method for strftime
-    # style formatting, but let's just convert it to datetime:
-    if dt == None:      
-      dt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(os.stat(filename).st_birthtime))
-      dt = str(dt).replace(' ', '_').replace('-', '').replace(':', '').replace('b', '').replace('\'', '')
-      return dt
+  try:
 
-    dt = datetime.datetime.fromtimestamp(int(dt))
-    dt = dt.replace(tzinfo=pytz.timezone('UTC'))
-  dt = dt.astimezone(datetime.timezone(datetime.timedelta(hours=8)))
-  return dt.strftime("%Y%m%d_%H%M%S")
+    properties = propsys.SHGetPropertyStoreFromParsingName(filename)
+    dt = properties.GetValue(pscon.PKEY_Media_DateEncoded).GetValue()
+    if not isinstance(dt, datetime.datetime):
+      # In Python 2, PyWin32 returns a custom time type instead of
+      # using a datetime subclass. It has a Format method for strftime
+      # style formatting, but let's just convert it to datetime:
+      if dt == None:
+        dt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(os.stat(filename).st_mtime))
+        dt = str(dt).replace(' ', '_').replace('-', '').replace(':', '').replace('b', '').replace('\'', '')
+        return dt
+
+      dt = datetime.datetime.fromtimestamp(int(dt))
+      dt = dt.replace(tzinfo=pytz.timezone('UTC'))
+    dt = dt.astimezone(datetime.timezone(datetime.timedelta(hours=8)))
+    return dt.strftime("%Y%m%d_%H%M%S")
+  except Exception as e:
+    # print("filename:"+filename + "; " + traceback.format_exc())
+    dt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(os.stat(filename).st_mtime))
+    dt = str(dt).replace(' ', '_').replace('-', '').replace(':', '').replace('b', '').replace('\'', '')
+    return dt
+  finally:
+    pass
 
 
 def get_video_duration(filename):
@@ -172,7 +183,7 @@ def rename_file(fileInfo):
   if 'nef' == suf or 'db' == suf:
     return None
 
-  if suf in ['png', 'jpg', 'jpeg', 'bmp', 'heic']:
+  if suf in ['png', 'jpg', 'jpeg', 'bmp', 'heic', 'dng']:
     rename_img(fileInfo)
     return
 
@@ -195,7 +206,7 @@ def walk2(path):
 
 
 def main():
-  path = u'F:\\2023-04-29安吉'
+  path = u'F:\\2024-07新疆'
 
   paths = walk2(path)
   cpu_count = multiprocessing.cpu_count()
@@ -203,13 +214,15 @@ def main():
   pool = multiprocessing.Pool(processes=cpu_count)
 
   print(pool.map(rename_file, paths))
-  # get_video_time('F:\\2023-04-29安吉\\安吉_安吉_安吉_安吉_安吉_安吉_安吉_安吉_安吉_安吉_安吉_安吉_5843d8e55362b3041476e03571861bec_118s_118s_118s_118s_118s_118s_118s_118s_118s_118s_118s_118s.mp4')
-  # get_img_create_time('F:\\2023-04-29安吉\\安吉_20230430_130733_1.jpg')
+
+  # dt = get_video_time('F:\\YH-iPhone14\\YH-iPhone0911.MOV')
+  
+  # dt = get_img_create_time('F:\\YH-iPhone14\\YH-iPhone2676.DNG')
+  # print(dt)
 
 
 #
-# pre_name = u'天天出生'
-pre_name = u'安吉'
+pre_name = u'新疆'
 
 # pre_name = u'桃花村鲜花港'
 
