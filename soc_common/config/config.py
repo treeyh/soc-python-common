@@ -70,7 +70,7 @@ class CodeGenerateByDb:
   exportPath = os.path.join(ExportPath, 'golang')
 
   # 生成对象是需要去除的表名前缀
-  ignoreTablePres = ['oscm_', 'osa_', 'osm_', 'ost_', 't_']
+  ignoreTablePres = ['et_']
 
   # 需要生成对象的表名列表，为空则库中所有表都生成
   exportTables = []

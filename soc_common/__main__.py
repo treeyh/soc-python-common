@@ -50,8 +50,8 @@ def main():
 
   # shutil.rmtree(path=config.ExportPath, ignore_errors=True)
 
-  # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_po_bo_file(config.exportDsConfig[3])
+  generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
+  generate.generate_po_bo_file(config.exportDsConfig[3])
 
   # generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
   # generate.generate_model_file(config.exportDsConfig[3])
@@ -75,10 +75,10 @@ def main():
   # ecc_demo.run()
   # gitlab_utils.get_project_access()
 
-  dbConf = config_model.DataSourceConfig(dsType=config.DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_expense_tracker_db',
-                                  user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_expense_tracker_db'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
-  postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
-  postgresqlExp.export_model(dbConf)
+  # dbConf = config_model.DataSourceConfig(dsType=config.DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_expense_tracker_db',
+  #                                 user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_expense_tracker_db'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
+  # postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
+  # postgresqlExp.export_model(dbConf)
 
 
 if __name__ == '__main__':

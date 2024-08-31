@@ -4,7 +4,6 @@ import sys
 import logging
 import traceback
 
-import psycopg
 from psycopg_pool import ConnectionPool
 
 
@@ -32,7 +31,7 @@ class PostgresqlUtils(object):
       self.pool = ConnectionPool(self.dsn)
       self.pool.open()
     except BaseException as e:
-      logging.error('Postgresql init Error %d: %s' % (e.args[0], e.args[1]))
+      logging.error('Postgresql init Error %s' % (e.args))
       sys.exit(1)
 
 
@@ -48,7 +47,7 @@ class PostgresqlUtils(object):
         result = self._result_to_map(yz, mapcol)
         return result
       except BaseException as e:
-        logging.error('Error %d: %s' % (e.args[0], e.args[1]))
+        logging.error('Error %s' % (e.args))
         return result
 
   def find_all(self, sql, params=(), mapcol=None):
@@ -64,7 +63,7 @@ class PostgresqlUtils(object):
           result.append(self._result_to_map(y, mapcol))
         return result
       except BaseException as e:
-        logging.error('sql %s, %s ;Error %d: %s' % (sql, str(params), e.args[0], e.args[1]))
+        logging.error('sql %s, %s ;Error %s' % (sql, str(params), e.args))
         return result
 
   def insert_or_update_or_delete(self, sql, params=(), isbackinsertid=False):
@@ -72,15 +71,15 @@ class PostgresqlUtils(object):
     with self.pool.connection() as conn:
       try:
         if isbackinsertid == True:
-          conn.execute(sql, params)
-          yz = conn.fetchone()[0]
+          cursor = conn.execute(sql, params)
+          yz = cursor.fetchone()
           conn.commit()
           return yz[0]
         else:
           conn.execute(sql, params).commit()
           return 0
       except BaseException as e:
-        logging.error('Error %d: %s, %s' % (e.args[0], e.args[1], traceback.format_exc()))
+        logging.error('Error %s, %s, %s, %s' % (e.args, sql, params, traceback.format_exc()))
         return 1
 
   def insert_more(self, sql, params=[]):
@@ -89,7 +88,7 @@ class PostgresqlUtils(object):
         conn.executemany(sql, params).commit()
         return 0
       except BaseException as e:
-        logging.error('Error %d: %s, %s' % (e.args[0], e.args[1], traceback.format_exc()))
+        logging.error('Error %s, %s' % (e.args, traceback.format_exc()))
         return 1
 
   def _get_count_sql(self, sql):
