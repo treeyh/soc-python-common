@@ -69,9 +69,9 @@ def main():
 
   # pull_code.main()
   # from soc_common.tools.toolkit.lang import convert_lang_2_ts
-  # from soc_common.tools import rename_img_name
+  from soc_common.tools import rename_img_name
   # # convert_lang_2_ts.run()
-  # rename_img_name.main()
+  rename_img_name.main()
   # ecc_demo.run()
   # gitlab_utils.get_project_access()
 
