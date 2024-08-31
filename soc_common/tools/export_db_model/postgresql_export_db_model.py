@@ -33,7 +33,7 @@ class PostgresqlExportDbModel(export_db_model.ExportDbModel):
 
     dsm = self.fill_table_fields(conf, dsm)
     
-    print(dsm)
+    # print(dsm)
 
     return dsm
 
@@ -140,6 +140,7 @@ ORDER BY
       postgresqlUtils = postgresql_utils.get_postgresql_utils(
         host=conf.host, port=conf.port, user=conf.user, passwd=conf.passwd, db=db.name)
       data = postgresqlUtils.find_all(table_column_sql, (), table_column_cols)
+      print(data)
       tables: ds_model.TableModel = []
       tableKey = ''
       table = None
@@ -167,6 +168,8 @@ ORDER BY
         autoInc = True if default != None and 'nextval' in default else False
         field_index = int(str_utils.format_bytes_to_str(d['dtd_identifier']))
 
+        default = self.format_defaut_value(defaultValue=default)
+
         if char_length != None:
           column_type = '%s(%s)' % (ftype, char_length)
           length = int(char_length)
@@ -193,6 +196,19 @@ ORDER BY
       db.tables = tables
 
     return dsModel
+  
+  def format_defaut_value(self, defaultValue:str):
+    if defaultValue is None or 'nextval' in defaultValue:
+      return None
+    vs = defaultValue.split('::')
+    if len(vs) > 1 and 'char' in vs[1]:
+      if len(vs[0]) > 1:
+        return vs[0][1:-1]
+      else:
+        return vs[0]
+    if 'false' == defaultValue or 'true' == defaultValue:
+      return True if 'true' == defaultValue else False
+    return defaultValue
 
   def get_create_script(self, conn: postgresql_utils.PostgresqlUtils, dbName: str, tableName: str) -> str:
     """获取表的创建脚本

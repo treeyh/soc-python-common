@@ -11,7 +11,7 @@ from typing import Dict, List
 from soc_common.config import config
 from soc_common.utils import file_utils, date_utils
 from soc_common.model import ds_model, config_model
-from soc_common.tools.export_db_model import mysql_export_db_model
+from soc_common.tools.export_db_model import mysql_export_db_model, postgresql_export_db_model
 
 
 class PythonModelGenerate(object):
@@ -39,8 +39,11 @@ class PythonModelGenerate(object):
     Returns:
         [type]: [description]
     """
-    ds = mysql_export_db_model.MysqlExportDbModel().export_model(conf)
-    print(ds)
+    if conf.dsType == config.DsMysql or conf.dsType == config.DsMariaDB:
+      ds = mysql_export_db_model.MysqlExportDbModel().export_model(conf)
+    else:
+      ds = postgresql_export_db_model.PostgresqlExportDbModel().export_model(conf=conf)
+    
     modelPath = os.path.join(self.exportPath, conf.code, 'model')
     file_utils.mkdirs(modelPath, True)
     for db in ds.dbs:
