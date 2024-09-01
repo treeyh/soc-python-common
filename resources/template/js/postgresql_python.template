@@ -1,0 +1,18 @@
+# 代码生成器自动生成
+
+{% set span = joiner(", ") %}
+SELECT {% for fl in tb.fields %}{{span()}}"{{fl.name}}"{% endfor %} FROM "{{tb.name}}" WHERE ;
+
+SELECT {{ tb.fields | join(", ", attribute="name") }} FROM "{{tb.name}}" WHERE ;
+
+{% set span = joiner(", ") %}
+[{% for fl in tb.fields %}{{span()}}'{{fl.name}}'{% endfor %}]
+
+{% set span = joiner(", ") %}
+{% set span2 = joiner(", ") %}
+INSERT INTO "{{tb.name}}"({% for fl in tb.fields %}{{span()}}"{{fl.name}}"{% endfor %}) VALUES({% for fl in tb.fields %}{{span2()}}%({{fl.name}})s{% endfor %}) ;
+
+{% set span = joiner(", ") %}
+UPDATE "{{tb.name}}" SET {% for fl in tb.fields %}{{span()}}"{{fl.name}}"=%({{fl.name}})s{% endfor %} WHERE ;
+
+DELETE FROM "{{tb.name}}" WHERE  ;

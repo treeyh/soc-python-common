@@ -14,7 +14,7 @@ from soc_common.model import ds_model, config_model
 from soc_common.tools.export_db_model import mysql_export_db_model, postgresql_export_db_model
 
 
-class PythonModelGenerate(object):
+class SqlModelGenerate(object):
 
   def __init__(self, templatePath: str, exportPath: str):
     """初始化
@@ -23,13 +23,13 @@ class PythonModelGenerate(object):
         templatePath (str): 模板路径
         exportPath (str): 输出路径
     """
-    filePath = os.path.join(templatePath, 'python')
+    filePath = os.path.join(templatePath, 'js')
     self.env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(filePath))
-    self.modelTemplate = self.env.get_template('model.template')
+    self.postgresqlPythonTemplate = self.env.get_template('postgresql_python.template')
     self.exportPath = exportPath
 
-  def generate_model_file(self, conf: config_model.DataSourceConfig):
+  def generate_python_file(self, conf: config_model.DataSourceConfig):
     """生成bo po文件
 
     Args:
@@ -44,13 +44,13 @@ class PythonModelGenerate(object):
     else:
       ds = postgresql_export_db_model.PostgresqlExportDbModel().export_model(conf=conf)
     
-    modelPath = os.path.join(self.exportPath, conf.code, 'model')
-    file_utils.mkdirs(modelPath, True)
+    templatePath = os.path.join(self.exportPath, conf.code, 'python')
+    file_utils.mkdirs(templatePath, True)
     for db in ds.dbs:
       for table in db.tables:
-        modelFilePath = os.path.join(modelPath, table.go_model_file_name() + '.py')
-        modelContent = self.modelTemplate.render(tb=table)
-        file_utils.write_file(filePath=modelFilePath, content=modelContent)
+        templateFilePath = os.path.join(templatePath, table.go_model_file_name() + '.sql')
+        modelContent = self.postgresqlPythonTemplate.render(tb=table)
+        file_utils.write_file(filePath=templateFilePath, content=modelContent)
 
-    return modelPath
+    return templatePath
   
