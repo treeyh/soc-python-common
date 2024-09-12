@@ -54,8 +54,8 @@ def main():
   # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
   # generate.generate_po_bo_file(config.exportDsConfig[3])
 
-  # generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_model_file(config.exportDsConfig[4])
+  generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
+  generate.generate_model_file(config.exportDsConfig[4])
 
   generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
   generate.generate_python_file(config.exportDsConfig[4])

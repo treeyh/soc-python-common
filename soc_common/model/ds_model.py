@@ -165,8 +165,10 @@ class FieldModel(object):
       return '0.0' if none_flag else self.default
     elif c in ['boolean', 'bool']:
       return None if none_flag else self.default
-    elif c in ['date', 'datetime', 'timestamp', 'timestamptz', 'time', 'year']:
+    elif c in ['datetime', 'timestamp', 'timestamptz', 'time', 'year']:
       return 'datetime.now()'
+    elif c in ['date']:
+      return 'date.today()'
     return '\'\'' if none_flag else '\'' + self.default + '\''
 
   def comment_str(self, lineSpan: str = '<br />') -> str:
@@ -235,8 +237,10 @@ class FieldModel(object):
       return 'float'
     elif c in ['boolean', 'bool']:
       return 'bool'
-    elif c in ['date', 'datetime', 'timestamp', 'timestamptz', 'time', 'year']:
+    elif c in ['datetime', 'timestamp', 'timestamptz', 'time', 'year']:
       return 'datetime'
+    elif c in ['date']:
+      return 'date'
     return c
 
   def go_attribute_gorm_json(self) -> str:

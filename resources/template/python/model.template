@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from datetime import datetime
+from datetime import datetime, date
 
 # 代码生成器自动生成
 
