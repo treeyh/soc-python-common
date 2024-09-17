@@ -201,7 +201,7 @@ ORDER BY
     if defaultValue is None or 'nextval' in defaultValue:
       return None
     vs = defaultValue.split('::')
-    if len(vs) > 1 and 'char' in vs[1]:
+    if len(vs) > 1 and ('char' in vs[1] or 'json' in vs[1]):
       if len(vs[0]) > 1:
         return vs[0][1:-1]
       else:
