@@ -54,11 +54,11 @@ def main():
   # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
   # generate.generate_po_bo_file(config.exportDsConfig[3])
 
-  generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_model_file(config.exportDsConfig[4])
+  # generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
+  # generate.generate_model_file(config.exportDsConfig[4])
 
-  generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_python_file(config.exportDsConfig[4])
+  # generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
+  # generate.generate_python_file(config.exportDsConfig[4])
 
   # sql_export_domain.format_select_sql()  # select 语句
   # sql_export_domain.format_update_sql()  # select 语句
@@ -83,6 +83,10 @@ def main():
   #                                 user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_expense_tracker_db'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
   # postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
   # postgresqlExp.export_model(dbConf)
+
+  from soc_common.tools.download import download_img
+
+  download_img.download_imgs()
 
 
 if __name__ == '__main__':
