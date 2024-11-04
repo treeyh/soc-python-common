@@ -4,6 +4,8 @@ import os
 import logging
 import logging.handlers
 
+from loguru import logger
+
 from soc_common.utils import file_utils
 
 
@@ -32,6 +34,10 @@ __logger = False
 __default_logger = None
 
 __folder_path = ''
+
+# https://github.com/Delgan/loguru
+__default_format1 = '{time} - {level} - {message}'
+
 
 
 def init(path: str, level: int = logging.INFO):
@@ -76,6 +82,10 @@ def get_logger(logFile: str = '', level: int = logging.INFO, formatter: str = __
 
   _loggers[logFile] = logger
   return logger
+
+
+
+
 
 
 if __name__ == '__main__':
