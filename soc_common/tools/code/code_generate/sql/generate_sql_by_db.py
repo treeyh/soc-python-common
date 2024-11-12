@@ -23,14 +23,15 @@ class SqlModelGenerate(object):
         templatePath (str): 模板路径
         exportPath (str): 输出路径
     """
-    filePath = os.path.join(templatePath, 'js')
+    filePath = os.path.join(templatePath, 'sql')
     self.env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(filePath))
-    self.postgresqlPythonTemplate = self.env.get_template('postgresql_python.template')
+    self.postgresqlTemplate = self.env.get_template('postgresql.template')
+    self.mysqlTemplate = self.env.get_template('postgresql.template')
     self.exportPath = exportPath
 
-  def generate_python_file(self, conf: config_model.DataSourceConfig):
-    """生成bo po文件
+  def generate_sql_file(self, conf: config_model.DataSourceConfig):
+    """生成sql文件
 
     Args:
         conf (config_model.DataSourceConfig): [description]
@@ -44,13 +45,21 @@ class SqlModelGenerate(object):
     else:
       ds = postgresql_export_db_model.PostgresqlExportDbModel().export_model(conf=conf)
     
-    templatePath = os.path.join(self.exportPath, conf.code, 'python')
+    templatePath = os.path.join(self.exportPath, conf.code, 'sql')
     file_utils.mkdirs(templatePath, True)
     for db in ds.dbs:
       for table in db.tables:
         templateFilePath = os.path.join(templatePath, table.go_model_file_name() + '.sql')
-        modelContent = self.postgresqlPythonTemplate.render(tb=table)
+
+
+        if conf.dsType == config.DsMysql or conf.dsType == config.DsMariaDB:
+          modelContent = self.mysqlTemplate.render(tb=table)
+        else:
+          modelContent = self.postgresqlTemplate.render(tb=table)
+        
         file_utils.write_file(filePath=templateFilePath, content=modelContent)
 
     return templatePath
+  
+
   

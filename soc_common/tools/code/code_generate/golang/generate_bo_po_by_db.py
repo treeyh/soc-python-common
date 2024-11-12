@@ -41,7 +41,7 @@ class GolangBoPoGenerate(object):
     Returns:
         [type]: [description]
     """
-    if conf.dsType == 'mysql':
+    if conf.dsType == config.DsMysql or conf.dsType == config.DsMariaDB:
       ds = mysql_export_db_model.MysqlExportDbModel().export_model(conf)
     else:
       ds = postgresql_export_db_model.PostgresqlExportDbModel().export_model(conf=conf)
