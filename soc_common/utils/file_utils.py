@@ -7,6 +7,8 @@ import traceback
 
 import shutil
 
+from pathlib import Path
+
 
 # # http://stackoverflow.com/questions/847850/cross-platform-way-of-getting-temp-directory-in-python
 # 'filename': os.path.join(tempfile.gettempdir(), 'glances.log')
@@ -125,8 +127,7 @@ def read_all_file(filePath, method='r', encoding='utf-8'):
   finally:
     fh.close()
 
-
-def read_all_lines_file(filePath, method='r', encoding='utf-8'):
+def read_all_lines_file(filePath:str, method:str='r', encoding:str='utf-8'):
   '''
       读取所有文件，一次性读取所有内容， 文件不存在返回None
       filePath：文件路径
@@ -134,10 +135,9 @@ def read_all_lines_file(filePath, method='r', encoding='utf-8'):
   '''
   if not exists_file(filePath=filePath):
     return None
-  fh = open(filePath, method, encoding=encoding)
   try:
-    c = fh.readlines()
-    return c
+    fh = open(filePath, method, encoding=encoding)
+    return fh.readlines()
   finally:
     fh.close()
 
@@ -235,12 +235,43 @@ def get_url_file_name(path):
   return os.path.basename(path.split('?')[0])
 
 
-def get_file_suffix(path):
-  '''
-      获取文件后缀
-      path：文件路径，可使用__file__
-  '''
-  return os.path.splitext(path)[1][1:]
+# def get_file_suffix(path):
+#   '''
+#       获取文件后缀
+#       path：文件路径，可使用__file__
+#   '''
+#   return os.path.splitext(path)[1][1:]
+
+
+def get_file_suffix(path:str) -> str:
+  """获取文件后缀
+
+  Args:
+      path (str): 文件路径
+
+  Returns:
+      str: 文件后缀,带"."
+  """  
+  # 文件路径
+  file_path = Path(path)
+  # 获取文件后缀
+  return file_path.suffix
+
+
+def get_file_stem(path:str) -> str:
+  """获取无后缀文件名
+
+  Args:
+      path (str): 文件路径
+
+  Returns:
+      str: 无后缀文件名
+  """  
+  # 文件路径
+  file_path = Path(path)
+  # 获取文件后缀
+  return file_path.stem
+
 
 
 def get_folder_sep():

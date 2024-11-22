@@ -4,6 +4,8 @@ import sys
 import os
 import time
 
+import inspect
+
 import subprocess
 
 import platform
@@ -41,6 +43,15 @@ work_path = os.path.realpath(os.path.dirname(__file__))
 appname_path = os.path.split(sys.argv[0])[0]
 sys_prefix = os.path.realpath(os.path.dirname(appname_path))
 
+
+def get_current_function_name(level=0):
+  """获取当前方法名或调用链上的方法名
+  Args:
+      level (int): 0 表示当前方法，1 表示上一级调用方法，依次类推。
+  Returns:
+      str: 方法名
+  """
+  return inspect.stack()[level + 1].function
 
 def add_path(path):
   '''
