@@ -135,12 +135,12 @@ def rename_img(imgInfo):
     dt = imgInfo[1][0:imgInfo[1].rfind('.')]
 
   suf = file_utils.get_file_suffix(imgInfo[1])
-  nef = 'NEF'
+  nef = '.NEF'
 
-  newImgPath = os.path.join(imgInfo[0], pre_name+'_'+dt+'.'+suf)
+  newImgPath = os.path.join(imgInfo[0], pre_name+'_'+dt+suf)
 
   oldNefPath = os.path.join(imgInfo[0], imgInfo[1].replace(suf, nef))
-  newNefPath = os.path.join(imgInfo[0], pre_name+'_'+dt+'.'+nef)
+  newNefPath = os.path.join(imgInfo[0], pre_name+'_'+dt+nef)
 
   if not file_utils.is_file(newImgPath):
     rename(olgImgPath, newImgPath, oldNefPath, newNefPath)
@@ -148,8 +148,8 @@ def rename_img(imgInfo):
 
   for i in range(1, 100):
 
-    newImgPath = os.path.join(imgInfo[0], pre_name+'_'+dt+'_'+str(i)+'.'+suf)
-    newNefPath = os.path.join(imgInfo[0], pre_name+'_'+dt+'_'+str(i)+'.'+nef)
+    newImgPath = os.path.join(imgInfo[0], pre_name+'_'+dt+'_'+str(i)+suf)
+    newNefPath = os.path.join(imgInfo[0], pre_name+'_'+dt+'_'+str(i)+nef)
 
     if not file_utils.is_file(newImgPath):
       rename(olgImgPath, newImgPath, oldNefPath, newNefPath)
@@ -170,7 +170,7 @@ def rename_video(imgInfo):
 
   suf = file_utils.get_file_suffix(imgInfo[1])
 
-  newVideoPath = os.path.join(imgInfo[0], pre_name+'_'+dt+'.'+suf)
+  newVideoPath = os.path.join(imgInfo[0], pre_name+'_'+dt+suf)
 
   rename(filePath, newVideoPath)
 
@@ -180,14 +180,14 @@ def rename_file(fileInfo):
 
   suf = file_utils.get_file_suffix(fileInfo[1]).lower()
 
-  if 'nef' == suf or 'db' == suf:
+  if '.nef' == suf or '.db' == suf:
     return None
 
-  if suf in ['png', 'jpg', 'jpeg', 'bmp', 'heic', 'dng']:
+  if suf in ['.png', '.jpg', '.jpeg', '.bmp', '.heic', '.dng']:
     rename_img(fileInfo)
     return
 
-  if suf in ['flv', 'avi', 'mov', 'mp4', 'wmv', 'mpeg', 'mpg']:
+  if suf in ['.flv', '.avi', '.mov', '.mp4', '.wmv', '.mpeg', '.mpg']:
     rename_video(fileInfo)
     return
   print('no match path: '+ os.path.join(fileInfo[0], fileInfo[1]))
@@ -206,7 +206,7 @@ def walk2(path):
 
 
 def main():
-  path = u'F:\\2024-07新疆'
+  path = u'F:\\12'
 
   paths = walk2(path)
   cpu_count = multiprocessing.cpu_count()
@@ -222,7 +222,7 @@ def main():
 
 
 #
-pre_name = u'新疆'
+pre_name = u'2009黄山'
 
 # pre_name = u'桃花村鲜花港'
 

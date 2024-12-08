@@ -58,7 +58,7 @@ def main():
   # generate.generate_model_file(config.exportDsConfig[4])
 
   # generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_sql_file(config.exportDsConfig[5])
+  # generate.generate_sql_file(config.exportDsConfig[4])
 
   # sql_export_domain.format_select_sql()  # select 语句
   # sql_export_domain.format_update_sql()  # select 语句
@@ -73,16 +73,16 @@ def main():
 
   # pull_code.main()
   # from soc_common.tools.toolkit.lang import convert_lang_2_ts
-  # from soc_common.tools import rename_img_name
-  # # # convert_lang_2_ts.run()
-  # rename_img_name.main()
+  # # convert_lang_2_ts.run()
+  from soc_common.tools import rename_img_name
+  rename_img_name.main()
   # ecc_demo.run()
   # gitlab_utils.get_project_access()
 
   # dbConf = config_model.DataSourceConfig(dsType=config.DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_question_db_local',
   #                                 user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_question_db_local'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
-  generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_po_bo_file(config.exportDsConfig[5])
+  # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
+  # generate.generate_po_bo_file(config.exportDsConfig[5])
   
   # postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
   # postgresqlExp.export_model(dbConf)

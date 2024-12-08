@@ -60,8 +60,8 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
                                   user='default', passwd='123456', includes=[], name='clickhouse测试环境', code='clickhouse-test', comment='clickhouse测试环境'),
     config_model.DataSourceConfig(dsType=DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_question_db_local',
                                   user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_question_db_local'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库'),
-    config_model.DataSourceConfig(dsType=DsPostgreSQL, host='127.0.0.1', port=5432, db='tree_trader_db',
-                                  user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['tree_trader_db'], excludes=[], name='测试数据库', code='export', comment='测试导出数据库'),
+    config_model.DataSourceConfig(dsType=DsPostgreSQL, host='192.168.7.160', port=5432, db='soc_trader_db',
+                                  user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_trader_db'], excludes=[], name='测试数据库', code='export', comment='测试导出数据库'),
     config_model.DataSourceConfig(dsType=DsMysql, host='1', port=3306, db='snake_dev',
                                   user='root', passwd='Admin@1234', includes=['snake_dev'], name='Snake', code='Snake-export', comment='Snake'),
 ]
@@ -74,7 +74,7 @@ class CodeGenerateByDb:
   exportPath = os.path.join(ExportPath, 'golang')
 
   # 生成对象是需要去除的表名前缀
-  ignoreTablePres = ['cloud_', 'chk_', 'que_soc_', 'soc_']
+  ignoreTablePres = ['cloud_', 'chk_', 'que_soc_', 'soc_', 'st_', 'tt_']
 
   # 需要生成对象的表名列表，为空则库中所有表都生成
   exportTables = []
