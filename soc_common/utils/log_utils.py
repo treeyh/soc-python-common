@@ -39,6 +39,7 @@ __default_logger = None
 __folder_path = ''
 
 # https://github.com/Delgan/loguru
+# https://www.cnblogs.com/struggleMan/p/17510494.html
 __default_format1 = '{time} - {level} - {message}'
 
 
@@ -104,6 +105,7 @@ def log_json_format(record):
       "time": record["time"].strftime("%Y-%m-%dT%H:%M:%S.%f%Z"),
       "pid": record["process"].id,
       "file": record["file"].name,
+      "thread": record["thread"].id,
       "class": record["name"],
       "line": record["line"],
       "level": record["level"].name,
