@@ -8,8 +8,9 @@
 @version        :1.0
 '''
 
-list1 = ''' '''
-list2 = ''' '''
+list1 = '''i-uf6agx'''
+
+list2 = '''i-uf6645tooe'''
 
 def compare_list():
   global list1, list2
@@ -30,7 +31,7 @@ def compare_list():
       print(l)
 
 
-_list = ''''''
+_list = '''i-uf6iqojec11nth	2025-01-17T16:00Z'''
 
 
 def get_date():
@@ -41,7 +42,7 @@ def get_date():
     ls = l.split('	')
     lm[ls[0]] = ls[1]
   
-  es = ''''''
+  es = '''i-uf66'''
 
   ess = es.split('\n')
   print(ess)
