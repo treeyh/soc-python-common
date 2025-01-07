@@ -74,8 +74,10 @@ def main():
   # pull_code.main()
   # from soc_common.tools.toolkit.lang import convert_lang_2_ts
   # # convert_lang_2_ts.run()
-  from soc_common.tools import rename_img_name
-  rename_img_name.main()
+
+  # from soc_common.tools import rename_img_name
+  # rename_img_name.main()
+
   # ecc_demo.run()
   # gitlab_utils.get_project_access()
 
@@ -94,8 +96,14 @@ def main():
   # key = crypto_utils.get_aes256_key()
   # print(f"AES-256 密钥: {key}")
   # print(type(key))
-  # new_key = crypto_utils.derive_aes_key(bytes(key, encoding='utf8'), b'123132123')
+  # new_key = crypto_utils.derive_aes_key(bytes(key, encoding='utf8'), b'LTAI5tS8cAu13Ax3u18d2D6T')
   # print(f"AES-256 新密钥: {new_key}")
+
+  key = crypto_utils.get_aes512_key()
+  print(f"AES-256 密钥: {key}")
+  print(type(key))
+  new_key = crypto_utils.derive_aes512_key(bytes(key, encoding='utf8'), b'LTAI5tS8cAu13Ax3u18d2D6T')
+  print(f"AES-256 新密钥: {new_key}")
 
 
 
