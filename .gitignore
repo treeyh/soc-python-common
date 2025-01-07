@@ -80,3 +80,5 @@ atlassian-ide-plugin.xml
 
 /export/*
 .config.json
+
+.codegpt

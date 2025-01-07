@@ -27,7 +27,7 @@ class SqlModelGenerate(object):
     self.env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(filePath))
     self.postgresqlTemplate = self.env.get_template('postgresql.template')
-    self.mysqlTemplate = self.env.get_template('postgresql.template')
+    self.mysqlTemplate = self.env.get_template('mysql.template')
     self.exportPath = exportPath
 
   def generate_sql_file(self, conf: config_model.DataSourceConfig):
