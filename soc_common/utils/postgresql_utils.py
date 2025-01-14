@@ -28,7 +28,7 @@ class PostgresqlUtils(object):
     self.dsn = 'postgresql://%s:%s@%s:%s/%s?sslmode=%s' % (user, passwd, host, str(port), db, sslmode)
 
     try:
-      self.pool = ConnectionPool(self.dsn)
+      self.pool = ConnectionPool(self.dsn, open=False)
       self.pool.open()
     except BaseException as e:
       logging.error('Postgresql init Error %s' % (e.args))
@@ -52,13 +52,13 @@ class PostgresqlUtils(object):
 
   def find_all(self, sql, params=(), mapcol=None):
     with self.pool.connection() as conn:
+      result = []
       try:
         yz = conn.execute(sql, params).fetchall()
         if yz == None:
           return None
         if mapcol == None:
           return yz
-        result = []
         for y in yz:
           result.append(self._result_to_map(y, mapcol))
         return result
@@ -71,22 +71,26 @@ class PostgresqlUtils(object):
     with self.pool.connection() as conn:
       try:
         if isbackinsertid == True:
-          cursor = conn.execute(sql, params)
-          yz = cursor.fetchone()
-          conn.commit()
-          return yz[0]
-        else:
-          conn.execute(sql, params).commit()
-          return 0
+          with conn.execute(sql, params) as cur:
+            if isbackinsertid:
+              yz = cur.fetchone()
+              conn.commit()
+              return yz[0]
+            else:
+              rowcount = cur.rowcount
+              conn.commit()
+              return rowcount
       except BaseException as e:
         logging.error('Error %s, %s, %s, %s' % (e.args, sql, params, traceback.format_exc()))
-        return 1
+        return -1
 
   def insert_more(self, sql, params=[]):
     with self.pool.connection() as conn:
       try:
-        conn.executemany(sql, params).commit()
-        return 0
+        with conn.execute(sql, params) as cur:
+          rowcount = cur.rowcount
+          conn.commit()
+          return rowcount
       except BaseException as e:
         logging.error('Error %s, %s' % (e.args, traceback.format_exc()))
         return 1
