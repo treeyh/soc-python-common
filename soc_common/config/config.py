@@ -141,6 +141,19 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
         code="Snake-export",
         comment="Snake",
     ),
+    # 7
+    config_model.DataSourceConfig(
+        dsType=DsMysql,
+        host="127.0.0.1",
+        port=3306,
+        db="snb_webhook_proxy_db",
+        user="root",
+        passwd="2Dv_v2VxnZ8PgG26f",
+        includes=["snb_webhook_proxy_db"],
+        name="snb_webhook_proxy_db",
+        code="snb_webhook_proxy_db",
+        comment="snb_webhook_proxy_db",
+    ),
 ]
 
 
@@ -151,7 +164,7 @@ class CodeGenerateByDb:
     exportPath = os.path.join(ExportPath, "golang")
 
     # 生成对象是需要去除的表名前缀
-    ignoreTablePres = ["cloud_", "chk_", "que_soc_", "soc_", "st_", "tt_", "bs_"]
+    ignoreTablePres = ["cloud_", "chk_", "que_soc_", "soc_", "st_", "tt_", "bs_", "bw_"]
 
     # 需要生成对象的表名列表，为空则库中所有表都生成
     exportTables = []
