@@ -47,6 +47,7 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
     #                               user='rta-sit', passwd='snowball', includes=[], excludes=['pre_mp_rta_transit_db', 'pre_mp_pay_center_db', 'pre_fp_global_business_db', 'pre_mp_gcm_db', 'logan_db'], name='RTA测试环境', code='rta-test', comment='RTA测试环境'),
     # config_model.DataSourceConfig(dsType=DsClickHouse, host='10.0.3.94', port=9000, db='system',
     #                               user='default', passwd='123456', includes=[], name='clickhouse测试环境', code='clickhouse-test', comment='clickhouse测试环境'),
+    # 0
     config_model.DataSourceConfig(
         dsType=DsMysql,
         host="192.168.80.129",
@@ -60,6 +61,7 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
         code="Mysql-export",
         comment="MySql测试导出数据库",
     ),
+    # 1
     config_model.DataSourceConfig(
         dsType=DsMariaDB,
         host="192.168.80.129",
@@ -72,6 +74,7 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
         code="MariaDB-export",
         comment="MariaDB测试导出数据库",
     ),
+    # 2
     config_model.DataSourceConfig(
         dsType=DsClickHouse,
         host="10.0.3.94",
@@ -84,6 +87,7 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
         code="clickhouse-test",
         comment="clickhouse测试环境",
     ),
+    # 3
     config_model.DataSourceConfig(
         dsType=DsPostgreSQL,
         host="127.0.0.1",
@@ -97,19 +101,21 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
         code="Postgresql-export",
         comment="Postgresql测试导出数据库",
     ),
+    # 4
     config_model.DataSourceConfig(
         dsType=DsPostgreSQL,
         host="192.168.7.160",
         port=5432,
-        db="soc_trader_db",
+        db="soc_trader_db_dev",
         user="proot",
         passwd="4pVmsxTuB_5ZlnSX",
-        includes=["soc_trader_db"],
+        includes=["soc_trader_db_dev"],
         excludes=[],
         name="测试数据库",
         code="export",
         comment="测试导出数据库",
     ),
+    # 5
     config_model.DataSourceConfig(
         dsType=DsMysql,
         host="1",
@@ -122,6 +128,7 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
         code="Snake-export",
         comment="Snake",
     ),
+    # 6
     config_model.DataSourceConfig(
         dsType=DsMysql,
         host="127.0.0.1",

@@ -55,10 +55,10 @@ def main():
   # generate.generate_po_bo_file(config.exportDsConfig[3])
 
   generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_model_file(config.exportDsConfig[6])
+  generate.generate_model_file(config.exportDsConfig[4])
 
   generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_sql_file(config.exportDsConfig[6])
+  generate.generate_sql_file(config.exportDsConfig[4])
 
   # sql_export_domain.format_select_sql()  # select 语句
   # sql_export_domain.format_update_sql()  # select 语句
