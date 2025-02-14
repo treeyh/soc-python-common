@@ -6,6 +6,8 @@ import traceback
 
 from psycopg_pool import ConnectionPool
 
+from soc_trader.utils import log_utils
+
 
 class PostgresqlUtils(object):
   """Postgresql Utils
@@ -31,7 +33,7 @@ class PostgresqlUtils(object):
       self.pool = ConnectionPool(self.dsn, open=False)
       self.pool.open()
     except BaseException as e:
-      logging.error('Postgresql init Error %s' % (e.args))
+      log_utils.log.error('Postgresql init Error %s' % (e.args))
       sys.exit(1)
 
 
@@ -47,7 +49,7 @@ class PostgresqlUtils(object):
         result = self._result_to_map(yz, mapcol)
         return result
       except BaseException as e:
-        logging.error('Error %s' % (e.args))
+        log_utils.log.error('Error %s' % (e.args))
         return result
 
   def find_all(self, sql, params=(), mapcol=None):
@@ -63,37 +65,39 @@ class PostgresqlUtils(object):
           result.append(self._result_to_map(y, mapcol))
         return result
       except BaseException as e:
-        logging.error('sql %s, %s ;Error %s' % (sql, str(params), e.args))
+        log_utils.log.error('sql %s, %s ;Error %s' % (sql, str(params), e.args))
+        log_utils.log.error(traceback.format_exc())
         return result
 
   def insert_or_update_or_delete(self, sql, params=(), isbackinsertid=False):
     # INSERT INTO charts (name, file_name, scale,) VALUES (%(name)s, %(fileName)s, %(scale)s) RETURNING id;
     with self.pool.connection() as conn:
       try:
-        if isbackinsertid == True:
-          with conn.execute(sql, params) as cur:
-            if isbackinsertid:
-              yz = cur.fetchone()
-              conn.commit()
-              return yz[0]
-            else:
-              rowcount = cur.rowcount
-              conn.commit()
-              return rowcount
+        with conn.cursor() as cur:
+          cur.execute(sql, params)
+          if isbackinsertid:
+            yz = cur.fetchone()
+            conn.commit()
+            return yz[0]
+          else:
+            rowcount = cur.rowcount
+            conn.commit()
+            return rowcount
       except BaseException as e:
-        logging.error('Error %s, %s, %s, %s' % (e.args, sql, params, traceback.format_exc()))
+        log_utils.log.error('Error %s, %s, %s, %s' % (e.args, sql, params, traceback.format_exc()))
         return -1
 
   def insert_more(self, sql, params=[]):
     with self.pool.connection() as conn:
       try:
-        with conn.execute(sql, params) as cur:
+        with conn.cursor() as cur:
+          cur.executemany(sql, params)
           rowcount = cur.rowcount
-          conn.commit()
-          return rowcount
+        conn.commit()
+        return rowcount
       except BaseException as e:
-        logging.error('Error %s, %s' % (e.args, traceback.format_exc()))
-        return 1
+        log_utils.log.error('Error %s, %s, %s, %s' % (e.args, sql, params, traceback.format_exc()))
+        return -1
 
   def _get_count_sql(self, sql):
     sql = sql.lower()
@@ -128,7 +132,7 @@ class PostgresqlUtils(object):
         page_result['data'] = result
         return page_result
       except BaseException as e:
-        logging.error('Error %d: %s, %s' % (e.args[0], e.args[1], traceback.format_exc()))
+        log_utils.log.error('Error %d: %s, %s' % (e.args[0], e.args[1], traceback.format_exc()))
         return page_result
 
   def _result_to_map(self, yz, mapcol):
