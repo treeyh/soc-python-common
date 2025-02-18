@@ -8,9 +8,9 @@
 @version        :1.0
 '''
 
-list1 = '''i-uf6agx'''
+list1 = '''i-uf6asvlvttm4'''
 
-list2 = '''i-uf6645tooe'''
+list2 = '''i-uf64'''
 
 def compare_list():
   global list1, list2
@@ -51,5 +51,5 @@ def get_date():
 
 
 if __name__ == '__main__':
-  # compare_list()
-  get_date()
+  compare_list()
+  # get_date()
