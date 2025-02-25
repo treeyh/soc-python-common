@@ -132,8 +132,6 @@ def init_log():
 
 
 
-
-
 if __name__ == '__main__':
   logger = get_logger()
   logger.info('asdfasdsasdf')
