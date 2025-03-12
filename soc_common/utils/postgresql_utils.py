@@ -6,7 +6,7 @@ import traceback
 
 from psycopg_pool import ConnectionPool
 
-from soc_trader.utils import log_utils
+from soc_common.utils import log_utils
 
 
 class PostgresqlUtils(object):

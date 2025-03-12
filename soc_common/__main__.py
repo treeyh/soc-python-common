@@ -84,8 +84,8 @@ def main():
   # dbConf = config_model.DataSourceConfig(dsType=config.DsPostgreSQL, host='127.0.0.1', port=5432, db='soc_question_db_local',
   #                                 user='proot', passwd='4pVmsxTuB_5ZlnSX', includes=['soc_question_db_local'], excludes=[], name='Postgresql测试导出数据库', code='Postgresql-export', comment='Postgresql测试导出数据库')
 
-  generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_po_bo_file(config.exportDsConfig[7])
+  # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
+  # generate.generate_po_bo_file(config.exportDsConfig[7])
   
   # postgresqlExp = postgresql_export_db_model.PostgresqlExportDbModel()
   # postgresqlExp.export_model(dbConf)
@@ -106,6 +106,13 @@ def main():
   # new_key = crypto_utils.derive_aes512_key(bytes(key, encoding='utf8'), b'LTAI5tS8cAu13Ax3u18d2D6T')
   # print(f"AES-256 新密钥: {new_key}")
 
+  import random
+
+  ls = []
+  for i in range(1000):
+    ls.append(random.randint(1, 200))
+
+  print(ls)
 
 
 if __name__ == '__main__':

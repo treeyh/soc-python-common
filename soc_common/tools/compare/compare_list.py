@@ -8,9 +8,9 @@
 @version        :1.0
 '''
 
-list1 = '''i-uf6asvlvttm4'''
+list1 = '''i-uf6agxhag'''
 
-list2 = '''i-uf64'''
+list2 = '''i-uf6h9'''
 
 def compare_list():
   global list1, list2
