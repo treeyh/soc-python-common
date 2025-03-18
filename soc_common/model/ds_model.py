@@ -234,7 +234,7 @@ class FieldModel(object):
     elif c in ['bigint', 'int8']:
       return 'int'
     elif c in ['float', 'double', 'decimal', 'peal', 'numeric']:
-      return 'float'
+      return 'Decimal'
     elif c in ['boolean', 'bool']:
       return 'bool'
     elif c in ['datetime', 'timestamp', 'timestamptz', 'time', 'year']:

@@ -54,11 +54,11 @@ def main():
   # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
   # generate.generate_po_bo_file(config.exportDsConfig[3])
 
-  # generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_model_file(config.exportDsConfig[4])
+  generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
+  generate.generate_model_file(config.exportDsConfig[4])
 
-  # generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_sql_file(config.exportDsConfig[4])
+  generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
+  generate.generate_sql_file(config.exportDsConfig[4])
 
   # sql_export_domain.format_select_sql()  # select 语句
   # sql_export_domain.format_update_sql()  # select 语句
@@ -106,13 +106,13 @@ def main():
   # new_key = crypto_utils.derive_aes512_key(bytes(key, encoding='utf8'), b'LTAI5tS8cAu13Ax3u18d2D6T')
   # print(f"AES-256 新密钥: {new_key}")
 
-  import random
+  # import random
 
-  ls = []
-  for i in range(1000):
-    ls.append(random.randint(1, 200))
+  # ls = []
+  # for i in range(1000):
+  #   ls.append(random.randint(1, 200))
 
-  print(ls)
+  # print(ls)
 
 
 if __name__ == '__main__':

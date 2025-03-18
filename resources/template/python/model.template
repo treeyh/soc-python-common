@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from datetime import datetime, date
+from decimal import Decimal
 
 # 代码生成器自动生成
 
