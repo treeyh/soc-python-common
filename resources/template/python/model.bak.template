@@ -1,0 +1,27 @@
+# -*- coding: UTF-8 -*-
+
+from datetime import datetime, date
+from decimal import Decimal
+
+# 代码生成器自动生成
+
+# {{tb.go_model_name()}} {{ tb.comment_str() }}
+class {{tb.go_model_name()}}(object):
+  """{{ tb.comment_str() }}
+  """    
+  
+  def __init__(self{% for fl in tb.fields %}, {{fl.python_field_name()}}:{{ fl.python_field_type() }} = {{fl.python_default_value()}}{% endfor %}):
+    """初始化
+
+    Args:
+        {% for fl in tb.fields %}{{fl.python_field_name()}} ({{ fl.python_field_type() }}, optional): {{fl.comment_str()}}. Defaults to {{fl.python_default_value()}}.
+        {% endfor %}
+    """    
+    super({{tb.go_model_name()}}, self).__init__()    
+    {% for fl in tb.fields %}self.{{fl.python_field_name()}} = {{fl.python_field_name()}} 
+    {% endfor %}
+
+  
+  def __repr__(self):
+    """返回一个对象的描述信息"""
+    return {{tb.python__repr()}}

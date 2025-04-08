@@ -6,10 +6,11 @@ import logging
 import argparse
 import shutil
 
+from datetime import datetime
 from typing import Dict, List
 
 from soc_common.config import config
-from soc_common.utils import log_utils, file_utils, crypto_utils
+from soc_common.utils import log_utils, file_utils, crypto_utils, date_utils
 from soc_common.model import ds_model, config_model
 from soc_common.tools.export_db_model import postgresql_export_db_model
 # from soc_common.tools.code.code_generate import sql_export_domain
@@ -55,10 +56,10 @@ def main():
   # generate.generate_po_bo_file(config.exportDsConfig[3])
 
   generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_model_file(config.exportDsConfig[4])
+  generate.generate_model_file(config.exportDsConfig[8])
 
   generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_sql_file(config.exportDsConfig[4])
+  generate.generate_sql_file(config.exportDsConfig[8])
 
   # sql_export_domain.format_select_sql()  # select 语句
   # sql_export_domain.format_update_sql()  # select 语句

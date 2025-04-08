@@ -227,8 +227,10 @@ class FieldModel(object):
     """
     c = self.ftype.lower()
 
-    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext', 'json', 'jsonb']:
+    if c in ['varchar', 'text', 'char', 'longtext', 'enum', 'mediumtext', 'tinytext']:
       return 'str'
+    elif c in ['json', 'jsonb']:
+      return 'Dict|str'
     elif c in ['int', 'tinyint', 'smallint', 'mediumint', 'bit', 'int2', 'int4']:
       return 'int'
     elif c in ['bigint', 'int8']:

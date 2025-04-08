@@ -154,6 +154,20 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
         code="snb_webhook_proxy_db",
         comment="snb_webhook_proxy_db",
     ),
+    # 8
+    config_model.DataSourceConfig(
+        dsType=DsPostgreSQL,
+        host="192.168.7.160",
+        port=5432,
+        db="soc_study_db_dev",
+        user="proot",
+        passwd="4pVmsxTuB_5ZlnSX",
+        includes=["soc_study_db_dev"],
+        excludes=[],
+        name="测试数据库",
+        code="export",
+        comment="测试导出数据库",
+    ),
 ]
 
 
@@ -164,7 +178,7 @@ class CodeGenerateByDb:
     exportPath = os.path.join(ExportPath, "golang")
 
     # 生成对象是需要去除的表名前缀
-    ignoreTablePres = ["cloud_", "chk_", "que_soc_", "soc_", "st_", "tt_", "bs_", "bw_"]
+    ignoreTablePres = ["cloud_", "chk_", "que_soc_", "soc_", "st_", "tt_", "bs_", "bw_", "ss_"]
 
     # 需要生成对象的表名列表，为空则库中所有表都生成
     exportTables = []
