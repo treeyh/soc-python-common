@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-
+import os
 import sys
 import logging
 import argparse
@@ -23,6 +23,7 @@ from soc_common.tools.code.code_generate.sql import generate_sql_by_db
 # from soc_common.tools.git import pull_code
 # from soc_common.tools.encrypt import ecc_demo
 from soc_common.tools.gitlab import gitlab_utils
+from soc_common.tools.accounts import read_xqz
 
 
 def _parse_option():
@@ -52,8 +53,8 @@ def main():
 
   # shutil.rmtree(path=config.ExportPath, ignore_errors=True)
 
-  generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
-  generate.generate_po_bo_file(config.exportDsConfig[9])
+  # generate = generate_bo_po_by_db.GolangBoPoGenerate(config.TemplatePath, config.ExportPath)
+  # generate.generate_po_bo_file(config.exportDsConfig[9])
 
   # generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
   # generate.generate_model_file(config.exportDsConfig[8])
@@ -114,6 +115,9 @@ def main():
   #   ls.append(random.randint(1, 200))
 
   # print(ls)
+  file_path = os.path.join(config.BasePath, 'resources', '1.csv')
+  target_path = os.path.join(config.ExportPath, '1_qj.csv')
+  read_xqz.read_xqz(file_path, target_path=target_path)
 
 
 if __name__ == '__main__':

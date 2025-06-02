@@ -82,3 +82,5 @@ atlassian-ide-plugin.xml
 .config.json
 
 .codegpt
+
+*.csv
