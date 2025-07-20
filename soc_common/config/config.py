@@ -182,8 +182,30 @@ exportDsConfig: List[config_model.DataSourceConfig] = [
         code="export",
         comment="测试导出数据库",
     ),
+    # 10
+    config_model.DataSourceConfig(
+        dsType=DsMysql,
+        host="192.168.7.160",
+        port=3306,
+        db="soc_builder_db",
+        user="root",
+        passwd="7Dv_v2VxnZ8PgG26f",
+        includes=["soc_builder_db"],
+        excludes=[],
+        name="测试数据库",
+        code="export",
+        comment="测试导出数据库",
+    ),
 ]
 
+DB_CONFIG = {
+    "host": "192.168.7.160",
+    "port": 3306,
+    "user": "root",
+    "passwd": "7Dv_v2VxnZ8PgG26f",
+    "db": "soc_builder_db",
+    "charset": "utf-8",
+}
 
 class CodeGenerateByDb:
     """根据数据库表结构生成代码配置"""

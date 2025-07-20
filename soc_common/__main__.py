@@ -57,10 +57,10 @@ def main():
   # generate.generate_po_bo_file(config.exportDsConfig[9])
 
   # generate = generate_model_by_db.PythonModelGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_model_file(config.exportDsConfig[8])
+  # generate.generate_model_file(config.exportDsConfig[10])
 
   # generate = generate_sql_by_db.SqlModelGenerate(config.TemplatePath, config.ExportPath)
-  # generate.generate_sql_file(config.exportDsConfig[8])
+  # generate.generate_sql_file(config.exportDsConfig[10])
 
   # sql_export_domain.format_select_sql()  # select 语句
   # sql_export_domain.format_update_sql()  # select 语句
@@ -115,9 +115,12 @@ def main():
   #   ls.append(random.randint(1, 200))
 
   # print(ls)
-  file_path = os.path.join(config.BasePath, 'resources', '1.csv')
-  target_path = os.path.join(config.ExportPath, '1_qj.csv')
-  read_xqz.read_xqz(file_path, target_path=target_path)
+  # file_path = os.path.join(config.BasePath, 'resources', '1.csv')
+  # target_path = os.path.join(config.ExportPath, '1_qj.csv')
+  # read_xqz.read_xqz(file_path, target_path=target_path)
+
+  from soc_common.tools.code.json import build_soc_builder_json
+  build_soc_builder_json.build_soc_builder_json()
 
 
 if __name__ == '__main__':
