@@ -82,7 +82,7 @@ def build_path(item: template_item.TemplateItem | template_fragment.TemplateFrag
   return path
 
 
-def build_template_node(item: template_item.TemplateItem) -> Dict:
+def build_template_node(item: template_item.TemplateItem):
   global template, _SPAN
   series_name = item.series_name.strip()
   group_name = item.group_name.strip()
@@ -90,7 +90,7 @@ def build_template_node(item: template_item.TemplateItem) -> Dict:
   name = item.name.strip()
 
   if item.series_code == '':
-      return
+      return {}
   series = None
   for s in template[_GROUPS]:
     if item.series_code == s[_CODE]:
@@ -148,17 +148,17 @@ def build_template_node(item: template_item.TemplateItem) -> Dict:
   
   if item.code == '':
       return
-  item = {
+  item_info = {
       _NAME: name,
       _CODE: item.code,
-      _TYPE: _TemplateSet,
+      _TYPE: _TemplateItem,
       _PATH: item.path + _SPAN + item.code,
       _CONTENT: {
         'template': item.content,
       },
       _GROUPS: []
   }
-  set[_GROUPS].append(item)
+  set[_GROUPS].append(item_info)
 
   
 
